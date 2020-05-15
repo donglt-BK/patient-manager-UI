@@ -1,28 +1,63 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="app" v-loading="loading">
+        <router-view/>
+    </div>
 </template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+    import LoginApi from '@/api/login/LoginApi';
+    import Auth from '@/security/Authentication';
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    export default {
+        name: "App",
+        data() {
+            return {
+                loading: false
+            }
+        },
+        created() {
+        },
+        methods: {
+           async checkAuth(){
+                this.loading = true;
+                try {
+                    const isAuth = await LoginApi.isAuthenticated();
+                    if (isAuth == false)
+                        Auth.logout();
+                } catch (e) {
+                    console.error(e);
+                } finally {
+                    this.loading = false;
+                }
+            }
+        }
+    }
 </script>
+<style lang="scss">
+    #app {
+        font-family: "Roboto", Helvetica, Arial, sans-serif;
+    }
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+    #nav {
+        padding: 30px;
+
+        a {
+            font-weight: bold;
+            color: #2c3e50;
+
+            &.router-link-exact-active {
+                color: #42b983;
+            }
+        }
+    }
+
+    html, body, #app {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #app > * {
+        height: 100%;
+    }
+
 </style>
