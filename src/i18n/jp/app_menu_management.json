@@ -1,0 +1,58 @@
+{
+  "appMenuManagement": {
+    "fields": {
+      "code": "Code",
+      "icon": "Icon",
+      "name": "メニュー名",
+      "noIcon": "アイコンなし",
+      "sortOrder": "Sort Order",
+      "url": "表示するWebアドレス",
+      "featureCode": "Feature Code",
+      "typeCode": "Type Code",
+      "isHiddenOnBottom": "Is Hidden On Bottom",
+      "isPublic": "Is Public",
+      "isShowOnApp": "Is Show On App",
+      "nameValid": "メニューの表示名です。",
+      "urlValid": "クリック後に指定のWebアドレスを開きます。",
+      "nameRequiredValidation": "メニュー名を入力してください",
+      "urlRequiredValidation": "メニューURLを入力してください",
+      "urlErrorValidation": "無効なURL",
+      "invalidFileType": "無効なファイルタイプ"
+    },
+    "title": {
+      "home": "アプリメニュー設定",
+      "create": "メニュー編集",
+      "bottomMenuLabel": "下部固定メインメニュー",
+      "topMenuLabel": "上部固定メインメニュー",
+      "subMenuLabel": "サブメニュー",
+      "appMenuTitle": "アプリメニュー設定",
+      "featureTitle": "起動する機能"
+    },
+    "list": {
+      "displayMessage": "アプリに表示するメニュー",
+      "nonDisplayMessage": "アプリには表示されないスタンバイ領域",
+      "menuFeature": "機能メニュー",
+      "noChange": "メニューには変更がありません。",
+      "changed": "メニューには変更があります。",
+      "openModalBtn": "スタンバイへ追加する",
+      "displayMenuTitle": "この領域にドラッグし、「登録」ボタンをクリックでアプリに反映されます。",
+      "createdMenuTitle": "本画面下部の「機能メニュー」から機能を追加すると、この領域に表示されます。",
+      "hiddenMenuTitle": "下部固定4メニュー以外のOTHER MENUに表示されるメニュー",
+      "fixedMenuTitle": "下部の常に表示される４つのメニュー",
+      "featureTitle": "アプリメニューに表示可能な機能メニューです。本機能で追加した機能はスタンバイメニューに追加されます。",
+      "confirmDeleteTitle": "削除を確認?",
+      "confirmDeleteMessage": "この操作は元に戻せません?",
+      "confirmDeleteOk": "確認",
+      "confirmDeleteCancel": "キャンセル",
+      "success": "登録しました。",
+      "fail": "Fail",
+      "mallInvalid": "モールを選択してください",
+      "iconInvalid": "アイコンを選択してください",
+      "iconSelectedPlaceholder": "写真アップロード",
+      "clearIconSelectedBtn": "Clear Image",
+      "publicBtn": "公開",
+      "confirmPublicOk": "確認",
+      "confirmPublicAppMenu": "すべてのメニューを公開しますか？"
+    }
+  }
+}

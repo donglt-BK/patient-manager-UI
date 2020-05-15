@@ -1,0 +1,46 @@
+{
+    "facilityEmployee":{
+        "title":{
+            "bookingStatus": "Booking Status",
+            "searchBooking": "Search Booking",
+            "bookingNumber": "Booking Number",
+            "receiveBooking": "Receive Booking",
+            "confirmBooking": "Confirm Booking",
+            "totalMoney": "Total Money"
+        },
+
+        "btn":{
+            "updatePage": "Update Page",
+            "receive": "Receive",
+            "searchBooking": "Search Booking",
+            "back": "Back",
+            "completed": "Completed",
+            "confirm": "Confirm",
+            "receiveBooking": "Receive"
+        },
+
+        "message":{
+            "bookingNumberAlreadyReceived": "Booking number have been used",
+            "bookingNumberDoesNotExist": "Booking Number Does not exist",
+            "fullSlot": "Full Slot",
+            "cancelByAdmin": "Booking had cancel by admin",
+            "cancelByUser": "Booking had cancel by user",
+            "bookingIsNotToday": "Booking is not today"
+        },
+
+        "feilds":{
+            "time": "Time",
+            "numberOfPerson": "Number Of Person",
+            "restNumberOfPerson": "Rest Number Of Person",
+            "bookingNumber": "Booking Number",
+            "bookingTimeRange": "Booking Time Range",
+            "numberSlot": "Number Slot",
+            "typeSlot": "Type Slot",
+            "money": "Money",
+            "totalMoney": "Total Money",
+            "bookingTime": "Booking Time",
+            "numberUsedInvitationCard": "Number Used Invitation Card",
+            "discountPercent": "Discount Percent"
+        }
+    }
+}

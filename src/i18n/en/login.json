@@ -1,0 +1,15 @@
+{
+  "login": {
+    "username": "Username",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "mallId": "Mall ID",
+    "nextBtn": "Next",
+    "loginBtn": "Login",
+    "backToPreviousStep": "Back to previous step",
+    "pleaseEnterUsername": "Please enter username.",
+    "pleaseEnterPassword": "Please enter password.",
+    "incorrectUsernameOrMallId": "Username or mall id is in-correct.",
+    "passwordIncorrect": "Password is in-correct."
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "page": {
+    "title": "ページ管理",
+    "fields": {
+      "outsidePageUrl": "外部ページURL",
+      "customPageUrl": "カスタムページURL",
+      "title": "ページタイトル",
+      "numberSeen": "ページビュー",
+      "numberAppView": "閲覧数(アプリ)",
+      "type": {
+        "label": "ページタイプ",
+        "custom": "カスタムページ",
+        "outside": "外部ページ"
+      },
+      "content": "ページ本文",
+      "role": "ページ編集権限",
+      "numberPage": "ページ番号",
+      "url": "ページURL",
+      "notificationSendNumber": "配信端末数",
+      "memberSendNumber": "アプリ会員配信数",
+      "memberPointNumber": "ポイントカード会員配信数",
+      "notificationSeenNumber": "既読端末数",
+      "memberSeenNumber": "既読会員数",
+      "updateTime": "最終更新日",
+      "activedeactive": "有効・無効"
+    },
+    "note": {
+      "outsidePageUrl": "外部ページのURLです。",
+      "customPageUrl": "ページURLを固定したい場合に指定してください。英小文字、数字とアンダースコア(_)が使用できます。",
+      "content": "ページの本文です。文字サイズ・色の変更、画像を挿入などビジュアルエディタメニューを活用いただけます。"
+    },
+    "message": {
+      "activePageSuccess": "有効になりました。",
+      "deActivePageSuccess": "無効になりました。",
+      "validateLengthTitle": "半角英数字・50文字以内で入力してください。",
+      "validateLengthUrl": "半角英数字・20文字以内で入力してください。",
+      "validateLinkWeb": "外部ページURLを入力してください！",
+      "validateExistTitle": "ページタイトルがすでに存在しました。",
+      "validateExistUrl": "ページURLがすでに存在しました。"
+    },
+    "text": {
+      "copy": "コピー",
+      "copied": "コーピーしました！"
+    },
+    "tab": {
+      "list": "投稿一覧",
+      "create": "新規投稿"
+    }
+  }
+}

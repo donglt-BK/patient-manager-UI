@@ -1,0 +1,28 @@
+{
+  "notificationSystem": {
+    "title": "Page Notification System Management JP",
+    "component": {
+      "downloading": "ダウンロード中",
+      "attachment": "添付ファイルダウンロード"
+    },
+    "dialog": {
+      "title": "システムからのお知らせ",
+      "btnChange": "変更",
+      "btnCancel": "キャンセル",
+      "addFile": "ファイル添付",
+      "content": "お知らせ表示内容",
+      "optional": "任意",
+      "attachedFile": "添付ファイル",
+      "btnRemove": "削除",
+      "btnUndo": "アンドゥ",
+      "successMsg": "変更しました。",
+      "errorMsg": "Change description failed JP"
+    },
+    "message":{
+      "noNotification": "現在、システムからのお知らせはありません。",
+      "systemNotification": "システム管理からのお知らせ",
+      "mallNotification": "施設管理からのお知らせ "
+    }
+  }
+}
+

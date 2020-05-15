@@ -1,0 +1,46 @@
+{
+    "facilityEmployee":{
+        "title":{
+            "bookingStatus": "予約状況",
+            "searchBooking": "ご予約のお客様",
+            "bookingNumber": "予約番号",
+            "receiveBooking": "ご予約受付 ",
+            "confirmBooking": "入力内容確認",
+            "totalMoney": "お会計"
+        },
+
+        "btn":{
+            "updatePage": "ページ更新",
+            "receive": "当日受付",
+            "searchBooking": "ご予約のお客様はこちら",
+            "back": "戻る",
+            "completed": "完了",
+            "confirm": "受付確定",
+            "receiveBooking": "受付"
+        },
+
+        "message":{
+            "bookingNumberAlreadyReceived": "この予約は受付しました。",
+            "bookingNumberDoesNotExist": "予約番号が誤っています。予約番号の下6桁の番号をご確認ください。",
+            "fullSlot": "予約可能な定員数が足りません。",
+            "cancelByAdmin": "管理者により、この予約はキャンセルされています。",
+            "cancelByUser": "ユーザーにより、この予約はキャンセルされています。",
+            "bookingIsNotToday": "本日の予約ではありません。当日の予約のみ受付できます。"
+        },
+
+        "feilds":{
+            "time": "時間帯",
+            "numberOfPerson": "人数",
+            "restNumberOfPerson": "残定員",
+            "bookingNumber": "Booking Number",
+            "bookingTimeRange": "予約時間帯",
+            "numberSlot": "予約人数",
+            "typeSlot": "区分",
+            "money": "金",
+            "totalMoney": "合計金額",
+            "bookingTime": "予約時間帯",
+            "numberUsedInvitationCard": "招待券",
+            "discountPercent": "現地割引"
+        }
+    }
+}

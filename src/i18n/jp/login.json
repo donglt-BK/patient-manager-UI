@@ -1,0 +1,16 @@
+{
+  "login": {
+    "username": "利用者コードを入力",
+    "password": "パスワードを入力",
+    "confirmPassword": "再度パスワードを入力",
+    "mallId": "施設IDを入力",
+    "nextBtn": "次へ",
+    "loginBtn": "ログイン",
+    "backToPreviousStep": "＞＞前のページに戻る",
+    "pleaseEnterUsername": "利用者コードを入力してください。",
+    "pleaseEnterPassword": "パスワードを入力してください。",
+    "incorrectUsernameOrMallId": "入力した施設ID又は利用者コードが正しくないです。",
+    "passwordIncorrect": "入力したパスワードが正しくないです。"
+
+  }
+}

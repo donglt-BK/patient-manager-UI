@@ -1,0 +1,27 @@
+{
+  "notificationSystem": {
+    "title": "Notification System Management",
+    "component": {
+      "downloading": "Downloading",
+      "attachment": "Attachment"
+    },
+    "dialog": {
+      "title": "Update Notification",
+      "btnChange": "Change",
+      "btnCancel": "Cancel",
+      "addFile": "Add files",
+      "content": "Content",
+      "optional": "Optional",
+      "attachedFile": "Attached files",
+      "btnRemove": "Remove",
+      "btnUndo": "Undo",
+      "successMsg": "Change notification successfully",
+      "errorMsg": "Change notification failed"
+    },
+    "message":{
+      "noNotification": "No Notification",
+      "systemNotification": "System Notification",
+      "mallNotification": "Mall Notification. "
+    }
+  }
+}

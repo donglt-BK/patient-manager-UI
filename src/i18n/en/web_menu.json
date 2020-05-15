@@ -1,0 +1,59 @@
+{
+  "webMenu": {
+    "fields": {
+      "code": "Code",
+      "icon": "Icon",
+      "name": "Name",
+      "noIcon": "No Icon",
+      "sortOrder": "Sort Order",
+      "url": "Url",
+      "featureCode": "Feature Code",
+      "typeCode": "Type Code",
+      "isHiddenOnBottom": "Is Hidden On Bottom",
+      "isPublic": "Is Public",
+      "isShowOnweb": "Is Show On web",
+      "nameValid": "Name Valid。",
+      "urlValid": "Url Valid。",
+      "nameRequiredValidation": "Please enter menu name",
+      "urlRequiredValidation": "Please enter menu url",
+      "urlErrorValidation": "URL invalid",
+      "invalidFileType": "File type invalid",
+      "pagePlaceholder": "Select page"
+    },
+    "title": {
+      "home": "Web Menu Management",
+      "create": "Create web Menu",
+      "headerMenuLabel": "Header Menu",
+      "topMenuLabel": "Top Menu",
+      "subMenuLabel": "Sub Menu",
+      "appMenuTitle": "web menu title",
+      "featureTitle": "Feature Title"
+    },
+    "list": {
+      "displayMessage": "Display menu",
+      "nonDisplayMessage": "Not display menu",
+      "menuFeature": "Menu Feature",
+      "noChange": "No Menu Change",
+      "changed": "Some Menu Changed",
+      "openModalBtn": "Open modal",
+      "createdMenuTitle": "created menu title",
+      "displayMenuTitle": "display menu title",
+      "hiddenMenuTitle": "hidden menu title",
+      "fixedMenuTitle": "fixed menu title",
+      "featureTitle": "this is feature title",
+      "confirmDeleteTitle": "Confirm Delete?",
+      "confirmDeleteMessage": "Are you sure?",
+      "confirmDeleteOk": "OK",
+      "confirmDeleteCancel": "Cancel",
+      "success": "Successfully",
+      "fail": "Fail",
+      "mallInvalid": "Please select mall",
+      "iconInvalid": "Please select icon",
+      "iconSelectedPlaceholder": "Click to upload",
+      "clearIconSelectedBtn": "Clear Image",
+      "publicBtn": "Public",
+      "confirmPublicOk": "OK",
+      "confirmPublicwebMenu": "Public all menu ?"
+    }
+  }
+}

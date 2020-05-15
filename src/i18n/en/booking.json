@@ -1,0 +1,12 @@
+{
+  "booking": {
+    "bookingNumber": "Booking Number",
+    "bookingTimeRange": "Booking Time Range",
+    "numberSlot": "Number Slot",
+    "remainingSlot": "Remaining Slot",
+    "notEnoughSlot": "Not enough slot.",
+    "invitationCard": "Invitation Card",
+    "discountPercent": "Discount Percent",
+    "numberInvitationCardGreaterThanNumberBookedSlot": "Number invitation card greater than number booked slots。"
+  }
+}

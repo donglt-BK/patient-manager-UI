@@ -1,0 +1,12 @@
+{
+    "booking": {
+        "bookingNumber": "予約番号",
+        "bookingTimeRange": "予約時間帯",
+        "numberSlot": "人数",
+        "remainingSlot": "残定員",
+        "notEnoughSlot": "予約可能な定員数が足りません。",
+        "invitationCard": "招待券",
+        "discountPercent": "現地割引",
+        "numberInvitationCardGreaterThanNumberBookedSlot": "予約数よりも大きい数の招待券。"
+    }
+}

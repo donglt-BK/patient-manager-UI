@@ -1,5 +1,13 @@
+const role = {
+    SYSTEM_ADMIN: "ADMIN",
+    HOSPITAL_MANAGER: "HPT_MNG",
+    DEPARTMENT_MANAGER: "DPT_MNG",
+    DOCTOR: "DOCTOR",
+    PATIENT: "PATIENT",
+
+}
+
 export default {
-    SYSTEM_ADMIN: "SYSTEM_ADMIN",
-    FACILITY_ADMIN: "FACILITY_ADMIN",
-    FACILITY_EMPLOYEE: "FACILITY_EMPLOYEE"
+    ...role,
+    ALL: Object.values(role)
 }

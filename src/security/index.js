@@ -2,7 +2,7 @@ import Router from '@/router/Router';
 import Auth from '@/security/Authentication';
 import Pages from '@/router/Pages';
 
-let enableSecurity = process.env.VUE_APP_ENABLE_SECURITY == 'true';
+let enableSecurity = process.env.VUE_APP_ENABLE_SECURITY === 'true';
 
 if (enableSecurity) {
     Router.beforeEach((to, from, next) => {
@@ -17,13 +17,13 @@ if (enableSecurity) {
                 if (!Auth.isAuthenticated()) {
                     next(Pages.login.path);
                 } else {
-                    next(Pages.forbidden.path);
+                    next(Pages.notFound.path);
                 }
             }
         } else {
 
-            if (Auth.isAuthenticated() && to.path == Pages.login.path)
-                next(Pages.redirect.path);
+            if (Auth.isAuthenticated() && to.path === Pages.login.path)
+                next(Pages.home.path);
 
             // no authorities, so just proceed
             next();

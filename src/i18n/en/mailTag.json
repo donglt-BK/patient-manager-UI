@@ -1,0 +1,20 @@
+{
+  "mailTag": {
+    "systemInfo": {
+      "name": "System info tag",
+      "myPage": "URL to my page"
+    },
+    "bookingInfo": {
+      "name": "Booking info tag",
+      "detailPage": "URL to booking detail",
+      "bookingDate": "Booking date",
+      "bookingTime": "Booking time",
+      "bookingNumber": "Booking number",
+      "bookingCount": "Number of booking slot",
+      "facilityHomePage": "URL to facility booking page",
+      "facilityName": "Facility name",
+      "confirmUrl": "Confirm URL for \"register mail\" or \"change email\" mail",
+      "refundStatus": "Current refund status for \"cancel mail\" "
+    }
+  }
+}

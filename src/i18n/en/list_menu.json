@@ -1,0 +1,19 @@
+{
+  "listMenu": {
+    "couponManagement": "Coupon Management",
+    "facilityAdminManagement": "Facility Admin Management",
+    "rulesSystem": "Rules System",
+    "systemMailTemplate": "System Mail Template",
+    "facilityManagement": "Facility Management",
+    "createFacility": "Create Facility",
+    "facilityInfo": "Facility Info",
+    "fixedHolidays": "Fixed Holidays",
+    "setupBooking": "Setup Booking",
+    "createNote": "Create Note",
+    "mailTemplate": "Mail Template",
+    "facilityManager": "Facility Manager",
+    "facilityEmployeeManagement": "Facility Employee Management",
+    "configFacilityPeriodicDayOffManagement": "Facility Periodic Day Off Management",
+    "bookingManagement": "Booking Management"
+  }
+}

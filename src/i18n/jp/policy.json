@@ -1,0 +1,33 @@
+{
+  "policy": {
+    "fields": {
+      "displayTimeCreate": "表示開始日時",
+      "displayTimeList": "表示開始日時",
+      "comment": "変更コメント",
+      "updateTime": "最終更新日",
+      "action": "アクション",
+      "activedeactive": "有効・無効",
+      "content": "利用規約本文"
+    },
+    "tabs": {
+      "create": "新規投稿",
+      "list": "投稿一覧",
+      "edit": "編集"
+    },
+    "activeDialog": {
+      "title": "対象利用規約を有効にしますか？",
+      "message": "アプリにすぐに表示できるのために表示時間が現在時間に自動変更されます。よろしいでしょうか？",
+      "confirmBtn": "はい",
+      "cancelBtn": "いいえ"
+    },
+    "message": {
+      "cantDeactive": "無効できません。",
+      "cantDelete": "対象利用規約が削除できません。他の利用規約を有効にしてから再度削除してください。",
+      "validateDisplay": "他の利用契約の有効期間と重複されています。"
+    },
+    "warningDialog": {
+      "title": "有効に設定できません！",
+      "message": "他の利用契約の有効期間と重複されています。時間を調整してから試してください。"
+    }
+  }
+}

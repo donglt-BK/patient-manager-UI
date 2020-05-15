@@ -80,9 +80,9 @@
                 try {
                     this.fullscreenLoading = true;
                     let response = await LoginApi.login(loginData);
-                    let currentUser = Auth.setCurrentUser(response.userEntity);
                     //TODO call to server to get full user data
-                    this.redirect();
+                    let currentUser = Auth.setCurrentUser(response.userEntity);
+                    this.goToHomePage();
                 } catch (e) {
                     console.log("error", e);
                     if (e.response.status === 400) {
@@ -95,8 +95,8 @@
                     this.fullscreenLoading = false;
                 }
             },
-            redirect() {
-                this.$router.push({path: Pages.redirect.path});
+            goToHomePage() {
+                this.$router.push({path: Pages.home.path});
             }
         }
     }

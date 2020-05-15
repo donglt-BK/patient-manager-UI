@@ -1,0 +1,95 @@
+/* ductv */
+@mixin textAlign() {
+  @each $direction in ("center", "left", "right") {
+    .text-#{$direction} {
+      text-align: #{$direction};
+    }
+  }
+}
+
+@include textAlign;
+
+@mixin sizePercent() {
+  @each $size in ("width", "height") {
+    @for $value from 0 through 100 {
+      $value: $value + 5;
+      .#{$size}-#{$value} {
+        #{$size}: percentage($value/100) !important;
+      }
+    }
+  }
+}
+
+@include sizePercent;
+
+.vertical-center {
+  align-items: center;
+}
+
+.horizontal-center {
+  justify-content: center;
+}
+
+@mixin flexSize {
+  @for $i from 1 through 100 {
+    .flex-#{$i} {
+      flex: $i;
+    }
+  }
+}
+
+@include flexSize;
+
+/* margin, padding */
+$max-size: 100;
+$types: ('margin', 'padding');
+$positions: ('top', 'right', 'bottom', 'left');
+
+@mixin marginPadding {
+  @each $type in $types {
+    @each $pos in $positions {
+      @for $value from 0 through $max-size {
+        $value: $value + 5;
+        .#{$type}-#{$pos}-#{$value} {
+          #{$type}-#{$pos}: #{$value}px;
+        }
+      }
+    }
+  }
+  @each $type in $types {
+    @for $value from 0 through $max-size {
+      $value: $value +5;
+      .#{$type}-#{$value} {
+        #{$type}: #{$value}px;
+      }
+    }
+  }
+}
+
+@include marginPadding;
+
+/*=========*/
+
+.full-parent-width {
+  width: 100% !important;
+}
+
+.mg-bottom-15 {
+  margin-bottom: 15px !important;
+}
+
+.mg-bottom-30 {
+  margin-bottom: 30px !important;
+}
+
+.mg-top-10 {
+  margin-top: 10px !important;
+}
+
+.mg-top-20 {
+  margin-top: 20px !important;
+}
+
+.mg-top-30 {
+  margin-top: 30px !important;
+}

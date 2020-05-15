@@ -1,0 +1,11 @@
+{
+  "rulesManagement": {
+    "systemUseRulesTitle": "System Use Rules",
+    "personalInformationRulesTitle": "Personal Information Rules",
+    "bookingOrderRulesTitle": "Use For Select Facility Display Before Order Booking",
+    "bookingPaymentRulesTitle": "Booking Payment Rules Management",
+    "bookingCancelRulesTitle": "Use For Cancel Booking Display",
+    "changeButton": "Change",
+    "attachFile": "Attach file"
+  }
+}

@@ -1,0 +1,53 @@
+/*$colors: (*/
+/*("name": "success", "color": "#67C23A"),*/
+/*("name": "success", "color": "#E6A23C"),*/
+/*("name": "success", "color": "#F56C6C"),*/
+/*("name": "success", "color": ""),*/
+/*("name": "success", "color": ""),*/
+/*);*/
+/*@mixin color() {*/
+/*    @each $type in ('text', 'bg') {*/
+/*    @each*/
+/*    }*/
+/*}*/
+
+
+.bg-success {
+    background-color: #67C23A !important;
+}
+
+.bg-warning {
+    background-color: #E6A23C !important;
+}
+
+.bg-danger {
+    background-color: #F56C6C !important;
+}
+
+.bg-info {
+    background-color: #909399 !important;
+}
+
+.bg-primary {
+    background-color: #409EFF !important;
+}
+
+.text-success {
+    color: #67C23A !important;
+}
+
+.text-warning {
+    color: #E6A23C !important;
+}
+
+.text-danger {
+    color: #F56C6C !important;
+}
+
+.text-info {
+    color: #909399 !important;
+}
+
+.text-primary {
+    color: #409EFF !important;
+}

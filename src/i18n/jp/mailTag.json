@@ -1,0 +1,20 @@
+{
+  "mailTag": {
+    "systemInfo": {
+      "name": "【システム情報】",
+      "myPage": "マイページのURLを埋め込む"
+    },
+    "bookingInfo": {
+      "name": "【予約情報】",
+      "detailPage": "予約詳細のURLを埋め込む　＊予約向け",
+      "bookingDate": "予約日 ex)2020/12/12(土)",
+      "bookingTime": "予約時間帯 ex)11:00 - 12:00",
+      "bookingNumber": "予約番号 ex)202003-031234",
+      "bookingCount": "ご利用人数 ex)4人",
+      "facilityHomePage": "予約施設の施設HP",
+      "facilityName": "予約施設の施設表示名",
+      "confirmUrl": "メールアドレス確認のURLを埋め込む ＊メールアドレス確認系向け",
+      "refundStatus": "キャンセルされた予約の返金ステータス"
+    }
+  }
+}

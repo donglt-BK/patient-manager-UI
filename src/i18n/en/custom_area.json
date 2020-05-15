@@ -1,0 +1,26 @@
+{
+  "customArea": {
+    "tabList": "List",
+    "tabCreate": "Create",
+    "title": "Custom Area",
+    "areaID": "Area ID",
+    "description": "Description",
+    "sizeRatio": "Size Ratio",
+    "verticalRatio": "Vertical Ratio",
+    "horizontalRatio": "Horizontal Ratio",
+    "size": "Size",
+    "invalidAreaMessage": "In-valid area ID",
+    "editContentRole": "Edit content role",
+    "mallRequiredMessage": "Please select mall",
+    "createSuccess": "Create custom page successfully.",
+    "updateSuccess": "Update custom page successfully.",
+    "deleteSuccess": "Delete success.",
+    "maxLength100": "Max length is 100 characters!",
+    "sizeRatioValidationMessage": "This ratio must between 1 and 9999.",
+    "editContentRole": {
+      "name": "Edit Content Role",
+      "admin": "Admin",
+      "mallAdmin": "Mall admin"
+    }
+  }
+}

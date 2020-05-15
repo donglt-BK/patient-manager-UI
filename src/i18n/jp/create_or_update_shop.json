@@ -1,0 +1,54 @@
+{
+    "createOrUpdateShop": {
+        "placeHolder": {
+            "shopNumber": "店番を入力してください。",
+            "shopName": "店名を入力してください。",
+            "floor": "フロアを選択してください。",
+            "shopCategory1": "店舗カテゴリを選択してください。",
+            "shopSubcategory1": "店舗サブカテゴリを選択してください。",
+            "shopcategory2": "店舗カテゴリを選択してください。",
+            "shopSubcategory2": "店舗サブカテゴリを選択してください。",
+            "thirdSubCategory": "店舗サブカテゴリを選択してください。",
+            "showOrder": "表示順を入力してください。",
+            "tel": "TELを入力してください。",
+            "businessTime": "営業時間を入力してください。",
+            "fax": "FAXを入力してください。",
+            "websiteUrl": "WebサイトURLを入力してください。",
+            "shopDescription": "",
+            "shopService": "主な取り扱いを入力してください。",
+            "creditCards": "クレジットカードを入力してください。",
+            "electricMoney": "電子マネーを入力してください。",
+            "shopInfomation": "",
+            "shopEvent": "",
+            "shopPushnoti" : ""
+        },
+        "tab":{
+            "createOrUpdateShop": "新規投稿",
+            "edit": "編集"
+        },
+        "message":{
+            "noContent": "なし",
+            "pleaseInputData": "本項目が必須です。",
+            "dataIsNotNumber": "数字のみ入力してください。",
+            "dataIsIncorrectFormat": "入力したデータが正しくありません。",
+            "shopNumberExisted": "店番が既存しました。",
+            "dataIsNotEnoughOrIncorrectFormat": "登録の処理が失敗しました。入力した部分をチェックしてから再度試してください。",
+            "lengthCanNotMoreThan100": "100文字以内でご入力ください。",
+            "lengthCanNotMoreThan250": "250文字以内でご入力ください。"
+        },
+        "button": {
+            "submit": "登録"
+        },
+        "feilds": {
+            "imageShop": "店画像(ロゴ)",
+            "firstCategory": "店舗カテゴリ１",
+            "firstSubCategory": "店舗サブカテゴリ１",
+            "secondSubCategory": "店舗サブカテゴリ２",
+            "thirdSubCategory": "店舗サブカテゴリ3",
+            "websiteUrl": "WebサイトURL",
+            "shopInformation": "ショップニュース投稿可否",
+            "shopEvent": "イベント投稿可否",
+            "shopPushNoti": "プッシュ通知投稿可否"
+        }
+    }
+}

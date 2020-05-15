@@ -1,0 +1,60 @@
+{
+  "floorGuide": {
+    "fields": {
+      "img": "Floor Image",
+      "noteImg": "※Click to view larger",
+      "floor": "Floor",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "updatedTime": "Recently Update"
+    },
+    "tabs": {
+      "list": "List Floor Image",
+      "create": "Create new",
+      "update": "Edit Floor Guide"
+    },
+    "labels": {
+      "chooseFloor": "Target Floor",
+      "activeTime": "Active Time",
+      "uploadImage": "Floor guide image upload",
+      "positionMap": "Import Position",
+      "positionMapMessage": "Import Position Message",
+      "downloadTemplate": "Download Template",
+      "import": "Import",
+      "shopNumber": "Shop Number",
+      "shopName": "Shop Name",
+      "topLeft": "Top Left",
+      "topRight": "Top Right",
+      "botLeft": "Bot Left",
+      "botRight": "Bot Right"
+    },
+    "btn": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "view": "View"
+    },
+    "message": {
+      "delete": "Delete floor guide successful!",
+      "edit": "Update floor guide successful!",
+      "create": "Create floor guide successful!",
+      "chooseImg": "Please choose 1 image!",
+      "chooseFloor": "Please choose 1 floor!",
+      "existFloor": "Floor is exist",
+      "validateEndTime": "End time must be after start time",
+      "chooseAnotherTime": "Time is repeated"
+    },
+    "note": {
+      "floor": "đăng ký xem tầng upload lên là tầng bao nhiêu",
+      "datetime": "end time",
+      "img": "ảnh upload nên lớn hơn 1000px và có định dạng là jpg hoặc png"
+    },
+    "placeholder": {
+      "floor": "Choose floor",
+      "datetime": {
+        "start": "Start time",
+        "end": "End time"
+      }
+    }
+  }
+}

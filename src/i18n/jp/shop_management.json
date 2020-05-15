@@ -1,0 +1,87 @@
+{
+  "shopManagement": {
+    "title": "店舗情報",
+    "table": {
+      "username": "利用者コード",
+      "shopNumber": "店番",
+      "shopName" : "店舗名",
+      "floor": "フロア",
+      "category1": "カテゴリ① ",
+      "subCategory1": "サブカテゴリ①",
+      "category2" : "カテゴリ②",
+      "subCategory2": "サブカテゴリ②",
+      "subCategory3": "サブカテゴリ3",
+      "showOrder": "表示順",
+      "businessTime": "営業時間",
+      "phoneNumber": "TEL",
+      "fax" : "FAX",
+      "websiteUrl" : "URL",
+      "shopIntroduction": "ショップ説明",
+      "mainService": "主な取扱い",
+      "creditCard": "クレジットカード",
+      "electronicMoney": "電子マネー",
+      "imageName" : "店舗画像ファイル名",
+      "shopInformationFeatureActive": "お知らせ投稿",
+      "shopPushNotificationFeatureActive": "プッシュ通知投稿",
+      "shopEventFeatureActive": "イベント投稿",
+      "activeBtn": "有効/無効",
+      "lastUpdateTime": "最終更新日",
+      "resetPassword": "パスワード初期化",
+      "delete" : "アクション",
+      "previewQuestion": "アンケート"
+    },
+    "tabs": {
+      "shopInfo": "店舗情報",
+      "shop": "店舗一覧",
+      "catalog": "チラシ一覧"
+    },
+    "buttons": {
+      "importShop": "店舗インポート",
+      "importShopImage": "店舗画像インポート",
+      "downloadTemplate": "店舗ExcelテンプレートDL",
+      "downloadShopTemplate": "店舗ExcelテンプレートDL"
+    },
+    "searchPlaceholder": "店番・店舗名を入力しEnterで検索",
+    "importDialogHeader": "店舗インポート",
+    "importImageDialogTitle": "店舗画像インポート",
+    "selectFileBtn": "エクセル又はファイルを選択",
+    "selectImageBtn": "画像アップロード",
+    "password": "パスワードを入力",
+    "confirmPassword": "再度パスワードを入力",
+    "validationMessages": {
+      "enterPassword": "パスワードを入力してください。",
+      "enterConfirmPassword": "再度パスワードを入力してください。",
+      "confirmPasswordNotMatch": "パスワードが統一していません。"
+    },
+    "resetPasswordDialog": {
+      "title": "店舗管理者パスワードをリセット"
+    },
+    "messages": {
+      "importShopImageSuccess": " 画像をインポートしました.",
+      "resetPasswordSuccess": "変更しました。",
+      "numberFileImageCanNotMoreThan1": "店舗ロゴは1枚のみ設定できます。複数不可です。",
+      "pleaseChooseAtLeaseOnePhoto": "店舗ロゴは1枚のみ設定できます。複数不可です。",
+      "pleaseSelectImageOnly": "画像ファイルのみ選択してください。",
+      "noFileSelected": "選択されたファイルがありません。",
+      "pleaseSelectCsvOrExcelFile": "エクセル又はファイルを選択してください。",
+      "pleaseSelectImportFile": "正しいファイルタイプを選択してください。",
+      "importEmptyFile": "選択されたファイルはデータがあります。",
+      "cannotImportEmptyFile": "データがないファイルがインポートできません。",
+      "invalidSelectedImages": "ファイル名が統一していません。"
+    },
+    "uploadImageTable": {
+      "image": "画像",
+      "selectedFileName": "店舗画像ファイル名",
+      "shopName": "店舗名",
+      "noShopMatch": "なし",
+      "showInvalidImages": "無効な{number}画像を表示する",
+      "showValidImages": "有効な{number}画像を表示する"
+    },
+    "select": {
+       "noneSelect": "選択なし"
+    },
+    "shopAnswer": {
+      "tab": "アンケート"
+    }
+  }
+}

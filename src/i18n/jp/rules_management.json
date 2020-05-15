@@ -1,0 +1,12 @@
+{
+  "rulesManagement": {
+    "systemUseRulesTitle": "システム利用規約",
+    "personalInformationRulesTitle": "個人情報規約",
+    "bookingOrderRulesTitle": "予約施設選択画面用",
+    "bookingPaymentRulesTitle": "決済画面用",
+    "bookingCancelRulesTitle": "予約キャンセル画面用",
+    "changeButton": "変更",
+    "attachFile": "ファイルを添付する"
+
+  }
+}

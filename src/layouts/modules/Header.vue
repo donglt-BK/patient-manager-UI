@@ -15,7 +15,6 @@
 </template>
 
 <script>
-    import i18n from '@/i18n';
     import auth from "@/security/Authentication";
     import Pages from "@/router/Pages";
 
@@ -23,20 +22,12 @@
         name: "Header",
         data() {
             return {
-                isUnAuthenticated: !auth.isAuthenticated(),
-                username: auth.getCurrentUser().username,
+                username: auth.getCurrentUser() ? auth.getCurrentUser().username : "",
             }
-        },
-        created() {
-        },
-        watch: {
-            '$route'(to) {
-                //TODO check code
-            },
         },
         methods: {
             profile() {
-
+                this.$router.push({path: Pages.profile.path});
             },
             logout() {
                 console.log("logout");
@@ -44,7 +35,7 @@
                 this.$router.push({path: "/login"});
             },
             redirectHome() {
-                this.$router.push({path: Pages.redirect.path});
+                this.$router.push({path: Pages.home.path});
             }
         }
     };

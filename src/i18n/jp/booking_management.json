@@ -1,0 +1,51 @@
+{
+  "bookingManagement": {
+    "searchPlaceholder": "予約番号、またはメールアドレスを入力",
+    "datePickerPlaceHolder": "予約日を選択",
+    "buttons": {
+      "cancel": "予約キャンセル",
+      "refund": "返金",
+      "cancelAll": "一括キャンセル",
+      "search": "照会",
+      "addInvitationCard": "招待券",
+      "addDiscountCard": "現地割引",
+      "addCard": "適用"
+    },
+    "fields": {
+      "bookingNumber": "予約番号",
+      "bookingDate": "予約日",
+      "timeRange": "時間帯",
+      "bookedSlots": "人数",
+      "status": "ステータス",
+      "refundStatus": "返金"
+    },
+    "status": {
+      "active": "有効",
+      "receive": "受付済",
+      "cancel": "キャンセル(ユーザー)",
+      "cancelByAdmin": "キャンセル(管理者）",
+      "expired": "期限切れ",
+      "refund": {
+        "none": "",
+        "success": "5%の手数料で返金する",
+        "full": "無料返金する",
+        "fail": "返金エラー"
+      }
+    },
+    "messages": {
+      "cancelSuccess": "Cancel success",
+      "refundSuccess": "返金しました。",
+      "refundFail": "返金の処理が失敗しました。"
+    },
+    "title":{
+      "addCard": "入力内容確認"
+    },
+    "dialog": {
+      "refundTile": "予約をキャンセルしますか？",
+      "refundMessage": "この操作は元にもどせません",
+      "content": "件の全ての予約をキャンセルします。この操作は戻せません。",
+      "fullRefund": "手数料無しで予約キャンセル",
+      "cancelFullRefund": "手数料無しで予約キャンセル"
+    }
+  }
+}

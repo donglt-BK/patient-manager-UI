@@ -1,0 +1,39 @@
+{
+  "shopImg": {
+    "tabs": {
+      "create": "Create",
+      "list": "List"
+    },
+    "fields": {
+      "image": "Image",
+      "imageUrl": "Image Url",
+      "name": "Name",
+      "orderNumber": "Order",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "updateTime": "Updated Time",
+      "active": "Active.De-active",
+      "includePast": "Include Past"
+    },
+    "placeholder": {
+      "name": "Please enter a name.",
+      "orderNumber": "Please enter an order.",
+      "startTime": "Please select the delivery start date and time (From).",
+      "endTime": "Please select the delivery end date and time (To)."
+    },
+    "message": {
+      "delete": "Delete successful!",
+      "update": "Update successful!",
+      "create": "Create successful!",
+      "validate": {
+        "orderNotNumber": "The display order entered is not a number. Please fix it and try again.",
+        "orderUsed": "The display order you entered already exists.",
+        "orderRange": "Please enter within 1000.",
+        "nameLength": "Please enter within 100 characters."
+      },
+      "chooseImg": "Please choose 1 image!",
+      "imageOnly": "Please select only image files."
+    },
+    "noValue": "None"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "listMenu": {
+    "couponManagement": "クーポン",
+    "facilityAdminManagement": "施設管理者",
+    "rulesSystem": "システム規約",
+    "systemMailTemplate": "システムメールテンプレート",
+    "facilityManagement": "施設",
+    "createFacility": "新規施設登録",
+    "facilityInfo": "施設情報",
+    "fixedHolidays": "定休日",
+    "setupBooking": "予約設定",
+    "createNote": "注意文言",
+    "mailTemplate": "メールテンプレート",
+    "facilityManager": "施設担当者",
+    "facilityEmployeeManagement": "施設担当者",
+    "configFacilityPeriodicDayOffManagement": "定休日",
+    "bookingManagement": "予約照会"
+  }
+}

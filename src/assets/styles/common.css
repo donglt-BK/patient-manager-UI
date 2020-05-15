@@ -1,0 +1,162 @@
+/*Override sweet alert css*/
+body.swal2-height-auto {
+    height: 100% !important;
+}
+
+.box {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.form-style {
+    background-color: #ffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
+}
+
+.comment-box {
+    background-color: #FBEFEF;
+    color: #555555;
+    padding: 10px 5px;
+    border: 1px solid #EFB3B2;
+    font-size: 70%;
+}
+
+.custom-btn-color {
+    background-color: #1055CC;
+    color: #ffff;
+}
+
+.custom-btn-color:hover, .custom-btn-color:focus {
+    background-color: #172ccc;
+    color: #ffff;
+}
+
+.error-message {
+    color: red;
+}
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+
+.swal2-container {
+    z-index: 3000 !important;
+}
+
+.el-form-item__content {
+    line-height: 40px;
+    position: relative;
+    font-size: 14px;
+}
+
+
+.min-w-100 {
+    min-width: 100px;
+}
+
+.edit-text {
+    text-decoration: underline;
+    color: blue !important;
+    float: left;
+    margin-left: 20px
+}
+
+.delete-text {
+    text-decoration: underline;
+    color: red !important;
+    float: right;
+    margin-right: 20px
+}
+
+.clearfix {
+    clear: both;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.btn-approve {
+    width: 80px;
+    background: none !important;
+    color: red !important;
+    border: 2px solid red !important;
+    font-weight: bold
+}
+
+.btn-reject {
+    width: 80px;
+    background: none;
+    color: rgb(101, 101, 101) !important;
+    border: 2px solid rgb(101, 101, 101);
+    font-weight: bold;
+}
+
+.disabledBtn > button {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.custom-btn {
+    border-radius: unset;
+    background-color: #e06666;
+    color: white;
+    border: none;
+    min-width: 150px;
+    padding: 13px 20px;
+}
+.custom-btn:disabled {
+    border: 1px solid #c6c6c6;
+}
+
+.custom-btn-type-default {
+    border-radius: unset;
+    min-width: 150px;
+    padding: 10px 15px;
+}
+
+.custom-btn:hover {
+    background-color: #c46868;
+}
+
+.hidden{display:none;}
+
+.tox-menu {
+    /*position: relative !important;*/
+    z-index: 5000 !important;
+}
+
+.tox-tinymce-aux {
+    /*position: relative !important;*/
+    z-index: 5000 !important;
+}
+
+.el-image-viewer__close .el-icon-circle-close{
+    color: #ffffff;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.inline-bl-el{
+    display: inline-block !important;
+}
+
+.dialog-title {
+    border-bottom: 3px solid #7fc5ff;
+    min-width: 150px;
+    margin-bottom: 20px;
+    color: black;
+    padding-bottom: 5px;
+}

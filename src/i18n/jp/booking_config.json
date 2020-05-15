@@ -1,0 +1,85 @@
+{
+  "bookingConfig": {
+    "tab": {
+      "list": "予約一覧",
+      "create": "予約新規登録"
+    },
+    "list": {
+      "startDate": "受付開始日",
+      "endDate": "受付終了日",
+      "detail": "予約可能期間",
+      "action": "アクション",
+      "detailBtn": "詳細",
+      "edit": "編集",
+      "delete": "削除",
+      "cantDelete": "予約が存在します。"
+    },
+    "create": {
+      "save": "登録",
+      "add": "追加",
+      "delete": "削除",
+      "cantDelete": "予約が存在します。",
+      "timeRange": {
+        "label": "時間帯と定員",
+        "description": "時間帯と定員を定義します。",
+        "startTime": "開始時刻",
+        "endTime": "終了時刻",
+        "maxSlot": "定員"
+      },
+      "slotType": {
+        "label": "人数区分と価格",
+        "description": "人数の区分と価格を定義します。",
+        "name": "区分名称",
+        "pricePerSlot": "価格"
+      },
+      "bookingDetail": {
+        "description": "予約受付を開始する日付を指定します。",
+        "day": "日前から",
+        "bookingStrategy": {
+          "BEFORE_MIDNIGHT": "当日 00:00",
+          "THREE_HOUR_BEFORE_START": "開始 3時間前",
+          "SIX_HOUR_BEFORE_START":  "開始 6時間前",
+          "TWELVE_HOUR_BEFORE_START":  "開始 12時間前",
+          "TWENTY_FOUR_HOUR_BEFORE_START": "開始 24時間前"
+        }
+      },
+      "startDateDescription": "予約受付を開始する日付を指定します",
+      "endDateDescription": "予約受付を終了する日付を指定します。終了日当日は受け付けます。未指定の場合は無期限です。"
+    },
+    "detail": {
+      "title": "予約詳細"
+    },
+    "message": {
+      "error": {
+        "invalidMaxSlotPrefix": "定員数は予約人数より少ないです。（予約人数：",
+        "invalidMaxSlotSuffix": "人）",
+        "invalidTimeRange": "時間帯が重複されています。",
+        "startEndConflict": "表示開始日時は表示終了日時より早くしてください。",
+        "intersectPrefix": "",
+        "intersectConnect": " から ",
+        "intersectSuffix": "までの予約が既存しました。",
+        "enterStartDate": "受付開始日を入力してください。",
+        "enterEndDate": "受付終了日を入力してください。",
+        "bookedPrefix": "",
+        "bookedSuffix": "に予約が既存しました。",
+        "bookedStartDate": "受付開始日と受付終了日を入力してください。",
+        "bookedEndDate": "受付終了日と受付終了日を入力してください。",
+        "missing": {
+          "timeRange": "時間帯と定員 を入力してください。",
+          "slotType": "人数区分と価格 を入力してください。",
+          "timeRangeField": "時間帯と定員 を入力してください。",
+          "slotTypeField": "人数区分と価格 を入力してください。",
+          "startDate": "受付開始日 を入力してください。",
+          "canBookBeforeDay": "予約可能期間 を入力してください。"
+        },
+        "fieldRequired": "本項目が必須です。"
+      },
+      "success": {
+        "delete": "削除しました。",
+        "create": "登録しました。",
+        "update": "変更しました。",
+        "nothingToUpdate": "変更しました。"
+      }
+    }
+  }
+}

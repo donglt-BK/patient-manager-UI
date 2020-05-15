@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/views/login/Login.vue';
-import Layout from "@/layouts/Layout";
-import Pages from '@/router/Pages';
-import RedirectComponent from '@/router/RedirectComponent';
+import Layout from "../layouts/Layout";
+import Login from "../views/login/Login";
+import Pages from './Pages';
+import View from "./index";
 import Error from "@/views/error/Error";
 import Roles from "@/security/Roles";
+import Menu from "../views/menu/Menu";
 
 Vue.use(Router);
 
@@ -15,17 +16,18 @@ const router = new Router({
     routes: [
         {
             path: "/",
-            redirect: Pages.redirect.path,
+            redirect: Pages.home.path,
             component: Layout,
             children: [
                 {
-                    path: Pages.redirect.path,
-                    component: RedirectComponent,
+                    path: Pages.home.path,
+                    component: Menu,
                     meta: {
                         title: "Redirecting",
-                        authorities: [Roles.SYSTEM_ADMIN,Roles.FACILITY_ADMIN,Roles.FACILITY_EMPLOYEE]
+                        authorities: [Roles.ALL]
                     }
                 },
+                ...View
             ]
         },
         {
@@ -41,14 +43,6 @@ const router = new Router({
             meta: {
                 title: "Not found",
                 error404: true,
-            }
-        },
-        {
-            ...Pages.forbidden,
-            component: Error,
-            meta: {
-                title: "Access denied",
-                error403: true,
             }
         }
     ]

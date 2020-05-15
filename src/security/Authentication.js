@@ -12,7 +12,7 @@ function getUserRoles() {
 let Auth = {
     setCurrentUser(currentUser) {
         localStorage.setItem(currentUserKey, JSON.stringify(currentUser));
-        return Auth.getCurrentUser();
+        return this.getCurrentUser();
     },
     getCurrentUser() {
         if (!localStorage.getItem(currentUserKey)) {
@@ -23,14 +23,14 @@ let Auth = {
             hasRole: function (checkRole) {
                 return this.role === checkRole;
             },
-            hasAnyRoles: Auth.hasAnyRoles,
+            hasAnyRoles: this.hasAnyRoles,
         };
     },
     isAuthenticated() {
-        return getCurrentUser() !== undefined && getCurrentUser() != null;
+        return this.getCurrentUser() !== undefined && this.getCurrentUser() != null;
     },
     hasAnyRoles(authorities) {
-        if (!isAuthenticated()) {
+        if (!this.isAuthenticated()) {
             return false;
         }
         let roles = [getUserRoles()];

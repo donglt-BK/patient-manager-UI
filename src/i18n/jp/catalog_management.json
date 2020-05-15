@@ -1,0 +1,70 @@
+{
+    "catalogManagement": {
+        "btn":{
+            "downloadTemplate": "チラシExcelテンプレートDL",
+            "importCatalog": "チラシインポート",
+            "importFilePdf": "チラシPDFインポート",
+            "uploadFile": "Excelアップロード",
+            "cancel": "キャンセル",
+            "save": "保存",
+            "uploadFilePdf": "PDFアップロード",
+            "delete": "削除"
+        },
+
+        "title": {
+            "importCatalog": "チラシインポート",
+            "importFilePdf": "チラシPDFインポー",
+            "deleteCatalog": "チラシ削除"
+        },
+
+        "feilds": {
+            "shopNumber": "店番",
+            "name": "店名",
+            "fileCatalog": "チラシファイル名",
+            "status": "ステータス",
+            "startTime": "掲載開始日",
+            "endTime": "掲載終了日",
+            "updatedTime": "最終更新日",
+            "action": "削除",
+            "active": "有効/無効"
+        },
+
+        "status":{
+            "noPdf": "無効 (チラシPDFなし)",
+            "future": "有効 (掲載予定)",
+            "using": "有効 (現在掲載中)",
+            "used": "無効 (掲載終了)"
+        },
+
+        "message": {
+            "shopNumberIsIncorrect": "インポートした店番はシステム上で存在しません。",
+            "startTimeIsIncorrect": "インポートした表示開始時間のフォマットが正しくないです。",
+            "endTimeIsIncorrect": "インポートした表示終了時間のフォマットが正しくないです。",
+            "timeIsIncorrect": "開始時間は終了時間より早くしてください！",
+            "beforeDelete": "チラシを削除しますか？",
+            "deleteSuccess": "削除が完了しました。",
+            "deleteFail": "このチラシがシステム上に存在しません。",
+            "serverError": "サーバーエラーです。",
+            "incorrectFormat": "インポートしたファイル",
+            "dataIncorrect": "インポートしたデータが正しくないです。",
+            "addSuccess": "チラシを追加しました。",
+            "addFail": "チラシの追加処理が失敗しました。",
+            "importPdfSuccess": "PDFをインポートしました。",
+            "importPdfFail": "PDFのインポート処理が失敗しました！",
+            "fileIsNotCsvOrExcel": "エクセル又はCSVファイルを選択してください。",
+            "fileIsNotPdf": "本ファイルはPDFタイプではありません。",
+            "fileNotExist": "チラシPDF名がチラシファイル名と統一していません。",
+            "timeHadExisted": "入力時間が重複されています。もう一度確認してください。",
+            "changeActiveSuccess": "有効しました",
+            "changeInActiveSuccess": "無効しました",
+            "catalogDoesNotExist": "チラシが存在していません。",
+            "notEnoughData": "入力したデータが欠けました",
+            "timeDoesNotExist": "入力したデータが正しくありません。"
+        },
+
+        "placeHolder": {
+            "mallSearch": "店番・店舗名を入力し、Enterで検索",
+            "shopSearch": "チラシ名を入力してください"
+        }
+    }
+}

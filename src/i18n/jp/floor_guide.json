@@ -1,0 +1,60 @@
+{
+  "floorGuide": {
+    "fields": {
+      "img": "フロア画像",
+      "noteImg": "※クリックで拡大表示",
+      "floor": "階",
+      "startTime": "表示開始日時",
+      "endTime": "表示終了日時",
+      "updatedTime": "最終更新日"
+    },
+    "tabs": {
+      "list": "フロア画像一覧",
+      "create": "新規登録",
+      "update": "編集"
+    },
+    "labels": {
+      "chooseFloor": "対象の階",
+      "activeTime": "有効日時",
+      "uploadImage": "フロアガイド画像アップロード",
+      "positionMap": "クリッカブルマップ",
+      "positionMapMessage": "クリッカブルマップの座標データを登録します。",
+      "downloadTemplate": "テンプレートダウンロード",
+      "import": "インポート",
+      "shopNumber": "店番",
+      "shopName": "店名",
+      "topLeft": "座標-左上",
+      "topRight": "座標-右上",
+      "botLeft": "座標-左下",
+      "botRight": "座標-右下"
+    },
+    "btn": {
+      "edit": "詳細",
+      "delete": "削除",
+      "save": "登録",
+      "view": "プレビュー"
+    },
+    "message": {
+      "delete": "削除しました。",
+      "edit": "変更しました。",
+      "create": "登録しました。",
+      "chooseImg": "画像を選択してください",
+      "chooseFloor": "Please choose 1 floor!",
+      "existFloor": "このフロアが既存しました。",
+      "validateEndTime": "表示開始時間は表示終了時間より早くしてください！",
+      "chooseAnotherTime": "入力時間が重複されています。もう一度確認してください。"
+    },
+    "note": {
+      "floor": "アップロードするフロアガイドは何階のフロアかを登録します。",
+      "datetime": "終了日",
+      "img": "推奨画像サイズは横幅が1000px以上　かつ　拡張子が「.jpg」または「.png」の画像をアップロードしてください。"
+    },
+    "placeholder": {
+      "floor": "階を入力",
+      "datetime": {
+        "start": "表示開始日を選択",
+        "end": "表示終了日を選択"
+      }
+    }
+  }
+}
