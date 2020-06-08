@@ -16,17 +16,8 @@ const router = new Router({
     routes: [
         {
             path: "/",
-            redirect: Pages.home.path,
             component: Layout,
             children: [
-                {
-                    path: Pages.home.path,
-                    component: Menu,
-                    meta: {
-                        title: "Redirecting",
-                        authorities: [Roles.ALL]
-                    }
-                },
                 ...View
             ]
         },

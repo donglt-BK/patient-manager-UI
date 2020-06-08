@@ -25,6 +25,10 @@
                     <el-form-item>
                         <el-button class="btn-block custom-btn-color" @click="onClickLogin">Login</el-button>
                     </el-form-item>
+
+                    <el-form-item>
+                        <a @click="register">Don't have account? Create new one now</a>
+                    </el-form-item>
                 </el-form>
 
             </el-col>
@@ -34,7 +38,7 @@
 
 <script>
     import Pages from "@/router/Pages";
-    import LoginApi from '@/api/login/LoginApi';
+    import LoginApi from '@/api/LoginApi';
     import Auth from '@/security/Authentication';
     import AlertService from "@/service/alert.service";
 
@@ -72,6 +76,9 @@
                     }
                 });
             },
+            register() {
+                LoginApi.register();
+            },
             async login() {
                 let loginData = {
                     username: this.formData.username,
@@ -80,8 +87,7 @@
                 try {
                     this.fullscreenLoading = true;
                     let response = await LoginApi.login(loginData);
-                    //TODO call to server to get full user data
-                    let currentUser = Auth.setCurrentUser(response.userEntity);
+                    Auth.setCurrentUser(response.user);
                     this.goToHomePage();
                 } catch (e) {
                     console.log("error", e);

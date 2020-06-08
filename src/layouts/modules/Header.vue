@@ -30,7 +30,6 @@
                 this.$router.push({path: Pages.profile.path});
             },
             logout() {
-                console.log("logout");
                 auth.logout();
                 this.$router.push({path: "/login"});
             },

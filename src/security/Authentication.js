@@ -1,17 +1,25 @@
+import Roles from "./Roles";
 const currentUserKey = "mas-current-user";
 
 function getUserRoles() {
     let currentUser = JSON.parse(localStorage.getItem(currentUserKey));
-    let roles = [];
     if (currentUser) {
-        roles.push(currentUser.role);
+        return currentUser.roles;
     }
-    return roles;
+    return null;
 }
 
 let Auth = {
-    setCurrentUser(currentUser) {
-        localStorage.setItem(currentUserKey, JSON.stringify(currentUser));
+    setCurrentUser(data) {
+        console.log(data);
+        if (data.systemAdmin) data.roles = Roles.ALL;
+        else {
+            data.roles = [Roles.PATIENT];
+            if (data.doctorIds.length > 0) data.roles.push(Roles.DOCTOR);
+            if (data.manageDepartmentIds.length > 0) data.roles.push(Roles.DEPARTMENT_MANAGER);
+            if (data.manageHospitalIds.length > 0) data.roles.push(Roles.HOSPITAL_MANAGER);
+        }
+        localStorage.setItem(currentUserKey, JSON.stringify(data));
         return this.getCurrentUser();
     },
     getCurrentUser() {
@@ -33,7 +41,7 @@ let Auth = {
         if (!this.isAuthenticated()) {
             return false;
         }
-        let roles = [getUserRoles()];
+        let roles = getUserRoles();
 
         if (!roles || roles.length === 0) {
             return false;

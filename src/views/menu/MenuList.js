@@ -1,39 +1,54 @@
 import Roles from "../../security/Roles";
+import Pages from "../../router/Pages";
 
 const menuList = {
     Profile: {
         name: "Your Profile",
         image: "",
         description: "",
-        page: "",
+        path: Pages.profile.path,
         authorize: Roles.ALL
     },
     Records: {
-        name: "Your Profile",
+        name: "Records",
         image: "",
         description: "",
-        page: "",
+        path: "",
         authorize: Roles.ALL
     },
     Appointment: {
-        name: "Your Profile",
+        name: "Appointment",
         image: "",
         description: "",
-        page: "",
+        path: "",
         authorize: Roles.ALL
     },
-    Management: {
-        name: "Your Profile",
+    Working: {
+        name: "Working",
         image: "",
         description: "",
-        page: "",
+        path: "",
+        authorize: [Roles.DOCTOR]
+    },
+    HospitalManagement: {
+        name: "Hospital Management",
+        image: "",
+        description: "",
+        path: "",
+        authorize: [Roles.HOSPITAL_MANAGER, Roles.SYSTEM_ADMIN]
+    },
+    DepartmentManagement: {
+        name: "Department Management",
+        image: "",
+        description: "",
+        path: "",
         authorize: [Roles.DEPARTMENT_MANAGER, Roles.HOSPITAL_MANAGER, Roles.SYSTEM_ADMIN]
     },
     Schedule: {
-        name: "Your Profile",
+        name: "Schedule",
         image: "",
         description: "",
-        page: "",
+        path: "",
         authorize: [Roles.DOCTOR, Roles.DEPARTMENT_MANAGER, Roles.HOSPITAL_MANAGER, Roles.SYSTEM_ADMIN]
     }
 }

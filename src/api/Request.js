@@ -39,8 +39,8 @@ let createRequest = (baseURL) => {
 
     return request;
 };
+console.log(process.env)
 
-
-const Request = createRequest(process.env.VUE_APP_BASE_API_URL);
+const Request = createRequest(process.env.VUE_APP_BACKEND_URL);
 
 export {Request};

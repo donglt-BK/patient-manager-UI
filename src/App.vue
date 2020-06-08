@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-    import LoginApi from '@/api/login/LoginApi';
+    import LoginApi from '@/api/LoginApi';
     import Auth from '@/security/Authentication';
 
     export default {
@@ -16,20 +16,6 @@
         },
         created() {
         },
-        methods: {
-           async checkAuth(){
-                this.loading = true;
-                try {
-                    const isAuth = await LoginApi.isAuthenticated();
-                    if (isAuth == false)
-                        Auth.logout();
-                } catch (e) {
-                    console.error(e);
-                } finally {
-                    this.loading = false;
-                }
-            }
-        }
     }
 </script>
 <style lang="scss">
