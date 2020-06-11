@@ -4,9 +4,6 @@
     </div>
 </template>
 <script>
-    import LoginApi from '@/api/LoginApi';
-    import Auth from '@/security/Authentication';
-
     export default {
         name: "App",
         data() {

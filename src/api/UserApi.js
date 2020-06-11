@@ -25,6 +25,19 @@ export default {
             headers: {
                 "Content-Type": "application/json"
             }
-        })
+        });
+    },
+    refresh() {
+        return request({
+            url: base + "/refresh",
+            method: "GET"
+        });
+    },
+    update(data) {
+        return request.post(base + "/update", data, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
     }
 };

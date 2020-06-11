@@ -37,8 +37,8 @@
 </template>
 
 <script>
-    import Pages from "@/router/Pages";
-    import LoginApi from '@/api/LoginApi';
+    import Pages from '@/router/Pages';
+    import UserApi from '@/api/UserApi';
     import Auth from '@/security/Authentication';
     import AlertService from "@/service/alert.service";
 
@@ -77,7 +77,7 @@
                 });
             },
             register() {
-                LoginApi.register();
+                UserApi.register();
             },
             async login() {
                 let loginData = {
@@ -86,7 +86,7 @@
                 };
                 try {
                     this.fullscreenLoading = true;
-                    let response = await LoginApi.login(loginData);
+                    let response = await UserApi.login(loginData);
                     Auth.setCurrentUser(response.user);
                     this.goToHomePage();
                 } catch (e) {
