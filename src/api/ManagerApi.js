@@ -87,9 +87,10 @@ export default {
                 "Content-Type": undefined
             }
         });
-    }, deleteDepartment(hospitalId, departmentId) {
+    },
+    deleteDepartment(hospitalId, departmentId) {
         return request({
-            url: base + "/department/delete?hospitalId=" + hospitalId + "&hospitalId=" + departmentId,
+            url: base + "/department/delete?hospitalId=" + hospitalId + "&departmentId=" + departmentId,
             method: "POST"
         });
     },
@@ -116,6 +117,7 @@ export default {
         });
     },
     updateDoctor(data) {
+        console.log(data)
         return request.post(base + "/doctor/update", data, {
             processData: false,
             contentType: false,
@@ -126,7 +128,7 @@ export default {
     },
     deleteDoctor(departmentId, doctorId) {
         return request({
-            url: base + "/doctor/delete?departmentId=" + departmentId + "&departmentId=" + doctorId,
+            url: base + "/doctor/delete?departmentId=" + departmentId + "&doctorId=" + doctorId,
             method: "POST"
         });
     },

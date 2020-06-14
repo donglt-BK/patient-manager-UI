@@ -19,7 +19,6 @@
 <script>
     import Editor from '@tinymce/tinymce-vue'
     import FileService from "@/service/file.service";
-    import AlertService from "@/service/alert.service";
     import i18n from "@/i18n";
 
     export default {
@@ -69,7 +68,7 @@
                                     textUpload.remove();
                                 }).catch(function (error) {
                                     $(".is-fullscreen").addClass("hidden");
-                                    AlertService.error("Upload Error");
+                                    this.$services.alert.error("Upload Error");
                                     textUpload.remove();
                                 });
                             });

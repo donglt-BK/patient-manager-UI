@@ -1,7 +1,7 @@
 <template>
     <div class="lefter-wrapper" v-bind:class="{close: !expand}">
         <div class="expander">
-            <img :src="require('../../assets/images/icons/menu.png')" alt="expand" @click="expand = !expand">
+            <img :src="require('../../assets/images/icons/menu.png')" alt="expand" @click="onExpandClick">
         </div>
         <LefterItem v-for="item in lefterItems" :key="item.name" :item-data="item"/>
     </div>
@@ -20,7 +20,12 @@
                 lefterItems: LefterItems.ALL//.filter(menu => Auth.hasAnyRoles(menu.authorize))
             }
         },
-        methods: {}
+        methods: {
+            onExpandClick() {
+                this.expand = !this.expand;
+                this.$emit("onExpandClick", this.expand);
+            }
+        }
     };
 </script>
 
@@ -28,6 +33,7 @@
     .lefter-wrapper {
         width: 170px;
         transition: width 0.5s;
+        position: fixed;
 
         .expander {
             text-align: right;

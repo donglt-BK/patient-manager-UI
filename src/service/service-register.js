@@ -5,7 +5,10 @@ import DeleteDialogService from './delete.dialog.service';
 
 Vue.prototype.$services = {
     alert: AlertService,
-    deleteDialog: DeleteDialogService
+    deleteDialog: DeleteDialogService,
+    scrollTop: () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 };
 
 

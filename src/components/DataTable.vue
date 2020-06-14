@@ -27,11 +27,6 @@
 </template>
 
 <script>
-    /**
-     *  Example: go page : /dataTableExample
-     */
-    import AlertService from "@/service/alert.service";
-
     export default {
         name: "DataTable",
         props: {

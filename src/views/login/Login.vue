@@ -40,7 +40,6 @@
     import Pages from '@/router/Pages';
     import UserApi from '@/api/UserApi';
     import Auth from '@/security/Authentication';
-    import AlertService from "@/service/alert.service";
 
     export default {
         name: "Login",
@@ -92,9 +91,9 @@
                 } catch (e) {
                     console.log("error", e);
                     if (e.response.status === 400) {
-                        AlertService.error(this.$t("login.incorrect"));
+                        this.$services.alert.error(this.$t("login.incorrect"));
                     } else {
-                        AlertService.error(this.$t("common.serverErrorMessage"), 2000);
+                        this.$services.alert.error(this.$t("common.serverErrorMessage"), 2000);
                         Auth.logout();
                     }
                 } finally {

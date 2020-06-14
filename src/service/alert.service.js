@@ -1,6 +1,6 @@
 import {Notification} from 'element-ui';
 
-let defaultDuration = 3000;
+let defaultDuration = 3000; //ms
 let AlertService = (function () {
     let disableAlert = false;
     function setDisabled(bool) {
@@ -9,41 +9,41 @@ let AlertService = (function () {
     }
     return {
         setDisabled: setDisabled,
-        show(type, title, message, duration) {
+        show(type, title, message, ms) {
             if (disableAlert) return;
             Notification({
                 type: type,
                 title: title,
                 message: message,
-                duration: duration ? duration : defaultDuration,
+                duration: ms ? ms : defaultDuration,
             });
         },
-        success(message, duration) {
+        success(message, ms) {
             if (disableAlert) return;
             Notification.success({
                 message: message,
-                duration: duration ? duration : defaultDuration,
+                duration: ms ? ms : defaultDuration,
             });
         },
-        error(message, duration) {
+        error(message, ms) {
             if (disableAlert) return;
             Notification.error({
                 message: message,
-                duration: duration ? duration : defaultDuration,
+                duration: ms ? ms : defaultDuration,
             });
         },
-        warning(message, duration) {
+        warning(message, ms) {
             if (disableAlert) return;
             Notification.warning({
                 message: message,
-                duration: duration ? duration : defaultDuration,
+                duration: ms ? ms : defaultDuration,
             });
         },
-        info(message, duration) {
+        info(message, ms) {
             if (disableAlert) return;
             Notification.info({
                 message: message,
-                duration: duration ? duration : defaultDuration,
+                duration: ms ? ms : defaultDuration,
             });
         }
     };
