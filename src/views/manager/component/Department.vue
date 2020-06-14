@@ -1,5 +1,5 @@
 <template>
-    <div v-if="visible" v-loading="loading">
+    <div v-show="visible" v-loading="loading">
         <InputLabel style='width: auto' text="Hospital" :required="true"/>
         <el-input :disabled="true" v-model="hospitalName"></el-input>
 
@@ -20,7 +20,7 @@
         <div v-show="!isCreate">
             <div>
                 <p>Images</p>
-                <ImageGallery ref="imageGallery" @uploaded="saveFile"/>
+                <ImageGallery ref="imageGallery" @uploaded="saveFile" @remove="removeFile"/>
             </div>
             <div>
                 <DataTable :getTableDataFn="getDoctors" ref="table">
@@ -172,7 +172,10 @@
                 }
             },
             saveFile(file) {
-                FileApi.addHospitalFile(this.id, file);
+                FileApi.addDepartmentFile(this.id, file);
+            },
+            removeFile(file) {
+                FileApi.deleteDepartmentFile(this.id, file);
             },
             getUrl(file) {
                 Util.buildFileUrl(file);

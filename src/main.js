@@ -14,10 +14,12 @@ import './util';
 import './assets/styles/app.scss';
 import './service/service-register';
 import './components/GlobalComponentRegister';
+import x5GMaps from 'x5-gmaps'
 
 Vue.use(ElementUI);
 Vue.use(VueMoment);
 locale.use(lang);
+Vue.use(x5GMaps,  process.env.VUE_APP_GG_MAP_KEY);
 // default language for element ui
 
 Vue.config.productionTip = false;
@@ -25,7 +27,7 @@ Vue.prototype.$utils = Utils;
 Vue.prototype.$auth = Auth;
 
 new Vue({
-  router,
-  i18n,
-  render: h => h(App)
+    router,
+    i18n,
+    render: h => h(App)
 }).$mount('#app')

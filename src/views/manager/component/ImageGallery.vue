@@ -1,14 +1,13 @@
 <template>
-    <div>
-        <div v-loading="isLoading">
-            <div v-if="!isLoading" v-for="img in images" class="img-wrapper">
-                <img :src="img">
-            </div>
-            <el-upload ref="uploader" class="uploader" :action="domain + '/file/upload'"
-                       :show-file-list="false" :on-success="uploadSuccess">
-                <i class="el-icon-plus add-button"/>
-            </el-upload>
+    <div class="gallery-wrapper" v-loading="isLoading">
+        <div v-if="!isLoading" v-for="img in images" class="img-wrapper">
+            <div class="remove" @click="remove(img)"/>
+            <img :src="img">
         </div>
+        <el-upload ref="uploader" class="uploader" :action="domain + '/file/upload'"
+                   :show-file-list="false" :on-success="uploadSuccess">
+            <i class="el-icon-plus add-button"/>
+        </el-upload>
     </div>
 </template>
 
@@ -37,44 +36,80 @@
                 this.images.push(Util.buildFileUrl(url));
                 this.$refs.uploader.uploadFiles = [];
                 this.$emit("uploaded", url);
+            },
+            remove(url) {
+                this.$emit("remove", url);
             }
         }
     }
 </script>
 
 <style scoped lang="scss">
-    .img-wrapper {
+    .gallery-wrapper {
         height: 180px;
-        display: inline-block;
-        img {
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        .img-wrapper {
             height: 100%;
-            padding-right: 10px;
-        }
-    }
-    .uploader {
-        display: inline-block;
-        /deep/ .el-upload {
-            border: 1px dashed #d9d9d9;
-            border-radius: 6px;
-            cursor: pointer;
+            display: inline-block;
             position: relative;
-            overflow: hidden;
+            margin-right: 10px;
 
             &:hover {
-                border-color: #409EFF;
+                background: #dcdcdc;
+            }
+
+            img {
+                height: 100%;
+            }
+
+            .remove {
+                position: absolute;
+                right: 10px;
+                top: 5px;
+                transform: rotate(45deg);
+                font-size: 20px;
+                cursor: pointer;
+
+                &:hover {
+                    font-weight: bold;
+                }
+
+                &:before {
+                    content: "+";
+                    rotation: 45deg;
+                }
             }
         }
 
-        .add-button {
-            font-size: 28px;
-            color: #8c939d;
-            width: 180px;
-            height: 180px;
-            line-height: 180px;
-            text-align: center;
+        .uploader {
+            display: inline-block;
+            height: 100%;
 
-            &:hover {
-                background: #fafafa;
+            /deep/ .el-upload {
+                border: 1px dashed #d9d9d9;
+                border-radius: 6px;
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+
+                &:hover {
+                    border-color: #409EFF;
+                }
+            }
+
+            .add-button {
+                font-size: 28px;
+                color: #8c939d;
+                width: 178px;
+                height: 178px;
+                line-height: 178px;
+                text-align: center;
+
+                &:hover {
+                    background: #fafafa;
+                }
             }
         }
     }

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="visible" v-loading="loading">
+    <div v-show="visible" v-loading="loading">
         <div v-show="!isOpenDepartment">
             <InputLabel style='width: auto' text="Hospital name" :required="true"/>
             <el-input v-model="name"></el-input>
@@ -13,6 +13,8 @@
 
             <InputLabel style='width: auto' text="Description" :required="true"/>
             <el-input v-model="description"></el-input>
+
+            <GoogleMap ref="map"/>
             <el-button @click="save">Save</el-button>
 
             <div v-show="!isCreate">
@@ -26,7 +28,7 @@
 
                 <div>
                     <p>Images</p>
-                    <ImageGallery ref="imageGallery" @uploaded="saveFile"/>
+                    <ImageGallery ref="imageGallery" @uploaded="saveFile" @remove="removeFile"/>
                 </div>
                 <div>
                     <p>Department</p>
@@ -56,10 +58,6 @@
                         <el-table-column>
                             <template slot-scope="scope">
                                 <el-button @click="selectDepartment(scope.row)">Detail</el-button>
-                            </template>
-                        </el-table-column>
-                        <el-table-column>
-                            <template slot-scope="scope">
                                 <el-button @click="deleteDepartment(scope.row.id)">Delete</el-button>
                             </template>
                         </el-table-column>
@@ -92,8 +90,6 @@
                 visible: false,
                 id: -1,
                 name: "",
-                latitude: 0,
-                longitude: 0,
                 status: "HIDDEN",
                 description: "",
                 address: {
@@ -119,14 +115,16 @@
                 });
             },
             save() {
+                let {lat, lng} = this.$refs.map.getLocation();
                 let entity = {
                     name: this.name,
-                    latitude: this.latitude,
-                    longitude: this.longitude,
+                    latitude: lat,
+                    longitude: lng,
                     status: this.status,
                     description: this.description,
                     addressId: this.address,
                 }
+                console.log(entity)
                 if (this.id === -1) {
                     this.loading = true;
                     ManagerApi.addHospital(entity).then(response => {
@@ -150,8 +148,6 @@
                 this.visible = true;
                 this.id = -1;
                 this.name = "";
-                this.latitude = 0;
-                this.longitude = 0;
                 this.status = "HIDDEN";
                 this.description = "";
                 this.address = {
@@ -166,18 +162,20 @@
                     specificAddress: "Blank"
                 }
                 this.managers = [];
+
+                this.$refs.map.load();
             },
             loadHospital({id, name, status, location, description, address, managers}) {
                 this.isCreate = false;
                 this.visible = true;
                 this.id = id;
                 this.name = name;
-                this.latitude = location.latitude;
-                this.longitude = location.longitude;
                 this.status = status;
                 this.description = description;
                 this.managers = managers;
                 this.address = address;
+
+                this.$refs.map.load(location);
 
                 FileApi.getHospitalFiles(id).then(response => {
                     let images = [];
@@ -220,6 +218,9 @@
             },
             saveFile(file) {
                 FileApi.addHospitalFile(this.id, file);
+            },
+            removeFile(file) {
+                FileApi.deleteHospitalFile(this.id, file);
             },
             onDelete() {
                 this.$emit("delete", this.id);

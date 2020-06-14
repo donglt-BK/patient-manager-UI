@@ -27,10 +27,6 @@
                 <el-table-column>
                     <template slot-scope="scope">
                         <el-button @click="selectHospital(scope.row)">Detail</el-button>
-                    </template>
-                </el-table-column>
-                <el-table-column>
-                    <template slot-scope="scope">
                         <el-button @click="deleteHospital(scope.row.id)">Delete</el-button>
                     </template>
                 </el-table-column>
@@ -97,7 +93,7 @@
                         id: hospital.id,
                         status: status
                     }).then(() => {
-                        this.$services.alert.success("Hospital status changed to " + status, 10000)
+                        this.$services.alert.success("Hospital status changed to " + status, 1000)
                     })
                 }
             },
