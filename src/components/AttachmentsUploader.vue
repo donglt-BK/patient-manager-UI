@@ -2,10 +2,10 @@
     <el-upload
             ref="attachmentUploader"
             action="#"
-            multiple
-            :limit="5"
+            :multiple="false"
+            :limit="1"
             :auto-upload="false">
-        <el-button slot="trigger" size="small" class="custom-btn-color">{{ title ? title : 'Select files'}}</el-button>
+        <el-button slot="trigger" size="small" class="custom-btn-color">{{title}}</el-button>
     </el-upload>
 </template>
 
@@ -13,15 +13,19 @@
     export default {
         name: "AttachmentsUploader",
         props: {
-            title: String
+            title: {
+                require: false,
+                type: String,
+                default: "Select files"
+            }
         },
-        created(){
+        created() {
         },
         methods: {
             getSelectedFiles() {
                 return this.$refs['attachmentUploader'].uploadFiles
             },
-            clearSelectedFiles(){
+            clearSelectedFiles() {
                 this.$refs['attachmentUploader'].uploadFiles = [];
             }
         }

@@ -9,5 +9,17 @@ export default {
             method: "POST",
             data: formData,
         });
+    },
+    getDepartmentFiles(departmentId) {
+        return request({
+            url: "/file/department?departmentId=" + departmentId,
+            method: "GET"
+        });
+    },
+    getHospitalFiles(hospitalId) {
+        return request({
+            url: "/file/hospital?hospitalId=" + hospitalId,
+            method: "GET"
+        });
     }
 };

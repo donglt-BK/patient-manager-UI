@@ -156,7 +156,6 @@
                     
                 } catch (e) {
                     console.error(e);
-                    AlertService.error(e);
                 } finally {
                     this.loading = false;
                 }

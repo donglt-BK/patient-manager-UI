@@ -3,10 +3,10 @@ import {Request as request} from './Request';
 const  base = "/user";
 
 export default {
-    login(data) {
+    login({username, password}) {
         let formData = new FormData();
-        formData.append("username", data.username);
-        formData.append("password", data.password);
+        formData.append("username", username);
+        formData.append("password", password);
 
         return request({
             url: "/login",

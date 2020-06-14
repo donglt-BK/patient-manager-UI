@@ -21,10 +21,14 @@ let createRequest = (baseURL) => {
          * perform redirect to login page when server response with status 401 ( un authorization )
          *
          */
-        if (error && error.response && error.response.status == 401) {
-            auth.logout(); // call logout to remove current user & token.
-            router.push({path: pages.login.path});
-            AlertService.setDisabled(true);
+        if (error && error.response) {
+            if (error.response.status == 401) {
+                auth.logout(); // call logout to remove current user & token.
+                router.push({path: pages.login.path});
+                AlertService.setDisabled(true);
+            } else if (error.response.status == 400) {
+                AlertService.error(error.response.data);
+            }
         }
         return Promise.reject(error);
     });
@@ -39,7 +43,6 @@ let createRequest = (baseURL) => {
 
     return request;
 };
-console.log(process.env)
 
 const Request = createRequest(process.env.VUE_APP_BACKEND_URL);
 

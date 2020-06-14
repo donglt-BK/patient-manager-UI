@@ -85,6 +85,9 @@ const utils = {
 
     isWebsiteUrl(input){
         return input.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/);
+    },
+    buildFileUrl(url) {
+        return process.env.VUE_APP_BACKEND_URL + "/file/get/" + url;
     }
 };
 

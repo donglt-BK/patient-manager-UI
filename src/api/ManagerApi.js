@@ -1,22 +1,18 @@
 import {Request as request} from './Request';
+import Util from "../util";
 
 const base = "/manage";
 
 export default {
-    listHospital({page, size}) {
-        let formData = new FormData();
-        formData.append("page", page ? page : 1);
-        formData.append("size", size ? size : 10);
-
+    listHospital(param) {
         return request({
-            url: "/hospital/list",
-            method: "GET",
-            data: formData,
+            url: base + "/hospital/list" + Util.createParam(param),
+            method: "GET"
         });
     },
     detailHospital(id) {
         return request({
-            url: "/hospital/detail?id=" + id,
+            url: base + "/hospital/detail?id=" + id,
             method: "GET"
         });
     },
@@ -49,25 +45,19 @@ export default {
     },
     deleteHospital(id) {
         return request({
-            url: "/hospital/delete?id=" + id,
+            url: base + "/hospital/delete?id=" + id,
             method: "POST"
         });
     },
-    listDepartment(hospitalId, {page, size}) {
-        let formData = new FormData();
-        formData.append("hospitalId", hospitalId);
-        formData.append("page", page ? page : 1);
-        formData.append("size", size ? size : 10);
-
+    listDepartment(param) {
         return request({
-            url: "/department/list",
+            url: base + "/department/list" + Util.createParam(param),
             method: "GET",
-            data: formData,
         });
     },
     detailDepartment(id) {
         return request({
-            url: "/department/detail?id=" + id,
+            url: base + "/department/detail?id=" + id,
             method: "GET"
         });
     },
@@ -99,26 +89,20 @@ export default {
         });
     }, deleteDepartment(hospitalId, departmentId) {
         return request({
-            url: "/department/delete?hospitalId=" + hospitalId + "&hospitalId=" + departmentId,
+            url: base + "/department/delete?hospitalId=" + hospitalId + "&hospitalId=" + departmentId,
             method: "POST"
         });
     },
 
-    listDoctor(departmentId, {page, size}) {
-        let formData = new FormData();
-        formData.append("departmentId", departmentId);
-        formData.append("page", page ? page : 1);
-        formData.append("size", size ? size : 10);
-
+    listDoctor(param) {
         return request({
-            url: "/doctor/list",
-            method: "GET",
-            data: formData,
+            url: base + "/doctor/list" + Util.createParam(param),
+            method: "GET"
         });
     },
     detailDoctor(id) {
         return request({
-            url: "/doctor/detail?id=" + id,
+            url: base + "/doctor/detail?id=" + id,
             method: "GET"
         });
     },
@@ -142,7 +126,7 @@ export default {
     },
     deleteDoctor(departmentId, doctorId) {
         return request({
-            url: "/doctor/delete?departmentId=" + departmentId + "&departmentId=" + doctorId,
+            url: base + "/doctor/delete?departmentId=" + departmentId + "&departmentId=" + doctorId,
             method: "POST"
         });
     },

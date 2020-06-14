@@ -1,4 +1,5 @@
 import Roles from "./Roles";
+
 const currentUserKey = "mas-current-user";
 
 function getUserRoles() {
@@ -7,6 +8,39 @@ function getUserRoles() {
         return currentUser.roles;
     }
     return null;
+}
+
+function isAuthenticated() {
+    return getCurrentUser() !== undefined && getCurrentUser() != null;
+}
+
+function hasAnyRoles(authorities) {
+    if (!isAuthenticated()) {
+        return false;
+    }
+    let roles = getUserRoles();
+
+    if (!roles || roles.length === 0) {
+        return false;
+    }
+
+    for (let i = 0; i < authorities.length; i++) {
+        let valid = roles.some(role => role === authorities[i]);
+        if (valid) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function getCurrentUser() {
+    if (!localStorage.getItem(currentUserKey)) {
+        return null;
+    }
+    return {
+        ...JSON.parse(localStorage.getItem(currentUserKey)),
+        hasAnyRoles: hasAnyRoles,
+    };
 }
 
 let Auth = {
@@ -20,41 +54,11 @@ let Auth = {
             if (data.manageHospitalIds.length > 0) data.roles.push(Roles.HOSPITAL_MANAGER);
         }
         localStorage.setItem(currentUserKey, JSON.stringify(data));
-        return this.getCurrentUser();
+        return getCurrentUser();
     },
-    getCurrentUser() {
-        if (!localStorage.getItem(currentUserKey)) {
-            return null;
-        }
-        return {
-            ...JSON.parse(localStorage.getItem(currentUserKey)),
-            hasRole: function (checkRole) {
-                return this.role === checkRole;
-            },
-            hasAnyRoles: this.hasAnyRoles,
-        };
-    },
-    isAuthenticated() {
-        return this.getCurrentUser() !== undefined && this.getCurrentUser() != null;
-    },
-    hasAnyRoles(authorities) {
-        if (!this.isAuthenticated()) {
-            return false;
-        }
-        let roles = getUserRoles();
-
-        if (!roles || roles.length === 0) {
-            return false;
-        }
-
-        for (let i = 0; i < authorities.length; i++) {
-            let valid = roles.some(role => role === authorities[i]);
-            if (valid) {
-                return true;
-            }
-        }
-        return false;
-    },
+    getCurrentUser: getCurrentUser,
+    isAuthenticated: isAuthenticated,
+    hasAnyRoles: hasAnyRoles,
     logout() {
         localStorage.removeItem(currentUserKey);
     }

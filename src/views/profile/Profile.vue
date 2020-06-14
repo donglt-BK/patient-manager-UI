@@ -40,6 +40,7 @@
     export default {
         name: "Profile",
         data() {
+            console.log("load")
             return {
                 edit: false,
                 userInfo: Auth.getCurrentUser(),

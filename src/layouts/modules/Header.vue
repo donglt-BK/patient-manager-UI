@@ -1,8 +1,6 @@
 <template>
-    <el-header class="text-left" style="height: 50px;">
-        <img @click="redirectHome" style="height: 80%; margin-top: 10%; margin-left: 10px" src="../../assets/images/logo_c.png"
-             alt="MAS Logo"/>
-
+    <el-header class="text-center" style="height: 50px;">
+        <img @click="redirectHome" style="height: 80%; position: relative; top: 10%" src="../../assets/images/logo_c.png" alt="MAS Logo"/>
         <label class="system-name">Medical Appointment System</label>
 
         <div class="pull-right">
@@ -19,7 +17,7 @@
     import Pages from "@/router/Pages";
 
     export default {
-        name: "Header",
+        name: "Lefter",
         data() {
             return {
                 username: auth.getCurrentUser() ? auth.getCurrentUser().username : "",
@@ -41,18 +39,6 @@
 </script>
 
 <style scoped>
-    .link {
-        margin: 0 10px;
-    }
-
-    .el-dropdown {
-        margin-left: 10px;
-    }
-
-    .el-icon-setting {
-        margin-right: 15px
-    }
-
     .el-header {
         background-color: #27293d;
         color: #ffff;
@@ -63,52 +49,14 @@
         float: right;
     }
 
-    .change-lang, .logout, .change-pass {
-        margin-left: 10px;
-    }
-
     .header-btn {
         padding: 4px 17px;
         border-radius: 0;
     }
 
-    .home {
-        margin-right: 20px;
+    .system-name {
+        position: relative;
+        left: 5px;
+        top: -8px;
     }
-
-    .home-icon {
-        display: none;
-    }
-
-    @media only screen and (min-width: 768px) and (max-width: 1280px) {
-        .el-header {
-            font-size: 12px;
-        }
-
-        .header-btn {
-            font-size: 12px;
-        }
-
-    }
-
-    @media only screen and (max-width: 768px) {
-        .change-lang {
-            display: none;
-        }
-
-        .home-btn-with-text {
-            display: none;
-        }
-
-        .home-icon {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 0;
-        }
-
-        .system-name {
-            display: none;
-        }
-    }
-
 </style>
