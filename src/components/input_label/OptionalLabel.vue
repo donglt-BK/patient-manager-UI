@@ -1,5 +1,5 @@
 <template>
-    <label class="optional  custom-btn-color">{{$t("common.optionalLabel")}}</label>
+    <label class="optional  custom-btn-color">Optional</label>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-    <label class="required">{{$t("common.requiredLabel")}}</label>
+    <label class="required">Required</label>
 </template>
 
 <script>

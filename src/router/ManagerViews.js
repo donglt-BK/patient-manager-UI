@@ -1,11 +1,11 @@
 import Roles from "../security/Roles";
-import Manager from "../views/manager/Manager";
+import Management from "../views/manager/Management";
 import Pages from "./Pages";
 
 let ManagerViews = [
     {
         ...Pages.management,
-        component: Manager,
+        component: Management,
         meta: {
             title: "Hospital Management",
         },

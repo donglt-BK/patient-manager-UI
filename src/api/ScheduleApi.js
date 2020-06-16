@@ -1,28 +1,38 @@
 import {Request as request} from './Request';
-
+import Util from '../util'
 const base = "/schedule";
 
 export default {
-    list(start, end, departmentId) {
-        let formData = new FormData();
-        formData.append("start", start);
-        formData.append("end", end);
-        formData.append("departmentId", departmentId);
-
+    list(param) {
         return request({
-            url: "/list",
+            url: base + "/list" + Util.createParam(param),
             method: "GET",
-            data: formData,
         });
     },
-    assign(date, shift, doctorIds) {
+    create({date, shift, scheduleLimit, doctorLimit, departmentId}) {
         let formData = new FormData();
         formData.append("date", date);
         formData.append("shift", shift);
-        formData.append("doctorIds", doctorIds.join("||"));
+        formData.append("scheduleLimit", scheduleLimit);
+        formData.append("doctorLimit", doctorLimit);
+        formData.append("departmentId", departmentId);
 
         return request({
-            url: "/assign",
+            url: base + "/create",
+            method: "POST",
+            data: formData,
+        });
+    },
+    assign(date, shift, scheduleLimit, doctorLimit, doctorId) {
+        let formData = new FormData();
+        formData.append("date", date);
+        formData.append("shift", shift);
+        formData.append("scheduleLimit", scheduleLimit);
+        formData.append("doctorLimit", doctorLimit);
+        formData.append("doctorId", doctorId);
+
+        return request({
+            url: base + "/assign",
             method: "POST",
             data: formData,
         });
@@ -35,7 +45,7 @@ export default {
         formData.append("doctorId", doctorId);
 
         return request({
-            url: "/deAssign",
+            url: base + "/deAssign",
             method: "POST",
             data: formData,
         });
@@ -43,7 +53,7 @@ export default {
 
     mySchedule(departmentId) {
         return request({
-            url: "/mySchedule?departmentId=" + departmentId,
+            url: base + "/mySchedule?departmentId=" + departmentId,
             method: "GET",
         });
     },
@@ -55,7 +65,7 @@ export default {
         formData.append("scheduleId", doctorId);
 
         return request({
-            url: "/requestChange",
+            url: base + "/requestChange",
             method: "POST",
             data: formData,
         });
@@ -68,7 +78,7 @@ export default {
         formData.append("size", size ? size : 10);
 
         return request({
-            url: "/myChangeRequest/list",
+            url: base + "/myChangeRequest/list",
             method: "GET",
             data: formData,
         });
@@ -81,7 +91,7 @@ export default {
         formData.append("size", size ? size : 10);
 
         return request({
-            url: "/changeRequest/list",
+            url: base + "/changeRequest/list",
             method: "GET",
             data: formData,
         });
@@ -93,7 +103,7 @@ export default {
         formData.append("isApprove", isApprove);
 
         return request({
-            url: "/changeRequest/resolve",
+            url: base + "/changeRequest/resolve",
             method: "POST",
             data: formData,
         });

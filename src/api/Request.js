@@ -2,6 +2,7 @@ import axios from 'axios';
 import auth from '@/security/Authentication';
 import router from '@/router/Router';
 import pages from '@/router/Pages';
+import AlertService from "../service/alert.service";
 
 let createRequest = (baseURL) => {
 
@@ -24,9 +25,11 @@ let createRequest = (baseURL) => {
             if (error.response.status == 401) {
                 auth.logout(); // call logout to remove current user & token.
                 router.push({path: pages.login.path});
-                this.$services.alert.setDisabled(true);
+                AlertService.setDisabled(true);
             } else if (error.response.status == 400) {
-                this.$services.alert.error(error.response.data);
+                AlertService.error(error.response.data);
+            } else if (error.response.status == 500) {
+                AlertService.error("Server error");
             }
         }
         return Promise.reject(error);

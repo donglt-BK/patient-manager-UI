@@ -23,7 +23,7 @@ const lefterItems = {
     Schedule: {
         name: "Schedule",
         image: require("../../assets/images/icons/schedule.png"),
-        path: "",
+        path: Pages.schedule.path,
         authorize: [Roles.DOCTOR, Roles.DEPARTMENT_MANAGER, Roles.HOSPITAL_MANAGER, Roles.SYSTEM_ADMIN]
     },
     HospitalManagement: {

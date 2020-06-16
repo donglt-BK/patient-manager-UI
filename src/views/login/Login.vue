@@ -39,7 +39,6 @@
 <script>
     import Pages from '@/router/Pages';
     import UserApi from '@/api/UserApi';
-    import Auth from '@/security/Authentication';
 
     export default {
         name: "Login",
@@ -86,7 +85,7 @@
                 try {
                     this.fullscreenLoading = true;
                     let response = await UserApi.login(loginData);
-                    Auth.setCurrentUser(response.user);
+                    this.$auth.setCurrentUser(response.user);
                     this.goToHomePage();
                 } catch (e) {
                     console.log("error", e);
@@ -94,7 +93,7 @@
                         this.$services.alert.error(this.$t("login.incorrect"));
                     } else {
                         this.$services.alert.error(this.$t("common.serverErrorMessage"), 2000);
-                        Auth.logout();
+                        this.$auth.logout();
                     }
                 } finally {
                     this.fullscreenLoading = false;

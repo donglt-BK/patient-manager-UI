@@ -1,4 +1,5 @@
 import {Request as request} from './Request';
+import Util from "../util"
 
 const  base = "/user";
 
@@ -39,5 +40,11 @@ export default {
                 "Content-Type": "application/json"
             }
         });
-    }
+    },
+    find(param) {
+        return request({
+            url: base + "/find" + Util.createParam(param),
+            method: "GET"
+        });
+    },
 };

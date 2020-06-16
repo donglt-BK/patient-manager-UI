@@ -14,16 +14,14 @@
             <InputLabel style='width: auto' text="Description" :required="true"/>
             <el-input v-model="description"></el-input>
 
-            <GoogleMap ref="map"/>
+            <!--<GoogleMap ref="map" :maker-name="name"/>-->
+            <AddressSelect ref="address"></AddressSelect>
             <el-button @click="save">Save</el-button>
 
             <div v-show="!isCreate">
                 <div>
                     <p>Managers</p>
-                    <div v-for="manager in managers">
-                        {{manager.name}}
-                    </div>
-                    <div class="addManager">Add</div>
+                    <ManagerList :managers="managers" @removeManager="removeManager" @addManager="addManager"/>
                 </div>
 
                 <div>
@@ -78,10 +76,11 @@
     import ManagerApi from "../../../api/ManagerApi";
     import FileApi from "../../../api/FileApi";
     import ImageGallery from "./ImageGallery";
+    import ManagerList from "./ManagerList";
 
     export default {
         name: "Hospital",
-        components: {ImageGallery, Department},
+        components: {ManagerList, ImageGallery, Department},
         data() {
             return {
                 isCreate: true,
@@ -92,17 +91,6 @@
                 name: "",
                 status: "HIDDEN",
                 description: "",
-                address: {
-                    country: "Blank",
-                    city: "Blank",
-                    district: "Blank",
-                    block: "Blank",
-                    countryId: -1,
-                    cityId: -1,
-                    districtId: -1,
-                    blockId: -1,
-                    specificAddress: "Blank"
-                },
                 managers: [],
             }
         },
@@ -115,14 +103,15 @@
                 });
             },
             save() {
-                let {lat, lng} = this.$refs.map.getLocation();
+                //let {lat, lng} = this.$refs.map.getLocation();
+                let {lat, lng} = {lat: 21.004807, lng: 105.845115};
                 let entity = {
                     name: this.name,
                     latitude: lat,
                     longitude: lng,
                     status: this.status,
                     description: this.description,
-                    addressId: this.address,
+                    addressId: this.$refs.address.getAddress(),
                 }
                 console.log(entity)
                 if (this.id === -1) {
@@ -150,20 +139,10 @@
                 this.name = "";
                 this.status = "HIDDEN";
                 this.description = "";
-                this.address = {
-                    country: "Blank",
-                    city: "Blank",
-                    district: "Blank",
-                    block: "Blank",
-                    countryId: 1,
-                    cityId: 1,
-                    districtId: 1,
-                    blockId: 1,
-                    specificAddress: "Blank"
-                }
+                this.$refs.address.reset();
                 this.managers = [];
 
-                this.$refs.map.load();
+                //this.$refs.map.load();
             },
             loadHospital({id, name, status, location, description, address, managers}) {
                 this.isCreate = false;
@@ -173,9 +152,10 @@
                 this.status = status;
                 this.description = description;
                 this.managers = managers;
-                this.address = address;
+                this.$refs.table.reload();
 
-                this.$refs.map.load(location);
+                //this.$refs.map.load(location.latitude, location.longitude);
+                this.$refs.address.load(address);
 
                 FileApi.getHospitalFiles(id).then(response => {
                     let images = [];
@@ -246,6 +226,35 @@
                     this.$services.alert.success("Delete department successful");
                     this.$services.scrollTop();
                 })
+            },
+            addManager(managerId) {
+                ManagerApi.addHospitalManager({
+                    hospitalId: this.id,
+                    managerId: managerId
+                }).then(response => {
+                    this.managers.push(response);
+                    this.$services.alert.success("Add manager successful");
+                    this.$emit("updateSuccess")
+                })
+            },
+            removeManager(managerId) {
+                console.log(managerId);
+                this.$services.deleteDialog.open(
+                    () => {
+                        ManagerApi.removeHospitalManager({
+                            hospitalId: this.id,
+                            managerId: managerId
+                        }).then(() => {
+                            this.managers = this.managers.filter(manager => manager.id !== managerId);
+                            this.$services.alert.success("Remove manager successful");
+                            this.$emit("updateSuccess")
+                        })
+                    }, {
+                        title: "Remove Manager",
+                        msg: "Do you want to remove this person from hospital managers?",
+                        ok: "Confirm",
+                        cancel: "Cancel",
+                    });
             }
         }
     }

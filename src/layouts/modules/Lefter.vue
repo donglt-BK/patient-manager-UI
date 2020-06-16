@@ -17,7 +17,7 @@
         data() {
             return {
                 expand: false,
-                lefterItems: LefterItems.ALL//.filter(menu => Auth.hasAnyRoles(menu.authorize))
+                lefterItems: LefterItems.ALL.filter(menu => this.$auth.hasAnyRoles(menu.authorize))
             }
         },
         methods: {
@@ -34,6 +34,7 @@
         width: 170px;
         transition: width 0.5s;
         position: fixed;
+        z-index: 1000;
 
         .expander {
             text-align: right;

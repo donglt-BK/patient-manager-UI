@@ -19,6 +19,10 @@
 
         <div v-show="!isCreate">
             <div>
+                <p>Managers</p>
+                <ManagerList :managers="managers" @removeManager="removeManager" @addManager="addManager"/>
+            </div>
+            <div>
                 <p>Images</p>
                 <ImageGallery ref="imageGallery" @uploaded="saveFile" @remove="removeFile"/>
             </div>
@@ -29,7 +33,7 @@
                             {{scope.row.name}}
                         </template>
                     </el-table-column>
-                    <el-table-column prop="licenceUrl">
+                    <el-table-column prop="licenceUrl" label="Licence">
                         <template slot-scope="scope">
                             <img v-if="scope.row.licenceUrl" :src="getUrl(scope.row.licenceUrl)">
                             <p v-else>No licence upload</p>
@@ -57,7 +61,8 @@
                         </template>
                     </el-table-column>
                 </DataTable>
-                <div class="add" @click="addDoctor">Add</div>
+                <div class="add" @click="showAddDoctorDialog">Add</div>
+                <AddUserDialog ref="addDialog" title="Doctor" @addUser="addDoctor"/>
             </div>
 
             <el-button @click="onDelete">Delete</el-button>
@@ -68,12 +73,13 @@
 <script>
     import ManagerApi from "../../../api/ManagerApi";
     import FileApi from "../../../api/FileApi";
-    import Util from "../../../util";
     import ImageGallery from "./ImageGallery";
+    import ManagerList from "./ManagerList";
+    import AddUserDialog from "./AddUserDialog";
 
     export default {
         name: "Department",
-        components: {ImageGallery},
+        components: {AddUserDialog, ManagerList, ImageGallery},
         data() {
             return {
                 isCreate: true,
@@ -86,6 +92,7 @@
                 status: "HIDDEN",
                 description: "",
                 managers: [],
+                doctors: []
             }
         },
         methods: {
@@ -143,16 +150,28 @@
                 this.status = status;
                 this.description = description;
                 this.managers = managers;
+                this.$refs.table.reload();
 
                 FileApi.getDepartmentFiles(id).then(response => {
                     let images = [];
                     if (response !== "")
                         images = (response + "").split("||");
                     this.$refs.imageGallery.loadImage(images)
-                })
-            },
-            addDoctor() {
+                });
 
+                ManagerApi.getAllDoctorId(this.id)
+                    .then(response => this.doctors = response);
+            },
+            showAddDoctorDialog() {
+                this.$refs.addDialog.show(this.doctors);
+            },
+            addDoctor(userId) {
+                ManagerApi.addDoctor({
+                    departmentId: this.id,
+                    userId: userId
+                }).then(() => {
+                    this.$refs.table.reload();
+                })
             },
             onDelete() {
                 this.$emit("delete", this.id);
@@ -178,7 +197,7 @@
                 FileApi.deleteDepartmentFile(this.id, file);
             },
             getUrl(file) {
-                Util.buildFileUrl(file);
+                this.$utils.buildFileUrl(file);
             },
             deleteDoctor(doctorId) {
                 this.$services.deleteDialog.open(
@@ -198,6 +217,35 @@
                     this.$refs.table.reload();
                     this.$services.alert.success("Delete doctor successful");
                 })
+            },
+            addManager(managerId) {
+                ManagerApi.addDepartmentManager({
+                    departmentId: this.id,
+                    managerId: managerId
+                }).then(response => {
+                    this.managers.push(response);
+                    this.$services.alert.success("Add manager successful");
+                    this.$emit("updateSuccess")
+                })
+            },
+            removeManager(managerId) {
+                console.log(managerId);
+                this.$services.deleteDialog.open(
+                    () => {
+                        ManagerApi.removeDepartmentManager({
+                            departmentId: this.id,
+                            managerId: managerId
+                        }).then(() => {
+                            this.managers = this.managers.filter(manager => manager.id !== managerId);
+                            this.$services.alert.success("Remove manager successful");
+                            this.$emit("updateSuccess")
+                        })
+                    }, {
+                        title: "Remove Manager",
+                        msg: "Do you want to remove this person from department managers?",
+                        ok: "Confirm",
+                        cancel: "Cancel",
+                    });
             }
         }
     }

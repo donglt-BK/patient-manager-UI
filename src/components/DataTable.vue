@@ -136,11 +136,18 @@
                 pageRequest.pageSize = this.pageSize;
                 this.loading = true;
                 try {
-                    const response = await this.getTableDataFn(
+                    let response = await this.getTableDataFn(
                         pageRequest,
                         this.tableConfig.sort,
                         this.filterRequest
                     );
+                    if (!response) {
+                        response = {
+                            content: [],
+                            totalElements: 0,
+                            length: 0
+                        }
+                    }
                     if(this.isPaging){
                         this.tableData = response.content;
                         this.tableConfig.totalElements = response.totalElements;

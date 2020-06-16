@@ -12,8 +12,6 @@
 </template>
 
 <script>
-    import Util from "../../../util";
-
     export default {
         name: "ImageGallery",
         data() {
@@ -30,10 +28,10 @@
             },
             loadImage(images) {
                 this.isLoading = false;
-                this.images = images.map(url => Util.buildFileUrl(url));
+                this.images = images.map(url => this.$utils.buildFileUrl(url));
             },
             uploadSuccess(url) {
-                this.images.push(Util.buildFileUrl(url));
+                this.images.push(this.$utils.buildFileUrl(url));
                 this.$refs.uploader.uploadFiles = [];
                 this.$emit("uploaded", url);
             },

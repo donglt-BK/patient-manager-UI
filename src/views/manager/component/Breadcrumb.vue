@@ -10,7 +10,6 @@
 </template>
 
 <script>
-    import Auth from "../../../security/Authentication";
     import Roles from "../../../security/Roles";
 
     export default {
@@ -24,16 +23,12 @@
             }
         },
         mounted() {
-            let user = Auth.getCurrentUser();
-            console.log(user);
+            let user = this.$auth.getCurrentUser();
             if (user.hasAnyRoles([Roles.SYSTEM_ADMIN]) || user.manageHospitalIds.length > 1) {
-                console.log("full")
                 this.canReturnTo = "management";
             } else if (user.hasAnyRoles([Roles.HOSPITAL_MANAGER]) || user.manageDepartmentIds.length > 1) {
-                console.log("hospital")
                 this.canReturnTo = "hospital";
             } else {
-                console.log("none")
                 this.canReturnTo = "none";
             }
         },
@@ -47,7 +42,6 @@
                 }
             },
             returnHospital() {
-                console.log(this.canReturnTo)
                 if (this.canReturnTo !== "none" && this.level !== "hospital") {
                     this.department = null;
                     this.level = "hospital";

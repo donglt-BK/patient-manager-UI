@@ -5,7 +5,8 @@ let Pages = {
     notFound: {name: "notFound", path: "/not-found"},
     home: {name: "home", path: "/"},
     profile: {name: "profile", path: "/profile"},
-    management: {name: "management", path: "/manage"}
+    management: {name: "management", path: "/manage"},
+    schedule: {name: "schedule", path: "/schedule"}
 };
 
 export default Pages;

@@ -11,7 +11,18 @@
 
     export default {
         name: "GoogleMap",
+        props: {
+            makerName: {
+                type: String,
+                require: true
+            }
+        },
         components: {gmapsMap, gmapsMarker},
+        watch: {
+            makerName() {
+                this.makerOptions.title = this.makerName;
+            }
+        },
         data() {
             return {
                 mapOptions: {
@@ -26,7 +37,7 @@
                 },
                 makerOptions: {
                     draggable: true,
-                    title: "a",
+                    title: this.makerName,
                     position: {
                         lat: 21.004807,
                         lng: 105.845115
@@ -39,7 +50,11 @@
             }
         },
         methods: {
-            load({latitude = 21.004807, longitude = 105.845115}) {
+            load(latitude = 21.004807, longitude = 105.845115) {
+                if (typeof(latitude) === "string") {
+                    latitude = parseFloat(latitude);
+                    longitude = parseFloat(longitude);
+                }
                 this.mapOptions.center = {
                     lat: latitude,
                     lng: longitude

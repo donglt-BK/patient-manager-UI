@@ -13,14 +13,13 @@
 </template>
 
 <script>
-    import auth from "@/security/Authentication";
     import Pages from "@/router/Pages";
 
     export default {
         name: "Lefter",
         data() {
             return {
-                username: auth.getCurrentUser() ? auth.getCurrentUser().username : "",
+                username: this.$auth.getCurrentUser() ? this.$auth.getCurrentUser().username : "",
             }
         },
         methods: {
@@ -28,7 +27,7 @@
                 this.$router.push({path: Pages.profile.path});
             },
             logout() {
-                auth.logout();
+                this.$auth.logout();
                 this.$router.push({path: "/login"});
             },
             redirectHome() {

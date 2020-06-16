@@ -46,7 +46,7 @@
     import ManagerApi from "../../api/ManagerApi";
 
     export default {
-        name: "Manager",
+        name: "Management",
         components: {Hospital, Breadcrumb},
         data() {
             return {
