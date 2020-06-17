@@ -1,9 +1,11 @@
 <template>
-    <toggle-button :value="value" :sync="true"
-                   :color="{checked: switchBtnActiveColor, unchecked: switchBtnInActiveColor}"
-                   :labels="{checked: 'ON', unchecked: 'OFF' }"
-                   @change="onChange"
-    />
+    <div style="display: inline-block">
+        <toggle-button :value="value" :sync="true"
+                       :color="{checked: switchBtnActiveColor, unchecked: switchBtnInActiveColor}"
+                       :labels="{checked: text.on, unchecked: text.off }"
+                       @change="onChange"
+        />
+    </div>
 </template>
 
 <script>
@@ -23,6 +25,14 @@
                 required: true,
                 type: Boolean
             },
+            text: {
+                required: false,
+                type: Object,
+                default: {
+                    on: 'ON',
+                    off: 'OFF'
+                }
+            }
         },
         data() {
             return {
@@ -44,5 +54,15 @@
 </script>
 
 <style scoped>
+    /deep/ .v-switch-core {
+        width: 70px !important;
+    }
+    /deep/ .vue-js-switch .v-switch-label.v-left {
+        left: 13px !important;
+    }
+
+    /deep/ .vue-js-switch.toggled .v-switch-button {
+        transform: translate3d(50px, 3px, 0px) !important;
+    }
 
 </style>

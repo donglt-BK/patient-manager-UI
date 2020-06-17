@@ -8,6 +8,9 @@ Vue.prototype.$services = {
     deleteDialog: DeleteDialogService,
     scrollTop: () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+    scrollBottom: () => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 };
 

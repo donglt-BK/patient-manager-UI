@@ -2,6 +2,7 @@
     <div class="map-wrapper">
         <gmaps-map :options="mapOptions" ref="map">
             <gmaps-marker :options="makerOptions" @move="updatePosition" ref="maker"/>
+            <gmaps-marker v-if="showMyLocation" :options="myMakerOptions" ref="myMaker"/>
         </gmaps-map>
     </div>
 </template>
@@ -12,9 +13,17 @@
     export default {
         name: "GoogleMap",
         props: {
+            movable: {
+                type: Boolean,
+                default: true,
+            },
+            showMyLocation: {
+                type: Boolean,
+                default: false,
+            },
             makerName: {
                 type: String,
-                require: true
+                required: true
             }
         },
         components: {gmapsMap, gmapsMarker},
@@ -28,7 +37,6 @@
                 mapOptions: {
                     center: {lat: 21.004807, lng: 105.845115},
                     zoom: 14,
-                    fullscreenControl: false,
                     mapTypeControl: false,
                     rotateControl: false,
                     scaleControl: false,
@@ -36,8 +44,16 @@
                     zoomControl: false
                 },
                 makerOptions: {
-                    draggable: true,
+                    draggable: this.movable,
                     title: this.makerName,
+                    position: {
+                        lat: 21.004807,
+                        lng: 105.845115
+                    },
+                },
+                myMakerOptions: {
+                    title: "You are here",
+                    icon: require('../assets/images/icons/nav.png'),
                     position: {
                         lat: 21.004807,
                         lng: 105.845115
@@ -46,12 +62,25 @@
                 location: {
                     lat: 21.004807,
                     lng: 105.845115
-                }
+                },
             }
         },
         methods: {
+            getMyLocation() {
+                if (navigator.geolocation) navigator.geolocation.getCurrentPosition((pos) => {
+                    this.myMakerOptions.position = {
+                        lat: pos.coords.latitude,
+                        lng: pos.coords.longitude
+                    }
+                    this.mapOptions.center = {
+                        lat: pos.coords.latitude,
+                        lng: pos.coords.longitude
+                    }
+                })
+                else this.$services.alert.error('Geolocation is not supported by this browser.')
+            },
             load(latitude = 21.004807, longitude = 105.845115) {
-                if (typeof(latitude) === "string") {
+                if (typeof (latitude) === "string") {
                     latitude = parseFloat(latitude);
                     longitude = parseFloat(longitude);
                 }
@@ -69,6 +98,8 @@
                     lng: longitude
                 }
 
+                if (this.showMyLocation)
+                    this.getMyLocation()
             },
             updatePosition({lat, lng}) {
                 this.location.lat = lat;
@@ -83,7 +114,7 @@
 
 <style scoped>
     .map-wrapper {
-        height: 300px;
-        width: 300px;
+        height: 100%;
+        width: 100%;
     }
 </style>

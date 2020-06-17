@@ -1,22 +1,14 @@
 <template>
     <div class="user-info-wrapper">
         <div class="edit">
-            <el-button @click="save">Save</el-button>
-            <div class="avatar-wrapper">
-                <div class="avatar">
-                    <img :src="getUrl(userInfo.avatar)"/>
-                </div>
-                <el-upload ref="uploader" class="uploader" :action="domain + '/file/upload'"
-                           :show-file-list="false" :on-success="uploadSuccess">
-                    <button>Change</button>
-                </el-upload>
-            </div>
+            <InputLabel style='width: auto' text="Username" :required="true"/>
+            <el-input v-model="userInfo.username"></el-input>
+
+            <InputLabel style='width: auto' text="Password" :required="true"/>
+            <el-input type="password" v-model="userInfo.password"></el-input>
 
             <InputLabel style='width: auto' text="Name" :required="true"/>
             <el-input v-model="userInfo.name"></el-input>
-
-            <InputLabel style='width: auto' text="Username" :required="true"/>
-            <el-input v-model="userInfo.username" disabled></el-input>
 
             <InputLabel style='width: auto' text="Gender" :required="true"/>
             <el-select v-model="userInfo.gender">
@@ -34,6 +26,7 @@
             <el-input v-model="userInfo.email"></el-input>
 
             <AddressSelect ref="address"></AddressSelect>
+            <el-button @click="save">Save</el-button>
 
         </div>
     </div>
@@ -44,12 +37,20 @@
     import UserApi from "../../api/UserApi";
 
     export default {
-        name: "Profile",
+        name: "Register",
         data() {
             return {
                 domain: process.env.VUE_APP_BACKEND_URL,
                 edit: true,
-                userInfo: this.$auth.getCurrentUser(),
+                userInfo: {
+                    username: "",
+                    password: "",
+                    name: "",
+                    gender: "MALE",
+                    phone: "",
+                    email: "",
+                    dob: ""
+                },
             }
         },
         methods: {
@@ -78,7 +79,7 @@
             },
         },
         mounted() {
-            this.$refs.address.load(this.$auth.getCurrentUser().address);
+            this.$refs.address.load();
         }
     }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="display: inline-block">
         <Manager v-for="(m, index) in managers" :key="index" :data="m"
                  :style="'z-index: ' + (managers.length - index)"
                  @removeManager="removeManager"/>
@@ -19,7 +19,7 @@
         components: {AddUserDialog, Manager},
         props: {
             managers: {
-                require: true
+                required: true
             }
         },
         methods: {

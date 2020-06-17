@@ -1,7 +1,7 @@
 <template>
-    <div class="lefter-wrapper" v-bind:class="{close: !expand}">
-        <div class="expander">
-            <img :src="require('../../assets/images/icons/menu.png')" alt="expand" @click="onExpandClick">
+    <div class="lefter-wrapper gray" v-bind:class="{close: !expand}">
+        <div class="expander" @click="onExpandClick">
+            <img :src="require('../../assets/images/icons/menu.png')" alt="expand">
         </div>
         <LefterItem v-for="item in lefterItems" :key="item.name" :item-data="item"/>
     </div>
@@ -30,11 +30,23 @@
 </script>
 
 <style scoped lang="scss">
+    @import "../../assets/styles/var";
+
     .lefter-wrapper {
         width: 170px;
         transition: width 0.5s;
         position: fixed;
         z-index: 1000;
+        height: 100vh;
+
+        > * {
+            height: 60px;
+            border-bottom: 1px solid $color-darkest-gray;
+
+            &:hover {
+                background-color: $color-darken-gray;
+            }
+        }
 
         .expander {
             text-align: right;
@@ -42,15 +54,15 @@
             position: relative;
 
             img {
-                height: 40px;
+                height: 30px;
                 position: relative;
-                top: 5px;
-                left: -5px;
+                top: 15px;
+                left: -15px;
             }
         }
 
         &.close {
-            width: 50px;
+            width: 60px;
         }
     }
 </style>

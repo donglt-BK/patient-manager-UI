@@ -1,25 +1,27 @@
 <template>
     <div>
         <el-dialog :visible.sync="dialogVisible" v-loading="loading" center width="80%" @close="$emit('close')">
-            <div slot="title" class="bold text-center">{{date}} {{shift}} SCHEDULE</div>
+            <div slot="title" class="bold text-center">
+                <SwitchButton :value="!closed" :text="{on: 'OPEN', off: 'CLOSE'}"
+                              @change="toggleOpen" style="float: left; position: relative; top: -2px; left: 25px"/>
+                {{date}} {{shift}} SCHEDULE</div>
             <div class="dialog-content-wrapper">
-
                 <div class="info-wrapper">
-                    <InputLabel style='width: auto' text="Date" :required="true"/>
+                    <InputLabel style='width: auto' text="Date"/>
                     <el-input v-model="date" disabled></el-input>
 
-                    <InputLabel style='width: auto' text="Shift" :required="true"/>
+                    <InputLabel style='width: auto' text="Shift"/>
                     <el-input v-model="shift" disabled></el-input>
 
-                    <InputLabel style='width: auto' text="Schedule appointment limit" :required="true"/>
-                    <el-input v-model="scheduleLimit" @change="change" type="number"></el-input>
+                    <InputLabel style='width: auto' text="Current patient appointment"/>
+                    <el-input v-model="bookingStatus" disabled></el-input>
 
-                    <InputLabel style='width: auto' text="Doctor appointment limit" :required="true"/>
-                    <el-input v-model="doctorLimit" @change="change" type="number"></el-input>
+                    <InputLabel style='width: auto' text="Schedule appointment limit" :required="true"/>
+                    <el-input v-model="limit" @change="change" type="number"></el-input>
                 </div>
 
                 <div class="not-assign-wrapper">
-                    <p>Not Assign</p>
+                    <p>Available</p>
                     <div class="user-wrapper">
                         <div v-for="doctor in all" class="user-item">
                             <div class="avatar-wrapper">
@@ -32,7 +34,7 @@
                 </div>
 
                 <div class="assign-wrapper">
-                    <p>Assign</p>
+                    <p>Assigned</p>
                     <div class="user-wrapper">
                         <div v-for="doctor in assign" class="user-item">
                             <div class="avatar-wrapper">
@@ -75,27 +77,40 @@
                 assignId: [],
                 shift: "",
                 date: "",
-                doctorLimit: 0,
-                scheduleLimit: 0,
+                closed: true,
+                limit: 100,
                 departmentId: -1,
-                loaded: false
+                loaded: false,
+                bookingStatus: 0,
             }
         },
         methods: {
+            toggleOpen(isOpen) {
+                if (this.bookingStatus > 0) this.$services.alert.error("Already have patient appointment")
+                else {
+                    this.closed = !isOpen.value;
+                    ScheduleApi.toggle({
+                        date: this.date,
+                        shift: this.shift,
+                        isClosed: this.closed,
+                        departmentId: this.departmentId
+                    })
+                }
+            },
             change() {
                 if (!this.loaded) return;
                 ScheduleApi.create({
                     date: this.date,
                     shift: this.shift,
-                    scheduleLimit: this.scheduleLimit,
-                    doctorLimit: this.doctorLimit,
+                    limit: this.limit,
+                    isClosed: this.closed,
                     departmentId: this.departmentId
                 })
             },
             getUrl(url) {
                 return this.$utils.buildFileUrl(url);
             },
-            show({doctors, departmentId, shift, date, scheduleLimit, doctorLimit}) {
+            show({doctors, departmentId, shift, date, limit}) {
                 this.loaded = false;
                 this.dialogVisible = true;
                 this.all = [];
@@ -105,8 +120,7 @@
                 this.departmentId = departmentId;
                 this.shift = shift;
                 this.date = moment(date).format("YYYY-MM-DD");
-                this.scheduleLimit = scheduleLimit;
-                this.doctorLimit = doctorLimit;
+                this.limit = limit;
                 this.loaded = true;
 
                 ManagerApi.listAllDoctor(this.departmentId).then(response => {
@@ -116,7 +130,7 @@
             },
             addDoctor(id) {
                 this.loading = true;
-                ScheduleApi.assign(this.date, this.shift, this.scheduleLimit, this.doctorLimit, id).then(() => {
+                ScheduleApi.assign(this.date, this.shift, this.closed, this.limit, id).then(() => {
                     this.loading = false;
                     let assigned = this.all.filter(d => d.id === id)[0];
                     this.assignId.push(id);

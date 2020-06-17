@@ -40,6 +40,17 @@ function getCurrentUser() {
     return {
         ...JSON.parse(localStorage.getItem(currentUserKey)),
         hasAnyRoles: hasAnyRoles,
+        update(data) {
+            let user = {...JSON.parse(localStorage.getItem(currentUserKey))};
+            user.name = data.name;
+            user.avatar = data.avatar;
+            user.dob = data.dob;
+            user.gender = data.gender;
+            user.address = data.address;
+            user.phone = data.phone;
+            user.email = data.email;
+            localStorage.setItem(currentUserKey, JSON.stringify(user));
+        }
     };
 }
 

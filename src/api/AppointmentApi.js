@@ -1,31 +1,18 @@
 import {Request as request} from './Request';
-
+import Util from "../util";
 const base = "/appointment";
 
 export default {
-    findHospital(name, {page, size}) {
-        let formData = new FormData();
-        formData.append('name', name);
-        formData.append("page", page ? page : 1);
-        formData.append("size", size ? size : 10);
-
+    findHospital(param) {
         return request({
-            url: base + "/find/hospital",
+            url: base + "/find/hospital" + Util.createParam(param),
             method: "GET",
-            data: formData,
         });
     },
-    findDepartment(hospitalId, name, {page, size}) {
-        let formData = new FormData();
-        formData.append('hospitalId', hospitalId);
-        formData.append('name', name);
-        formData.append("page", page ? page : 1);
-        formData.append("size", size ? size : 10);
-
+    findDepartment(param) {
         return request({
-            url: base + "/find/department",
+            url: base + "/find/department" + Util.createParam(param),
             method: "GET",
-            data: formData,
         });
     },
     findDoctor(departmentId, name, {page, size}) {

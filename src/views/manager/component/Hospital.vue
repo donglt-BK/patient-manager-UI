@@ -1,40 +1,48 @@
 <template>
     <div v-show="visible" v-loading="loading">
         <div v-show="!isOpenDepartment">
-            <InputLabel style='width: auto' text="Hospital name" :required="true"/>
-            <el-input v-model="name"></el-input>
+            <div class="info-wrapper clearfix">
+                <div>
+                    <InputLabel class='label' text="Hospital name" :required="true"/>
+                    <el-input class='field' v-model="name"></el-input>
 
-            <InputLabel style='width: auto' text="Status" :required="true"/>
-            <el-select v-model="status">
-                <el-option label="Available   - Can find and can interact" value="AVAILABLE"/>
-                <el-option label="Unavailable - Can find but can not interact" value="UNAVAILABLE"/>
-                <el-option label="Hidden      - Can not be found" value="HIDDEN"/>
-            </el-select>
+                    <InputLabel class='label' text="Status" :required="true"/>
+                    <el-select class='field' v-model="status">
+                        <el-option label="Available   - Can find and can interact" value="AVAILABLE"/>
+                        <el-option label="Unavailable - Can find but can not interact" value="UNAVAILABLE"/>
+                        <el-option label="Hidden      - Can not be found" value="HIDDEN"/>
+                    </el-select>
 
-            <InputLabel style='width: auto' text="Description" :required="true"/>
-            <el-input v-model="description"></el-input>
+                    <InputLabel class='label' text="Description" :optional="true"/>
+                    <el-input class='field' v-model="description"></el-input>
 
-            <!--<GoogleMap ref="map" :maker-name="name"/>-->
-            <AddressSelect ref="address"></AddressSelect>
-            <el-button @click="save">Save</el-button>
+                    <AddressSelect ref="address"></AddressSelect>
+
+                    <div v-show="!isCreate" class="manager-wrapper">
+                        <p  >Managers</p>
+                        <ManagerList :managers="managers" @removeManager="removeManager" @addManager="addManager"/>
+                    </div>
+
+                    <el-button @click="save" class="save blue">Save</el-button>
+                </div>
+                <div class="map-wrapper">
+                    <GoogleMap ref="map" :maker-name="name"/>
+                </div>
+            </div>
+            <hr/>
 
             <div v-show="!isCreate">
-                <div>
-                    <p>Managers</p>
-                    <ManagerList :managers="managers" @removeManager="removeManager" @addManager="addManager"/>
-                </div>
-
                 <div>
                     <p>Images</p>
                     <ImageGallery ref="imageGallery" @uploaded="saveFile" @remove="removeFile"/>
                 </div>
+                <hr/>
                 <div>
                     <p>Department</p>
                     <DataTable :getTableDataFn="getDepartments" ref="table">
                         <el-table-column prop="name" label="Department Name">
                             <template slot-scope="scope">
                                 {{scope.row.name}}
-                                <el-button @click="selectDepartment(scope.row)">Detail</el-button>
                             </template>
                         </el-table-column>
                         <el-table-column prop="status" label="Status">
@@ -103,8 +111,8 @@
                 });
             },
             save() {
-                //let {lat, lng} = this.$refs.map.getLocation();
-                let {lat, lng} = {lat: 21.004807, lng: 105.845115};
+                let {lat, lng} = this.$refs.map.getLocation();
+                //let {lat, lng} = {lat: 21.004807, lng: 105.845115};
                 let entity = {
                     name: this.name,
                     latitude: lat,
@@ -142,7 +150,7 @@
                 this.$refs.address.reset();
                 this.managers = [];
 
-                //this.$refs.map.load();
+                this.$refs.map.load();
             },
             loadHospital({id, name, status, location, description, address, managers}) {
                 this.isCreate = false;
@@ -154,7 +162,7 @@
                 this.managers = managers;
                 this.$refs.table.reload();
 
-                //this.$refs.map.load(location.latitude, location.longitude);
+                this.$refs.map.load(location.latitude, location.longitude);
                 this.$refs.address.load(address);
 
                 FileApi.getHospitalFiles(id).then(response => {
@@ -260,6 +268,62 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    .label {
+        margin-top: 10px;
+        width: 160px !important;
+    }
 
+    .field {
+        width: calc(100% - 160px);
+    }
+
+    hr {
+        margin: 20px;
+    }
+    .info-wrapper {
+        margin-top: 10px;
+
+        > div {
+            display: inline-block;
+            float: left;
+            width: calc(100% - 310px);
+        }
+
+        .map-wrapper {
+            width: 300px;
+            height: 300px;
+            margin-left: 10px;
+        }
+
+        .save {
+            margin-top: 12px;
+            width: 75px;
+            float: right;
+            background-color: blue;
+            color: white;
+        }
+
+        .manager-wrapper {
+            width: calc(100% - 95px);
+            float: left;
+            margin: 14px 10px 0 0;
+            height: 38px;
+            border-radius: 10px ;
+            position: relative;
+
+            > p {
+                width: 75px;
+                margin: 8px 0;
+                display: inline-block;
+            }
+
+            > div {
+                width: calc(100% - 75px);
+                display: inline-block;
+                position: absolute;
+                left: 90px;
+            }
+        }
+    }
 </style>

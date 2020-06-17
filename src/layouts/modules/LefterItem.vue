@@ -20,23 +20,22 @@
 
 <style scoped lang="scss">
     .lefter-item {
-        height: 50px;
         padding: 2.5px;
         position: relative;
         cursor: pointer;
 
         img {
-            height: 80%;
+            height: 66%;
             position: relative;
-            top: 10%;
-            left: 5px;
+            top: 22%;
+            left: 10px;
         }
 
         p {
             margin: 0;
             position: absolute;
             top: calc(50% - 9px);
-            left: 50px;
+            left: 60px;
             width: 120px;
             white-space: nowrap;
             overflow: hidden;

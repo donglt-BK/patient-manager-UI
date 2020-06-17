@@ -28,12 +28,6 @@ export default {
             }
         });
     },
-    refresh() {
-        return request({
-            url: base + "/refresh",
-            method: "GET"
-        });
-    },
     update(data) {
         return request.post(base + "/update", data, {
             headers: {

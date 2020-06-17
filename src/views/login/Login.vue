@@ -27,7 +27,7 @@
                     </el-form-item>
 
                     <el-form-item>
-                        <a @click="register">Don't have account? Create new one now</a>
+                        <a>Don't have account? Create <span class="link" @click="register">new</span> one now</a>
                     </el-form-item>
                 </el-form>
 
@@ -37,8 +37,8 @@
 </template>
 
 <script>
-    import Pages from '@/router/Pages';
-    import UserApi from '@/api/UserApi';
+    import Pages from '../../router/Pages';
+    import UserApi from '../../api/UserApi';
 
     export default {
         name: "Login",
@@ -47,12 +47,12 @@
                 rules: {
                     username: [{
                         required: true,
-                        message: this.$t("login.pleaseEnterUsername"),
+                        message: "Missing username",
                         trigger: "blur"
                     }],
                     password: [{
                         required: true,
-                        message: this.$t("login.pleaseEnterPassword"),
+                        message: "Missing password",
                         trigger: "blur"
                     }],
                 },
@@ -75,7 +75,7 @@
                 });
             },
             register() {
-                UserApi.register();
+                this.$router.push({path: Pages.register.path});
             },
             async login() {
                 let loginData = {
@@ -90,7 +90,7 @@
                 } catch (e) {
                     console.log("error", e);
                     if (e.response.status === 400) {
-                        this.$services.alert.error(this.$t("login.incorrect"));
+                        this.$services.alert.error("Wrong username or password");
                     } else {
                         this.$services.alert.error(this.$t("common.serverErrorMessage"), 2000);
                         this.$auth.logout();
@@ -116,5 +116,14 @@
     .login-wrapper {
         height: 100%;
         background-color: whitesmoke;
+    }
+
+    .link {
+        color: blue;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 </style>

@@ -127,19 +127,23 @@
 </script>
 
 <style scoped lang="scss">
+    @import "../../assets/styles/var";
     /deep/ .status.active {
-        color: white;
+        * {
+            color: white;
+        }
 
         &.available {
-            background: blue;
+            background: $color-darken-blue  ;
         }
 
         &.unavailable {
-            background: red;
+            background: $color-red;
         }
 
         &.cant-see {
-            background: black;
+            background: $color-dark;
+
         }
     }
 </style>

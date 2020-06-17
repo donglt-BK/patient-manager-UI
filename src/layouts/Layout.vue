@@ -3,7 +3,7 @@
         <Lefter @onExpandClick="onExpandClick"></Lefter>
         <div class="content-wrapper" v-bind:class="{close: !expand}">
             <Header></Header>
-            <el-container class="app-container">
+            <el-container class="app-container lightest-blue">
                 <el-main>
                     <!-- customize content here -->
                     <transition name="fade" mode="out-in">
@@ -51,9 +51,12 @@
         left: 170px;
 
         &.close {
-            left: 50px;
-            width: calc(100% - 50px);
+            left: 60px;
+            width: calc(100% - 60px);
         }
+    }
+
+    .app-container {
     }
 
     /deep/ .lefter-wrapper.close {

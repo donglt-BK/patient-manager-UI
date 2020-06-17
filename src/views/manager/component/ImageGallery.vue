@@ -2,7 +2,7 @@
     <div class="gallery-wrapper" v-loading="isLoading">
         <div v-if="!isLoading" v-for="img in images" class="img-wrapper">
             <div class="remove" @click="remove(img)"/>
-            <img :src="img">
+            <img :src="getUrl(img)">
         </div>
         <el-upload ref="uploader" class="uploader" :action="domain + '/file/upload'"
                    :show-file-list="false" :on-success="uploadSuccess">
@@ -28,14 +28,18 @@
             },
             loadImage(images) {
                 this.isLoading = false;
-                this.images = images.map(url => this.$utils.buildFileUrl(url));
+                this.images = images;
+            },
+            getUrl(url) {
+                return this.$utils.buildFileUrl(url);
             },
             uploadSuccess(url) {
-                this.images.push(this.$utils.buildFileUrl(url));
+                this.images.push(url);
                 this.$refs.uploader.uploadFiles = [];
                 this.$emit("uploaded", url);
             },
             remove(url) {
+                this.images = this.images.filter(i => i !== url);
                 this.$emit("remove", url);
             }
         }
@@ -44,12 +48,12 @@
 
 <style scoped lang="scss">
     .gallery-wrapper {
-        height: 180px;
+        height: 190px;
         overflow-x: auto;
         overflow-y: hidden;
-
+        white-space: nowrap;
         .img-wrapper {
-            height: 100%;
+            height: 180px;
             display: inline-block;
             position: relative;
             margin-right: 10px;

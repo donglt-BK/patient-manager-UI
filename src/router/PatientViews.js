@@ -1,7 +1,8 @@
-import Pages from "@/router/Pages";
+import Pages from "./Pages";
 import Profile from "../views/profile/Profile";
 import Roles from "../security/Roles";
-import Home from "../views/Home";
+import Home from "../views/home/Home";
+import AppointmentBook from "../views/appointment/AppointmentBook";
 
 let PatientViews = [
     {
@@ -15,6 +16,12 @@ let PatientViews = [
         component: Home,
         meta: {
             title: "Home",
+        },
+    }, {
+        ...Pages.book,
+        component: AppointmentBook,
+        meta: {
+            title: "Booking Appointment",
         },
     },
 ];

@@ -9,12 +9,25 @@ export default {
             method: "GET",
         });
     },
-    create({date, shift, scheduleLimit, doctorLimit, departmentId}) {
+    toggle({date, shift, isClosed, departmentId}) {
         let formData = new FormData();
         formData.append("date", date);
         formData.append("shift", shift);
-        formData.append("scheduleLimit", scheduleLimit);
-        formData.append("doctorLimit", doctorLimit);
+        formData.append("isClosed", isClosed);
+        formData.append("departmentId", departmentId);
+
+        return request({
+            url: base + "/toggle",
+            method: "POST",
+            data: formData,
+        });
+    },
+    create({date, shift, isClosed, limit, departmentId}) {
+        let formData = new FormData();
+        formData.append("date", date);
+        formData.append("shift", shift);
+        formData.append("limit", limit);
+        formData.append("isClosed", isClosed);
         formData.append("departmentId", departmentId);
 
         return request({
@@ -23,12 +36,12 @@ export default {
             data: formData,
         });
     },
-    assign(date, shift, scheduleLimit, doctorLimit, doctorId) {
+    assign(date, shift, isClosed, limit, doctorId) {
         let formData = new FormData();
         formData.append("date", date);
         formData.append("shift", shift);
-        formData.append("scheduleLimit", scheduleLimit);
-        formData.append("doctorLimit", doctorLimit);
+        formData.append("limit", limit);
+        formData.append("isClosed", isClosed);
         formData.append("doctorId", doctorId);
 
         return request({

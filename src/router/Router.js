@@ -7,6 +7,7 @@ import Pages from "./Pages";
 import PatientViews from "./PatientViews";
 import DoctorViews from "./DoctorViews";
 import ManagerViews from "./ManagerViews";
+import Register from "../views/login/Register";
 
 Vue.use(Router);
 
@@ -22,15 +23,19 @@ const router = new Router({
                 ...DoctorViews,
                 ...ManagerViews
             ]
-        },
-        {
+        }, {
+            ...Pages.register,
+            component: Register,
+            meta: {
+                title: "Register"
+            }
+        }, {
             ...Pages.login,
             component: Login,
             meta: {
                 title: "Login Page"
             }
-        },
-        {
+        }, {
             ...Pages.notFound,
             component: Error,
             meta: {

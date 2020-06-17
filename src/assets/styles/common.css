@@ -81,8 +81,10 @@ body.swal2-height-auto {
     margin-right: 20px
 }
 
-.clearfix {
+.clearfix::after {
+    content: "";
     clear: both;
+    display: table;
 }
 
 .text-right {

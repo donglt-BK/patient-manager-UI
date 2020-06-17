@@ -1,32 +1,37 @@
 <template>
     <div v-show="visible" v-loading="loading">
-        <InputLabel style='width: auto' text="Hospital" :required="true"/>
-        <el-input :disabled="true" v-model="hospitalName"></el-input>
+        <div class="info-wrapper clearfix">
 
-        <InputLabel style='width: auto' text="Department name" :required="true"/>
-        <el-input v-model="name"></el-input>
+            <InputLabel class="label" style='width: auto' text="Department name" :required="true"/>
+            <el-input class="field" v-model="name"></el-input>
 
-        <InputLabel style='width: auto' text="Status" :required="true"/>
-        <el-select v-model="status">
-            <el-option label="Available   - Can find and can interact" value="AVAILABLE"/>
-            <el-option label="Unavailable - Can find but can not interact" value="UNAVAILABLE"/>
-            <el-option label="Hidden      - Can not be found" value="HIDDEN"/>
-        </el-select>
+            <InputLabel class="label" text="Status" :required="true"/>
+            <el-select class="field" v-model="status">
+                <el-option label="Available   - Can find and can interact" value="AVAILABLE"/>
+                <el-option label="Unavailable - Can find but can not interact" value="UNAVAILABLE"/>
+                <el-option label="Hidden      - Can not be found" value="HIDDEN"/>
+            </el-select>
 
-        <InputLabel style='width: auto' text="Description" :required="true"/>
-        <el-input v-model="description"></el-input>
-        <el-button @click="save">Save</el-button>
-
-        <div v-show="!isCreate">
-            <div>
+            <InputLabel class="label" text="Description" :optional="true"/>
+            <el-input class="field" v-model="description"></el-input>
+            <div class="manager-wrapper" v-show="!isCreate">
                 <p>Managers</p>
                 <ManagerList :managers="managers" @removeManager="removeManager" @addManager="addManager"/>
             </div>
+
+            <el-button @click="save" class="save blue">Save</el-button>
+        </div>
+        <hr/>
+
+        <div v-show="!isCreate">
+
             <div>
                 <p>Images</p>
                 <ImageGallery ref="imageGallery" @uploaded="saveFile" @remove="removeFile"/>
             </div>
+            <hr/>
             <div>
+                <p>Doctors</p>
                 <DataTable :getTableDataFn="getDoctors" ref="table">
                     <el-table-column prop="name" label="Doctor">
                         <template slot-scope="scope">
@@ -251,6 +256,52 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
+    .label {
+        margin-top: 10px;
+        width: 200px !important;
+    }
+
+    .field {
+        width: calc(100% - 200px);
+    }
+
+    hr {
+        margin: 20px;
+    }
+
+    .info-wrapper {
+        margin-top: 10px;
+
+        .save {
+            margin-top: 4px;
+            width: 75px;
+            background-color: blue;
+            color: white;
+            float: right;
+        }
+
+        .manager-wrapper {
+            width: calc(100% - 95px);
+            float: left;
+            margin: 5px 10px 0 0;
+            height: 38px;
+            border-radius: 10px;
+            position: relative;
+
+            > p {
+                width: 75px;
+                margin: 8px 0;
+                display: inline-block;
+            }
+
+            > div {
+                width: calc(100% - 75px);
+                display: inline-block;
+                position: absolute;
+                left: 90px;
+            }
+        }
+    }
 </style>

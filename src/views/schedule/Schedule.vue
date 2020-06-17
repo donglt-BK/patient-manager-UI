@@ -3,12 +3,13 @@
         <p>Doctor Schedule</p>
         <div>
             <div class="select-wrapper">
-                <el-select style="margin-right: 10px" v-model="chosenHospital" placeholder="Hospital" @change="getDepartments"
+                <el-select style="margin-right: 10px" v-model="chosenHospital" placeholder="Hospital"
+                           @change="getDepartments"
                            no-data-text="No Hospital Found">
                     <el-option v-for="hospital in hospitals" :label="hospital.name" :value="hospital.id"/>
                 </el-select>
                 <el-select v-model="chosenDepartment" placeholder="Department" :disabled="chosenHospital === ''"
-                           no-data-text="No Department Found" @change="getSchedules">
+                           no-data-text="No Department Found" @change="getSchedules(true)">
                     <el-option v-for="department in departments" :label="department.name" :value="department.id"/>
                 </el-select>
             </div>
@@ -30,8 +31,8 @@
                         <div class="morning">
                             <div v-if="schedule.has(data.day + '-MORNING')">
                                 <div v-if="schedule.has(data.day + '-MORNING')"
-                                     v-for="(doctor, index) in getSchedule(data.day + '-MORNING')"
-                                     :style="'z-index: ' + (getSchedule(data.day + '-MORNING').length - index)"
+                                     v-for="(doctor, index) in getScheduleDoctor(data.day + '-MORNING')"
+                                     :style="'z-index: ' + (getScheduleDoctor(data.day + '-MORNING').length - index)"
                                      class="avatar-wrapper">
                                     <img :src="getUrl(doctor.user.avatar)"/>
                                 </div>
@@ -39,15 +40,19 @@
                                     +{{getExceed(data.day + '-MORNING')}}
                                 </div>
                             </div>
+                            <SwitchButton class="switch" :value="!getIsClosed(data.day + '-MORNING')"
+                                          :text="{on: 'OPEN', off: 'CLOSE'}"
+                                          v-bind:class="{show: have(data.day + '-MORNING')}"
+                                          @change="toggleOpen($event, data.day + '-MORNING')"/>
                             <div class="description">Morning</div>
-                            <el-button class="manage-button" @click="showScheduleDialog(data.day + '-MORNING')">Manage
-                            </el-button>
+                            <i class="el-icon-setting manage-button"
+                               @click="showScheduleDialog(data.day + '-MORNING')"/>
                         </div>
                         <div class="afternoon">
                             <div v-if="schedule.has(data.day + '-AFTERNOON')">
                                 <div v-if="schedule.has(data.day + '-AFTERNOON')"
-                                     v-for="(doctor, index) in getSchedule(data.day + '-AFTERNOON')"
-                                     :style="'z-index: ' + (getSchedule(data.day + '-AFTERNOON').length - index)"
+                                     v-for="(doctor, index) in getScheduleDoctor(data.day + '-AFTERNOON')"
+                                     :style="'z-index: ' + (getScheduleDoctor(data.day + '-AFTERNOON').length - index)"
                                      class="avatar-wrapper">
                                     <img :src="getUrl(doctor.user.avatar)"/>
                                 </div>
@@ -55,10 +60,13 @@
                                     +{{getExceed(data.day + '-AFTERNOON')}}
                                 </div>
                             </div>
+                            <SwitchButton class="switch" :value="!getIsClosed(data.day + '-AFTERNOON')"
+                                          :text="{on: 'OPEN', off: 'CLOSE'}"
+                                          v-bind:class="{show: have(data.day + '-AFTERNOON')}"
+                                          @change="toggleOpen($event, data.day + '-AFTERNOON')"/>
                             <div class="description">Afternoon</div>
-                            <el-button class="manage-button" @click="showScheduleDialog(data.day + '-AFTERNOON')">
-                                Manage
-                            </el-button>
+                            <i class="el-icon-setting manage-button"
+                               @click="showScheduleDialog(data.day + '-AFTERNOON')"/>
                         </div>
                     </div>
                 </div>
@@ -103,16 +111,44 @@
                 else this.$refs.dialog.show({
                     doctors: [],
                     departmentId: this.chosenDepartment,
+                    limit: this.limit,
                     shift: key.split("-")[3],
-                    date: key.split("-", 3).join("-"),
-                    scheduleLimit: 50,
-                    doctorLimit: 30
+                    date: key.split("-", 3).join("-")
                 });
             },
-            getSchedule(key) {
+            getScheduleDoctor(key) {
                 let doctors = this.schedule.get(key).doctors;
                 if (doctors.length <= 5) return doctors;
                 return doctors.slice(0, 4);
+            },
+            have(key) {
+                return this.schedule.has(key);
+            },
+            get(key) {
+                return this.schedule.get(key);
+            },
+            getIsClosed(key) {
+                return this.schedule.has(key) ? this.get(key).closed : true;
+            },
+            toggleOpen(val, key) {
+                if (!this.chosenDepartment) {
+                    this.$services.alert.info("Choose department first");
+                    return;
+                }
+
+                let schedule = this.get(key);
+                if (!schedule) {
+                    schedule = {
+                        shift: key.split("-")[3],
+                        date: key.split("-", 3).join("-"),
+                    }
+                }
+                ScheduleApi.toggle({
+                    date: moment(schedule.date).format("YYYY-MM-DD"),
+                    shift: schedule.shift,
+                    isClosed: !val.value,
+                    departmentId: this.chosenDepartment
+                }).then(this.getSchedules)
             },
             getExceed(key) {
                 return this.schedule.get(key).doctors.length - 5;
@@ -129,20 +165,14 @@
             nextWeek() {
                 this.start = moment(this.start).add('d', 7).format("YYYY-MM-DD");
                 this.end = moment(this.end).add('d', 7).format("YYYY-MM-DD");
-                console.log(this.start);
-                console.log(this.end);
             },
             prevWeek() {
                 this.start = moment(this.start).add('d', -7).format("YYYY-MM-DD");
                 this.end = moment(this.end).add('d', -7).format("YYYY-MM-DD");
-                console.log(this.start);
-                console.log(this.end);
-            },
-            logData(data) {
-                console.log(data);
-                return "";
             },
             getDepartments() {
+                this.chosenDepartment = '';
+                this.schedule = new Map();
                 this.departmentLoading = true;
                 ManagerApi.listManageDepartment(this.chosenHospital).then(response => {
                     console.log(response)
@@ -150,7 +180,8 @@
                     this.departments = response;
                 })
             },
-            getSchedules() {
+            getSchedules(reset = false) {
+                if (reset) this.schedule = new Map();
                 this.scheduleLoading = true;
                 ScheduleApi.list({
                     start: this.start,
@@ -161,7 +192,6 @@
                     res.forEach(schedule => {
                         this.schedule.set(moment(schedule.date).format("YYYY-MM-DD") + "-" + schedule.shift, schedule);
                     });
-                    console.log(this.schedule)
                 })
             }
         },
@@ -198,10 +228,12 @@
     .select-wrapper {
         display: inline-block;
     }
+
     .calendar-button-group {
         display: inline-block;
         float: right;
     }
+
     .avatar-wrapper {
         height: 35px;
         width: 35px;
@@ -269,12 +301,25 @@
                     display: none;
                     padding: 5px;
                     position: absolute;
-                    left: 5px;
-                    bottom: 4px;
+                    left: 75px;
+                    bottom: 1px;
                 }
 
-                &:hover .manage-button {
-                    display: inline-block;
+                .switch {
+                    position: absolute !important;
+                    left: 4px !important;
+                    bottom: 4px !important;
+                    display: none !important;
+
+                    &.show {
+                        display: inline-block !important;
+                    }
+                }
+
+                &:hover {
+                    .manage-button, .switch {
+                        display: inline-block !important;
+                    }
                 }
             }
 

@@ -6,4 +6,64 @@
 @import "custom_tab";
 @import "custom-flex.css";
 @import "~slick-carousel/slick/slick.css";
-@import "customize_table";
+@import "_var.scss";
+
+body * {
+  color: $color-dark;
+}
+
+.darken-gray {
+  background: $color-darken-gray;
+}
+
+
+.gray {
+  background: $color-gray;
+}
+
+.lightest-blue {
+  background: $color-lightest-blue;
+}
+
+.light-blue {
+  background: $color-light-blue;
+}
+
+.blue {
+  background: $color-blue;
+}
+
+.darken-blue {
+  background: $color-darken-blue;
+}
+
+.darkest-blue {
+  background: $color-darkest-blue;
+}
+
+.dark {
+  background: $color-dark;
+}
+
+.btn {
+  height: 30px;
+  padding: 0 10px;
+
+  &.no-radius {
+    border-radius: 0;
+  }
+}
+
+.el-table {
+  * {
+      border-color: $color-lightest-blue !important;
+  }
+
+  th {
+    background: $color-darkest-gray;
+    text-align: center;
+    * {
+      color: $color-dark;
+    }
+  }
+}
