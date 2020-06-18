@@ -70,19 +70,17 @@
                 let response = await AppointmentApi.myAppointment();
                 this.loading = false;
                 response.forEach(a => {
-                    a.date = moment(a).format("YYYY-MM-DD");
+                    a.date = moment(a.schedule.date).format("YYYY-MM-DD");
                 })
+                console.log(JSON.stringify(response))
                 response.sort((a, b) => {
                     if (a.date !== b.date)
-                        return a.date > b.date;
-
+                        return a.date < b.date ? 1 : -1;
                     if (a.schedule.shift !== b.schedule.shift)
-                        return a.schedule.shift > b.schedule.shift;
-
+                        return a.schedule.shift > b.schedule.shift ? 1 : -1;
                     if (a.schedule.id !== b.schedule.id)
-                        return a.schedule.id > b.schedule.id;
-
-                    return a.id > b.id;
+                        return a.schedule.id > b.schedule.id ? 1 : -1;
+                    return a.id < b.id ? 1 : -1;
                 });
                 this.appointments = response;
                 this.isNone();
@@ -91,7 +89,8 @@
                 let today = moment().format('YYYY-MM-DD');
                 if (today !== a.date) return a.date < today;
                 if (a.schedule.shift === 'AFTERNOON') return true;
-                return moment().format("HH") < '12';
+                console.log(a, moment().format("HH") < '12')
+                return moment().format("HH") > '12';
             },
             isShow(a) {
                 if (!this.showHistory && this.isPast(a)) return false;
@@ -120,9 +119,13 @@
     }
 
     .wrapper {
-        width: 700px;
+        width: 742px;
         height: calc(100vh - 100px);
         margin: 0 auto;
+        border: 1px solid #cecece;
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
 
         .checkbox-wrapper {
             border-right: 1px solid black;
@@ -137,7 +140,7 @@
             display: inline-block;
             width: 450px;
             float: right;
-            padding: 0  20px;
+            padding: 0 20px;
             height: 100%;
             overflow: auto;
 
@@ -222,9 +225,9 @@
                     float: right;
                     padding-left: 10px;
                     padding-top: 12px;
-                    width: fit-content;
                     text-align: right;
                     height: 62px;
+                    width: 105px;
                     border-left: 1px dashed black;
                 }
 

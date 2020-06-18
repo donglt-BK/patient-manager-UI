@@ -10,6 +10,7 @@ let AlertService = (function () {
     return {
         setDisabled: setDisabled,
         show(type, title, message, ms) {
+            if (!message || message === '') return;
             if (disableAlert) return;
             Notification({
                 type: type,
@@ -19,6 +20,7 @@ let AlertService = (function () {
             });
         },
         success(message, ms) {
+            if (!message || message === '') return;
             if (disableAlert) return;
             Notification.success({
                 message: message,
@@ -26,6 +28,7 @@ let AlertService = (function () {
             });
         },
         error(message, ms) {
+            if (!message || message === '') return;
             if (disableAlert) return;
             Notification.error({
                 message: message,
@@ -33,6 +36,7 @@ let AlertService = (function () {
             });
         },
         warning(message, ms) {
+            if (!message || message === '') return;
             if (disableAlert) return;
             Notification.warning({
                 message: message,
@@ -40,6 +44,7 @@ let AlertService = (function () {
             });
         },
         info(message, ms) {
+            if (!message || message === '') return;
             if (disableAlert) return;
             Notification.info({
                 message: message,

@@ -1,7 +1,7 @@
 import {Request as request} from './Request';
 import Util from "../util"
 
-const  base = "/user";
+const base = "/user";
 
 export default {
     login({username, password}) {
@@ -15,16 +15,13 @@ export default {
             data: formData,
         });
     },
-    register() {
-        let data = {
-            username: "admin",
-            password: "admin",
-            name: "admin"
-        }
+    register(data) {
 
         return request.post(base + "/register", data, {
+            processData: false,
+            contentType: false,
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": undefined
             }
         });
     },

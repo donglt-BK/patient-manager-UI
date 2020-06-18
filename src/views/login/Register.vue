@@ -1,31 +1,43 @@
 <template>
-    <div class="user-info-wrapper" v-loading="loading">
-        <InputLabel style='width: auto' text="Username" :required="true"/>
-        <el-input v-model="userInfo.username"></el-input>
+    <div class="user-info-wrapper">
+        <div class="info" v-loading="loading">
+            <h3 style="margin-top: 0; text-align: center">CREATE ACCOUNT</h3>
+            <InputLabel style='width: 145px' text="Username" :required="true"/>
+            <el-input class="input" v-model="userInfo.username"></el-input>
 
-        <InputLabel style='width: auto' text="Password" :required="true"/>
-        <el-input type="password" v-model="userInfo.password"></el-input>
+            <InputLabel style='width: 145px' text="Password" :required="true"/>
+            <el-input class="input" type="password" v-model="userInfo.password"></el-input>
 
-        <InputLabel style='width: auto' text="Name" :required="true"/>
-        <el-input v-model="userInfo.name"></el-input>
 
-        <InputLabel style='width: auto' text="Gender" :required="true"/>
-        <el-select v-model="userInfo.gender">
-            <el-option label="Male" value="MALE"/>
-            <el-option label="Female" value="FEMALE"/>
-        </el-select>
+            <InputLabel style='width: 145px' text="Name" :required="true"/>
+            <el-input class="input" v-model="userInfo.name"></el-input>
 
-        <InputLabel style='width: auto' text="Date of Birth" :required="true"/>
-        <el-date-picker v-model="userInfo.dob"></el-date-picker>
+            <div style="display: flex">
+                <div style="flex: 5; margin-right: 5px">
 
-        <InputLabel style='width: auto' text="Phone" :optional="true"/>
-        <el-input v-model="userInfo.phone"></el-input>
+                    <InputLabel style='width: 145px' text="Gender" :required="true"/>
+                    <el-select class="input" v-model="userInfo.gender">
+                        <el-option label="Male" value="MALE"/>
+                        <el-option label="Female" value="FEMALE"/>
+                    </el-select>
 
-        <InputLabel style='width: auto' text="Email" :optional="true"/>
-        <el-input v-model="userInfo.email"></el-input>
+                    <InputLabel style='width: 145px' text="Phone" :optional="true"/>
+                    <el-input class="input" v-model="userInfo.phone"></el-input>
+                </div>
+                <div style="flex: 7; margin-left: 5px">
+                    <InputLabel style='width: 145px' text="Date of Birth" :required="true"/>
+                    <el-date-picker class="input" v-model="userInfo.dob"></el-date-picker>
 
-        <AddressSelect ref="address"></AddressSelect>
-        <el-button @click="save">Save</el-button>
+                    <InputLabel style='width: 145px' text="Email" :optional="true"/>
+                    <el-input class="input" v-model="userInfo.email"></el-input>
+                </div>
+            </div>
+
+            <AddressSelect ref="address"></AddressSelect>
+
+            <el-button @click="save" class="btn darken-blue" style="width: 50%; margin: 10px 25%">Create</el-button>
+        </div>
+
     </div>
 </template>
 
@@ -47,15 +59,16 @@
                     phone: "",
                     email: "",
                     dob: "",
-                    loading: false
                 },
+                loading: false
             }
         },
         methods: {
             save() {
                 let entity = {
+                    username: this.userInfo.username,
+                    password: this.userInfo.password,
                     name: this.userInfo.name,
-                    avatar: this.userInfo.avatar,
                     dob: this.userInfo.dob,
                     gender: this.userInfo.gender,
                     address: this.$refs.address.getAddress(),
@@ -66,10 +79,12 @@
                 this.loading = true;
                 UserApi.register(entity).then(() => {
                     this.loading = false;
-                    this.$services.alert.success("Update success");
+                    this.$services.alert.success("Create account success");
                     setTimeout(() => {
                         this.$router.push(Pages.login.path)
                     }, 1000)
+                }).catch(() => {
+                    this.loading = false;
                 })
             },
             getUrl(url) {
@@ -87,15 +102,32 @@
 </script>
 
 <style scoped lang="scss">
-    .avatar {
-        overflow: hidden;
-        width: 100px;
-        height: 100px;
-        border-radius: 10px;
-        border: 3px solid #d2d2d2;
+    @import "../../assets/styles/var";
 
-        img {
-            width: 100%;
+    .user-info-wrapper {
+        background-color: $color-lightest-blue;
+        height: 100%;
+        overflow: auto;
+    }
+
+    .info {
+        width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #cecece;
+        background-color: white;
+        border-radius: 10px;
+
+        .input {
+            width: calc(100% - 145px);
+        }
+
+        /deep/ .label {
+            width: 145px !important;
+        }
+
+        /deep/ .field {
+            width: calc(100% - 145px) !important;
         }
     }
 </style>
