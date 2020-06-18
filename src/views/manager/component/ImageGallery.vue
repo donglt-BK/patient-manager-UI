@@ -90,15 +90,12 @@
             height: 100%;
 
             /deep/ .el-upload {
-                border: 1px dashed #d9d9d9;
+                border: 1px dashed #9c9c9c;
+                background: #eeeeee;
                 border-radius: 6px;
                 cursor: pointer;
                 position: relative;
                 overflow: hidden;
-
-                &:hover {
-                    border-color: #409EFF;
-                }
             }
 
             .add-button {

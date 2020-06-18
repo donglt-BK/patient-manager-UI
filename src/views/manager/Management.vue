@@ -26,12 +26,13 @@
                 </el-table-column>
                 <el-table-column>
                     <template slot-scope="scope">
-                        <el-button @click="selectHospital(scope.row)">Detail</el-button>
-                        <el-button @click="deleteHospital(scope.row.id)">Delete</el-button>
+                        <el-button class="darken-blue btn" @click="selectHospital(scope.row)">Detail</el-button>
+                        <el-button class="red btn" @click="deleteHospital(scope.row.id)">Delete</el-button>
                     </template>
                 </el-table-column>
             </DataTable>
-            <div class="add" @click="addHospital">Add</div>
+
+            <el-button @click="addHospital" class="add-btn btn darken-blue">Add Hospital</el-button>
         </div>
         <Hospital @selectDepartment="selectDepartment" @addDepartment="addDepartment"
                   @updateSuccess="updateSuccess" @deleteDepartment="returnHospital"
@@ -83,7 +84,8 @@
             selectDepartment(department) {
                 this.$refs.breadcrumb.goToDepartment(department.name);
             },
-            updateSuccess() {
+            updateSuccess(name) {
+                this.$refs.breadcrumb.goToHospital(name)
                 this.$refs.table.reload();
             },
             changeStatus(hospital, status) {
@@ -134,7 +136,7 @@
         }
 
         &.available {
-            background: $color-darken-blue  ;
+            background: $color-darken-blue;
         }
 
         &.unavailable {
@@ -145,5 +147,10 @@
             background: $color-dark;
 
         }
+    }
+
+    /deep/ .add-btn {
+        position: relative;
+        top: -40px;
     }
 </style>

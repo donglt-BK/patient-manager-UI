@@ -1,92 +1,49 @@
 <template>
     <div v-show="visible" v-loading="loading">
         <div class="info-wrapper clearfix">
-
-            <InputLabel class="label" style='width: auto' text="Department name" :required="true"/>
-            <el-input class="field" v-model="name"></el-input>
-
-            <InputLabel class="label" text="Status" :required="true"/>
-            <el-select class="field" v-model="status">
-                <el-option label="Available   - Can find and can interact" value="AVAILABLE"/>
-                <el-option label="Unavailable - Can find but can not interact" value="UNAVAILABLE"/>
-                <el-option label="Hidden      - Can not be found" value="HIDDEN"/>
-            </el-select>
-
-            <InputLabel class="label" text="Description" :optional="true"/>
-            <el-input class="field" v-model="description"></el-input>
-            <div class="manager-wrapper" v-show="!isCreate">
-                <p>Managers</p>
-                <ManagerList :managers="managers" @removeManager="removeManager" @addManager="addManager"/>
+            <div class="image-wrapper">
+                <img class="image" :src="getUrl(image)"/>
+                <el-upload ref="uploader" class="uploader" :action="domain + '/file/upload'"
+                           :show-file-list="false" :on-success="uploadImageSuccess">
+                    <el-button class="btn darken-blue" style="margin-top: 10px">Change</el-button>
+                </el-upload>
             </div>
+            <div style="float: right; width: calc(100% - 180px); display: inline-block">
+                <InputLabel class="label" style='width: auto' text="Department name" :required="true"/>
+                <el-input class="field" v-model="name"></el-input>
 
-            <el-button @click="save" class="save blue">Save</el-button>
-        </div>
-        <hr/>
+                <InputLabel class="label" text="Status" :required="true"/>
+                <el-select class="field" v-model="status">
+                    <el-option label="Available - Can find and can interact" value="AVAILABLE"/>
+                    <el-option label="Unavailable - Can find but can not interact" value="UNAVAILABLE"/>
+                    <el-option label="Hidden - Can not be found" value="HIDDEN"/>
+                </el-select>
 
-        <div v-show="!isCreate">
+                <InputLabel class="label" text="Description" :optional="true"/>
+                <el-input class="field" v-model="description"></el-input>
+                <div class="manager-wrapper" v-show="!isCreate">
+                    <p>Managers</p>
+                    <ManagerList :managers="managers" @removeManager="removeManager" @addManager="addManager"/>
+                </div>
 
-            <div>
-                <p>Images</p>
-                <ImageGallery ref="imageGallery" @uploaded="saveFile" @remove="removeFile"/>
+                <el-button @click="save" class="save btn darken-blue">Save</el-button>
+                <el-button @click="onDelete" v-show="!isCreate" class="delete-btn btn red">Delete Department</el-button>
             </div>
-            <hr/>
-            <div>
-                <p>Doctors</p>
-                <DataTable :getTableDataFn="getDoctors" ref="table">
-                    <el-table-column prop="name" label="Doctor">
-                        <template slot-scope="scope">
-                            {{scope.row.name}}
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="licenceUrl" label="Licence">
-                        <template slot-scope="scope">
-                            <img v-if="scope.row.licenceUrl" :src="getUrl(scope.row.licenceUrl)">
-                            <p v-else>No licence upload</p>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="status" label="Status">
-                        <template slot-scope="scope">
-                            <el-button @click="changeStatus(scope.row, 'AVAILABLE')" class="available status"
-                                       v-bind:class="{active: scope.row.status === 'AVAILABLE'}">
-                                Available
-                            </el-button>
-                            <el-button @click="changeStatus(scope.row, 'UNAVAILABLE')" class="unavailable status"
-                                       v-bind:class="{active: scope.row.status === 'UNAVAILABLE'}">
-                                Unavailable
-                            </el-button>
-                            <el-button @click="changeStatus(scope.row, 'HIDDEN')" class="cant-see status"
-                                       v-bind:class="{active: scope.row.status === 'HIDDEN'}">
-                                Hidden
-                            </el-button>
-                        </template>
-                    </el-table-column>
-                    <el-table-column>
-                        <template slot-scope="scope">
-                            <el-button @click="deleteDoctor(scope.row.id)">Delete</el-button>
-                        </template>
-                    </el-table-column>
-                </DataTable>
-                <div class="add" @click="showAddDoctorDialog">Add</div>
-                <AddUserDialog ref="addDialog" title="Doctor" @addUser="addDoctor"/>
-            </div>
-
-            <el-button @click="onDelete">Delete</el-button>
         </div>
     </div>
 </template>
 
 <script>
     import ManagerApi from "../../../api/ManagerApi";
-    import FileApi from "../../../api/FileApi";
-    import ImageGallery from "./ImageGallery";
     import ManagerList from "./ManagerList";
     import AddUserDialog from "./AddUserDialog";
 
     export default {
         name: "Department",
-        components: {AddUserDialog, ManagerList, ImageGallery},
+        components: {AddUserDialog, ManagerList},
         data() {
             return {
+                domain: process.env.VUE_APP_BACKEND_URL,
                 isCreate: true,
                 loading: false,
                 visible: false,
@@ -97,16 +54,14 @@
                 status: "HIDDEN",
                 description: "",
                 managers: [],
-                doctors: []
+                image: ''
             }
         },
         methods: {
-            async getDoctors(pageRequest) {
-                if (this.id === -1) return;
-                return ManagerApi.listDoctor({
-                    departmentId: this.id,
-                    ...pageRequest
-                });
+            uploadImageSuccess(url) {
+                this.image = url;
+                this.$refs.uploader.uploadFiles = [];
+                if (this.id !== -1) this.save();
             },
             save() {
                 let entity = {
@@ -114,22 +69,22 @@
                     name: this.name,
                     status: this.status,
                     description: this.description,
+                    image: this.image
                 }
                 if (this.id === -1) {
                     this.loading = true;
                     ManagerApi.addDepartment(entity).then(response => {
                         this.loading = false;
-                        console.log(response)
-                        this.$emit("updateSuccess");
+                        this.$emit("updateSuccess", this.name);
                         this.$services.alert.success("Create department success");
                         this.loadDepartment(response);
                     });
                 } else {
                     entity.id = this.id;
                     this.loading = true;
-                    ManagerApi.updateDepartment(entity).then(response => {
+                    ManagerApi.updateDepartment(entity).then(() => {
                         this.loading = false;
-                        this.$emit("updateSuccess");
+                        this.$emit("updateSuccess", this.name);
                         this.$services.alert.success("Update department success");
                     });
                 }
@@ -144,8 +99,9 @@
                 this.status = "HIDDEN";
                 this.description = "";
                 this.managers = [];
+                this.image = '';
             },
-            loadDepartment({id, hospitalId, hospitalName, name, status, description, managers}) {
+            loadDepartment({id, hospitalId, hospitalName, name, status, description, managers, image}) {
                 this.isCreate = false;
                 this.visible = true;
                 this.id = id;
@@ -155,28 +111,7 @@
                 this.status = status;
                 this.description = description;
                 this.managers = managers;
-                this.$refs.table.reload();
-
-                FileApi.getDepartmentFiles(id).then(response => {
-                    let images = [];
-                    if (response !== "")
-                        images = (response + "").split("||");
-                    this.$refs.imageGallery.loadImage(images)
-                });
-
-                ManagerApi.getAllDoctorId(this.id)
-                    .then(response => this.doctors = response);
-            },
-            showAddDoctorDialog() {
-                this.$refs.addDialog.show(this.doctors);
-            },
-            addDoctor(userId) {
-                ManagerApi.addDoctor({
-                    departmentId: this.id,
-                    userId: userId
-                }).then(() => {
-                    this.$refs.table.reload();
-                })
+                this.image = image;
             },
             onDelete() {
                 this.$emit("delete", this.id);
@@ -184,44 +119,8 @@
             close() {
                 this.visible = false;
             },
-            changeStatus(doctor, status) {
-                if (doctor.status !== status) {
-                    doctor.status = status;
-                    ManagerApi.updateDoctor({
-                        id: doctor.id,
-                        status: status
-                    }).then(() => {
-                        this.$services.alert.success("Doctor status changed to " + status, 1000)
-                    })
-                }
-            },
-            saveFile(file) {
-                FileApi.addDepartmentFile(this.id, file);
-            },
-            removeFile(file) {
-                FileApi.deleteDepartmentFile(this.id, file);
-            },
             getUrl(file) {
-                this.$utils.buildFileUrl(file);
-            },
-            deleteDoctor(doctorId) {
-                this.$services.deleteDialog.open(
-                    () => {
-                        this.confirmDeleteDoctor(doctorId)
-                    }, {
-                        title: "Delete Doctor",
-                        msg: "Do you want to delete this doctor? This can not be undone",
-                        ok: "Confirm",
-                        cancel: "Cancel",
-                    });
-            },
-            confirmDeleteDoctor(doctorId) {
-                this.loading = true;
-                ManagerApi.deleteDoctor(this.id, doctorId).then(() => {
-                    this.loading = false;
-                    this.$refs.table.reload();
-                    this.$services.alert.success("Delete doctor successful");
-                })
+                return this.$utils.buildFileUrl(file);
             },
             addManager(managerId) {
                 ManagerApi.addDepartmentManager({
@@ -234,7 +133,6 @@
                 })
             },
             removeManager(managerId) {
-                console.log(managerId);
                 this.$services.deleteDialog.open(
                     () => {
                         ManagerApi.removeDepartmentManager({
@@ -257,6 +155,25 @@
 </script>
 
 <style scoped lang="scss">
+    .image-wrapper {
+        display: inline-block;
+        float: left;
+        width: 180px;
+        height: 200px;
+        padding-right: 10px;
+        text-align: center;
+    }
+
+    .image {
+        overflow: hidden;
+        width: 100%;
+        border-radius: 10px;
+        border: 3px solid #d2d2d2;
+    }
+
+    .delete-btn {
+        margin-top: 4px !important;
+    }
 
     .label {
         margin-top: 10px;
@@ -277,13 +194,11 @@
         .save {
             margin-top: 4px;
             width: 75px;
-            background-color: blue;
-            color: white;
             float: right;
         }
 
         .manager-wrapper {
-            width: calc(100% - 95px);
+            width: calc(100% - 265px);
             float: left;
             margin: 5px 10px 0 0;
             height: 38px;

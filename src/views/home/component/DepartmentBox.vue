@@ -5,13 +5,11 @@
             <div class="unavailable" v-show="data.status === 'UNAVAILABLE'">UNAVAILABLE</div>
         </div>
         <div class="body" v-bind:class="{show: show}">
-            <div class="img-wrapper" slot="title" @click="changeImage">
-                <div v-for="(url, i) in data.files">
-                    <img :src="getImage(url)" :class="{active: i === display}">
-                </div>
+            <div class="img-wrapper" slot="title">
+                <img :src="getImage(data.image)">
             </div>
-            <p style="padding: 0 10px">{{data.description}}</p>
-            <el-button style="margin: 0 10px; width: calc(100% - 20px)" @click="makeAppointment">Make an Appointment
+            <p style="padding: 0 10px; color: black ">{{data.description}}</p>
+            <el-button style="margin: 0 10px 10px; width: calc(100% - 20px)" class="btn darken-blue" @click="makeAppointment">Make an Appointment
             </el-button>
         </div>
     </div>
@@ -30,11 +28,11 @@
         }, data() {
             return {
                 show: false,
-                display: 0
             }
         }, methods: {
             makeAppointment() {
-                this.$router.push(Pages.book.path + "?id=" + this.data.id)
+                let routeData = this.$router.resolve(Pages.book.path + "?id=" + this.data.id);
+                window.open(routeData.href, '_blank');
             },
             toggle() {
                 if (this.data.status !== 'UNAVAILABLE') this.show = !this.show
@@ -42,16 +40,6 @@
             getImage(url) {
                 return this.$utils.buildFileUrl(url);
             },
-            changeImage() {
-                const data = this.data;
-                if (data.files && data.files.length > 1) {
-                    this.display++;
-                    if (this.display === data.files.length) this.display = 0;
-                }
-            }
-        },
-        mounted() {
-            setInterval(this.changeImage, 7000)
         }
     }
 </script>
@@ -60,28 +48,19 @@
     @import "../../../assets/styles/var";
 
     .img-wrapper {
-        cursor: pointer;
         width: 100%;
         height: 100px;
         overflow: hidden;
         border-bottom: 1px solid $color-darkest-gray;
         position: relative;
+        line-height: 100px;
+        text-align: center;
 
-        div {
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            text-align: center;
+        img {
+            max-height: 100%;
+            max-width: 100%;
+            vertical-align: middle;
 
-            img {
-                height: 100%;
-                transition: opacity 1s;
-                opacity: 0;
-
-                &.active {
-                    opacity: 1;
-                }
-            }
         }
     }
 
@@ -123,25 +102,14 @@
             }
         }
 
-        &:hover {
-            .header {
-                background: $color-darken-blue;
-            }
-
-            .body {
-                border: 1px solid #bbbbbb;
-            }
-        }
-
         .body {
-            height: 0;
-            transition: height .7s;
+            max-height: 0;
+            transition: max-height .7s;
             border: 1px solid #d5d5d5;
             overflow: hidden;
 
             &.show {
-                height: 200px;
-                //height: fit-content;
+                max-height: 300px;
             }
         }
     }

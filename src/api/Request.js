@@ -25,7 +25,7 @@ let createRequest = (baseURL) => {
             if (error.response.status == 401) {
                 auth.logout(); // call logout to remove current user & token.
                 router.push({path: pages.login.path});
-                AlertService.setDisabled(true);
+                console.log("Unauthorize")
             } else if (error.response.status == 400) {
                 AlertService.error(error.response.data);
             } else if (error.response.status == 500) {

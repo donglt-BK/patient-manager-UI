@@ -82,7 +82,9 @@
                 })
             },
             async load(address = {countryId: ""}) {
-                this.country = address.countryId;
+                if (address.countryId !== 0) {
+                    this.country = address.countryId;
+                }
                 this.address = address.specificAddress;
                 if (this.country !== '') this.getCity(address);
             },

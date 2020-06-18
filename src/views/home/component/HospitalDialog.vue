@@ -23,7 +23,7 @@
                 <DepartmentBox v-for="(d, i) in departments" v-if="i % 3 === t" :data="d">
                 </DepartmentBox>
             </div>
-
+            <div style="text-align: center" v-if="departments.length === 0">No department found</div>
         </div>
         <div>
 
@@ -69,13 +69,7 @@
                 this.loading = true;
                 this.page = 1;
                 AppointmentApi.findDepartment({hospitalId: h.id})
-                    .then(res => {
-                        this.departments = res.map(d => {
-                            if (d.files === '') d.files = ["noimage.png"]
-                            else d.files = d.files.split("||");
-                            return d;
-                        })
-                    });
+                    .then(res => this.departments = res);
                 this.visible = true;
                 this.display = 0;
                 this.hospital = h;
@@ -142,9 +136,12 @@
             width: 100%;
             position: absolute;
             text-align: center;
+            line-height: 200px;
 
             img {
-                height: 100%;
+                max-height: 100%;
+                max-width: 100%;
+                vertical-align: middle;
                 transition: opacity 1s;
                 opacity: 0;
 

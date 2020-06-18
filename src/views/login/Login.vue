@@ -1,36 +1,37 @@
 <template>
     <div v-loading.fullscreen.lock="fullscreenLoading" class="login-wrapper">
         <el-row type="flex" justify="center" align="center" style="height: 100%;">
-            <el-col :md="7" :sm="10" :lg="6" :xs="20" class="row vertical-center">
+            <el-col :md="14" :sm="14" :lg="10" :xs="20" class="row vertical-center">
                 <el-form v-loading="loading" :inline="false"
                          class="flex-1 form-style" :rules="rules"
                          :model="formData" :disabled="disableForm"
                          ref="loginForm">
 
-                    <h3 class="text-center">
+                    <h3 class="text-center" style="width: 100%">
                         <label class="login-form-title">MEDICAL APPOINTMENT SYSTEM</label>
                     </h3>
-                    <img style="width: 36%; margin-left: 32%" src="../../assets/images/logo_c.png" alt="MAS Logo"/>
-                    <h5 class="text-center">Please login to continue</h5>
-                    <el-form-item prop="username">
-                        <el-input v-model="formData.username" placeholder="Username"
-                                  @keypress.enter.native="next"/>
-                    </el-form-item>
+                    <div class="clearfix" style="margin-top: 25px">
+                        <img style="width: 164px; float: left" src="../../assets/images/logo_c.png" alt="MAS Logo"/>
+                        <div style="width: calc(100% - 164px); padding-left: 20px; float: right">
+                            <el-form-item prop="username">
+                                <el-input v-model="formData.username" placeholder="Username"
+                                          @keypress.enter.native="next"/>
+                            </el-form-item>
 
-                    <el-form-item prop="password">
-                        <el-input ref="passwordInput" type="password" v-model="formData.password"
-                                  placeholder="Password" @keypress.enter.native.prevent="onClickLogin"/>
-                    </el-form-item>
+                            <el-form-item prop="password">
+                                <el-input ref="passwordInput" type="password" v-model="formData.password"
+                                          placeholder="Password" @keypress.enter.native.prevent="onClickLogin"/>
+                            </el-form-item>
 
-                    <el-form-item>
-                        <el-button class="btn-block custom-btn-color" @click="onClickLogin">Login</el-button>
-                    </el-form-item>
-
-                    <el-form-item>
+                            <el-form-item>
+                                <el-button class="btn darken-blue login-btn" @click="onClickLogin">Login</el-button>
+                            </el-form-item>
+                        </div>
+                    </div>
+                    <el-form-item style="text-align: center; margin-bottom: 0;">
                         <a>Don't have account? Create <span class="link" @click="register">new</span> one now</a>
                     </el-form-item>
                 </el-form>
-
             </el-col>
         </el-row>
     </div>
@@ -88,7 +89,6 @@
                     this.$auth.setCurrentUser(response.user);
                     this.goToHomePage();
                 } catch (e) {
-                    console.log("error", e);
                     if (e.response.status === 400) {
                         this.$services.alert.error("Wrong username or password");
                     } else {
@@ -107,19 +107,26 @@
 </script>
 
 <style lang="scss" scoped>
+    @import "../../assets/styles/var";
+
     /deep/ .login-form-title {
-        border-bottom: 3px solid #EFB3B2;
+        width: 100%;
+        border-bottom: 3px solid $color-darkest-blue;
         display: inline-block;
         padding-bottom: 5px;
     }
 
+    .login-btn {
+        width: 100%;
+    }
+
     .login-wrapper {
         height: 100%;
-        background-color: whitesmoke;
+        background-color: $color-lightest-blue;
     }
 
     .link {
-        color: blue;
+        color: $color-blue;
         cursor: pointer;
 
         &:hover {

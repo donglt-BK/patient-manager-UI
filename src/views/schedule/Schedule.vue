@@ -23,46 +23,38 @@
 
         <el-calendar v-loading="scheduleLoading" :range="[start, end]">
             <template slot="dateCell" slot-scope="{date, data}">
-                <div v-if='' class="date-cell">
+                <div v-if='' class="date-cell" v-bind:class="{'date-past': isDatePast(data.day)}">
                     <div class="date">
-                        {{data.day.split("-")[2]}}
+                        {{data.day.split("-")[2]}}{{isToday(data.day) ? ' - Today' : ''}}
                     </div>
                     <div class="shift-wrapper">
-                        <div class="morning">
-                            <div v-if="schedule.has(data.day + '-MORNING')">
-                                <div v-if="schedule.has(data.day + '-MORNING')"
-                                     v-for="(doctor, index) in getScheduleDoctor(data.day + '-MORNING')"
-                                     :style="'z-index: ' + (getScheduleDoctor(data.day + '-MORNING').length - index)"
-                                     class="avatar-wrapper">
-                                    <img :src="getUrl(doctor.user.avatar)"/>
-                                </div>
-                                <div v-if="getExceed(data.day + '-MORNING') > 0" class="exceed">
-                                    +{{getExceed(data.day + '-MORNING')}}
-                                </div>
+                        <div class="morning" v-bind:class="{past: isPast(data.day + '-MORNING')}">
+                            <div v-if="schedule.has(data.day + '-MORNING')"
+                                 :class="'percent ' + getStatus(data.day + '-MORNING')"
+                                 :style="'width: ' + getPercent(data.day + '-MORNING')"/>
+                            <div v-if="schedule.has(data.day + '-MORNING')"
+                                 class="detail">{{schedule.get(data.day + '-MORNING').bookingStatus}} /
+                                {{schedule.get(data.day + '-MORNING').limit}} slots
                             </div>
                             <SwitchButton class="switch" :value="!getIsClosed(data.day + '-MORNING')"
                                           :text="{on: 'OPEN', off: 'CLOSE'}"
-                                          v-bind:class="{show: have(data.day + '-MORNING')}"
+                                          v-bind:class="{show: schedule.has(data.day + '-MORNING')}"
                                           @change="toggleOpen($event, data.day + '-MORNING')"/>
                             <div class="description">Morning</div>
                             <i class="el-icon-setting manage-button"
                                @click="showScheduleDialog(data.day + '-MORNING')"/>
                         </div>
-                        <div class="afternoon">
-                            <div v-if="schedule.has(data.day + '-AFTERNOON')">
-                                <div v-if="schedule.has(data.day + '-AFTERNOON')"
-                                     v-for="(doctor, index) in getScheduleDoctor(data.day + '-AFTERNOON')"
-                                     :style="'z-index: ' + (getScheduleDoctor(data.day + '-AFTERNOON').length - index)"
-                                     class="avatar-wrapper">
-                                    <img :src="getUrl(doctor.user.avatar)"/>
-                                </div>
-                                <div v-if="getExceed(data.day + '-AFTERNOON') > 0" class="exceed">
-                                    +{{getExceed(data.day + '-AFTERNOON')}}
-                                </div>
+                        <div class="afternoon" v-bind:class="{past: isPast(data.day + '-AFTERNOON')}">
+                            <div v-if="schedule.has(data.day + '-AFTERNOON')"
+                                 :class="'percent ' + getStatus(data.day + '-AFTERNOON')"
+                                 :style="'width: ' + getPercent(data.day + '-AFTERNOON')"/>
+                            <div v-if="schedule.has(data.day + '-AFTERNOON')"
+                                 class="detail">{{schedule.get(data.day + '-AFTERNOON').bookingStatus}} /
+                                {{schedule.get(data.day + '-AFTERNOON').limit}} slots
                             </div>
                             <SwitchButton class="switch" :value="!getIsClosed(data.day + '-AFTERNOON')"
                                           :text="{on: 'OPEN', off: 'CLOSE'}"
-                                          v-bind:class="{show: have(data.day + '-AFTERNOON')}"
+                                          v-bind:class="{show: schedule.has(data.day + '-AFTERNOON')}"
                                           @change="toggleOpen($event, data.day + '-AFTERNOON')"/>
                             <div class="description">Afternoon</div>
                             <i class="el-icon-setting manage-button"
@@ -101,6 +93,28 @@
             }
         },
         methods: {
+            getStatus(key) {
+                let percent = this.getPercent(key).replace("%", "");
+                percent = parseInt(percent);
+                if (percent === 100) {
+                    return "full";
+                }
+                if (percent > 65) {
+                    return "almost";
+                }
+                if (percent > 40) {
+                    return "ok";
+                }
+                return "nice"
+            },
+            getPercent(key) {
+                let data = this.schedule.get(key);
+                if (data) {
+                    if (data.limit === 0) return 0;
+                    return data.bookingStatus / data.limit * 100 + "%";
+                }
+                return 0;
+            },
             showScheduleDialog(key) {
                 if (!this.chosenDepartment) {
                     this.$services.alert.info("Choose department first");
@@ -116,27 +130,18 @@
                     date: key.split("-", 3).join("-")
                 });
             },
-            getScheduleDoctor(key) {
-                let doctors = this.schedule.get(key).doctors;
-                if (doctors.length <= 5) return doctors;
-                return doctors.slice(0, 4);
-            },
-            have(key) {
-                return this.schedule.has(key);
-            },
-            get(key) {
-                return this.schedule.get(key);
-            },
             getIsClosed(key) {
-                return this.schedule.has(key) ? this.get(key).closed : true;
+                return this.schedule.has(key) ? this.schedule.get(key).closed : true;
             },
             toggleOpen(val, key) {
+                if (this.isPast(key)) return;
+
                 if (!this.chosenDepartment) {
                     this.$services.alert.info("Choose department first");
                     return;
                 }
 
-                let schedule = this.get(key);
+                let schedule = this.schedule.get(key);
                 if (!schedule) {
                     schedule = {
                         shift: key.split("-")[3],
@@ -150,32 +155,29 @@
                     departmentId: this.chosenDepartment
                 }).then(this.getSchedules)
             },
-            getExceed(key) {
-                return this.schedule.get(key).doctors.length - 5;
-            },
             getUrl(url) {
                 return this.$utils.buildFileUrl(url);
             },
             today() {
                 this.start = moment().day(-13).format("YYYY-MM-DD");
                 this.end = moment().day(14).format("YYYY-MM-DD");
-                console.log(this.start);
-                console.log(this.end);
+                this.getSchedules();
             },
             nextWeek() {
                 this.start = moment(this.start).add('d', 7).format("YYYY-MM-DD");
                 this.end = moment(this.end).add('d', 7).format("YYYY-MM-DD");
+                this.getSchedules();
             },
             prevWeek() {
                 this.start = moment(this.start).add('d', -7).format("YYYY-MM-DD");
                 this.end = moment(this.end).add('d', -7).format("YYYY-MM-DD");
+                this.getSchedules();
             },
             getDepartments() {
                 this.chosenDepartment = '';
                 this.schedule = new Map();
                 this.departmentLoading = true;
                 ManagerApi.listManageDepartment(this.chosenHospital).then(response => {
-                    console.log(response)
                     this.departmentLoading = false;
                     this.departments = response;
                 })
@@ -193,11 +195,27 @@
                         this.schedule.set(moment(schedule.date).format("YYYY-MM-DD") + "-" + schedule.shift, schedule);
                     });
                 })
+            },
+            isDatePast(d) {
+                let today = moment().format('YYYY-MM-DD');
+                if (today !== d) return d < today;
+                return moment().format("HH") > '12';
+            },
+            isPast(key) {
+                let shift = key.split("-")[3];
+                let date = key.split("-", 3).join("-");
+
+                let today = moment().format('YYYY-MM-DD');
+                if (today !== date) return date < today;
+                if (shift === 'AFTERNOON') return true;
+                return moment().format("HH") > '12'
+            },
+            isToday(d) {
+                return moment().format('YYYY-MM-DD') === d;
+
             }
         },
         mounted() {
-            console.log(this.start);
-            console.log(this.end);
             this.hospitalLoading = true;
             ManagerApi.listManageHospital().then(response => {
                 this.hospitalLoading = false;
@@ -227,40 +245,12 @@
 
     .select-wrapper {
         display: inline-block;
+        margin-bottom: 10px;
     }
 
     .calendar-button-group {
         display: inline-block;
         float: right;
-    }
-
-    .avatar-wrapper {
-        height: 35px;
-        width: 35px;
-        overflow: hidden;
-        border-radius: 50%;
-        cursor: pointer;
-        position: relative;
-        margin-left: -5px;
-        display: inline-block;
-
-        img {
-            width: 100%;
-        }
-    }
-
-    .exceed {
-        height: 35px;
-        width: 35px;
-        overflow: hidden;
-        border-radius: 50%;
-        cursor: pointer;
-        background: #f1f1f1;
-        border: 1px dashed #d9d9d9;
-        display: inline-block;
-        margin-left: -5px;
-        padding: 9px;
-        font-size: 14px;
     }
 
     .date-cell {
@@ -292,7 +282,7 @@
                     position: absolute;
                     right: 0;
                     bottom: 0;
-                    color: #b4b4b4;
+                    color: black;
                     text-align: right;
                     display: none;
                 }
@@ -316,20 +306,54 @@
                     }
                 }
 
-                &:hover {
+                &:not(.past):hover {
                     .manage-button, .switch {
                         display: inline-block !important;
                     }
                 }
+
+                .detail {
+                    width: 100%;
+                    position: absolute;
+                    top: 20px;
+                    left: 0;
+                    text-align: center;
+                }
+
+                .percent {
+                    position: absolute;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+
+                    &.nice {
+                        background-color: #98ff98;
+                    }
+
+                    &.ok {
+                        background-color: #ffff94;
+                    }
+
+                    &.almost {
+                        background-color: #ffd07a;
+                    }
+
+                    &.full {
+                        background-color: #ffaeae;
+                    }
+                }
             }
 
-            .morning:hover, .afternoon:hover {
+            /deep/ .past {
+                cursor: default !important;
+            }
+
+            .morning:not(.past):hover, .afternoon:not(.past):hover {
                 background: #eaeaea;
             }
         }
 
-
-        &:hover {
+        &:hover:not(.date-past) {
             background: #d0d0d0;
 
             .date {
@@ -343,6 +367,11 @@
             .description {
                 display: inline-block;
             }
+        }
+
+        /deep/ &.date-past {
+            cursor: default !important;
+            background-color: #f6f6f6;
         }
     }
 </style>

@@ -1,33 +1,34 @@
 <template>
-    <div v-bind:class="{searched: searched}" style="min-height: calc(100vh - 90px); position:relative;">
-        <div v-bind:class="{show: searched && founded.length===0 && !extraLoading && !keyLoading}" class="not-found">No
-            hospital found
+    <div v-bind:class="{searched: searched}" style="position:relative;">
+        <div v-bind:class="{show: key !== '' && searched && founded.length===0 && !keyLoading}"
+             class="not-found">No hospital found
         </div>
-        <el-input placeholder="Search hospital" v-model="key" @keypress.enter.native="changeKey(true)"
-                  class="search-input">
+        <el-input placeholder="Search hospital" v-model="key" class="search-input">
             <i slot="prefix" class="el-input__icon el-icon-search"></i>
         </el-input>
-        <div class="result-wrapper" v-loading="extraLoading || keyLoading"
-             v-bind:class="{founded: founded.length !== 0}">
+        <div class="result-wrapper" v-loading="keyLoading">
             <div class="clearfix">
-                <div class="hospital" v-for="h in founded" @click="showHospital(h)"
-                     v-bind:class="{unavailable: h.status === 'UNAVAILABLE'}">
-                    <div class="unavailable">UNAVAILABLE</div>
-                    <div class="img-wrapper">
-                        <div v-for="(url, i) in h.files">
-                            <img :src="getHospitalImage(url)" :class="{active: i === h.display}">
+                <transition-group name="fade" tag="div">
+                    <div class="hospital" v-for="h in founded" :key="h.id" @click="showHospital(h)"
+                         v-bind:class="{unavailable: h.status === 'UNAVAILABLE'}">
+                        <div class="unavailable">UNAVAILABLE</div>
+                        <div class="img-wrapper">
+                            <div v-for="(url, i) in h.files" :key="i">
+                                <img :src="getHospitalImage(url)" :class="{active: i === h.display}">
+                            </div>
+                        </div>
+                        <div class="info">
+                            <p class="name">{{h.name}}</p>
+                            <p class="address" v-if="isAddress(h.address.specificAddress)">
+                                {{h.address.specificAddress}}</p>
+                            <p class="address" v-else>{{h.address.block}}, {{h.address.district}}, {{h.address.city}},
+                                {{h.address.country}}</p>
                         </div>
                     </div>
-                    <div class="info">
-                        <p class="name">{{h.name}}</p>
-                        <p class="address" v-if="isAddress(h.address.specificAddress)">{{h.address.specificAddress}}</p>
-                        <p class="address" v-else>{{h.address.block}}, {{h.address.district}}, {{h.address.city}},
-                            {{h.address.country}}</p>
-                    </div>
-                </div>
+                </transition-group>
             </div>
         </div>
-        <div class="more" @click="loadMore" v-show="more">Load more</div>
+        <div class="more" @click="loadMore" v-show="more" v-loading="extraLoading">Load more</div>
         <HospitalDialog ref="dialog"/>
     </div>
 </template>
@@ -60,16 +61,15 @@
                             this.keyLoading = false;
                             this.page = 1;
                             this.more = false;
-                            setTimeout(() => this.founded = [], 200)
+                            this.founded = [];
                         }
-                    }, 1000)
-
+                    }, 700)
                 }
-                if (!this.searched) return;
+                let delay = this.searched ? 700 : 800
                 const waitKey = val;
                 setTimeout(() => {
                     if (this.key === waitKey) this.changeKey(false)
-                }, 700)
+                }, delay)
             }
         },
         methods: {
@@ -82,27 +82,25 @@
             getHospitalImage(url) {
                 return this.$utils.buildFileUrl(url);
             },
-            changeKey(enterPress) {
-                if (enterPress === this.searched) return;
-                this.founded = [];
-                this.page = 1;
-                this.keyLoading = true;
-                this.more = false;
+            changeKey() {
                 if (this.key !== '') {
-                    if (!this.searched) {
-                        this.searched = true;
-                        setTimeout(() => {
-                            this.search();
-                        }, 1000)
-                    } else {
+                    this.page = 1;
+                    this.more = false;
+                    this.keyLoading = true;
+                    this.searched = true;
+                    setTimeout(() => {
+                        this.founded = [];
                         this.search();
-                    }
+                    }, 500)
                 }
             },
             loadMore() {
                 this.page++;
                 this.extraLoading = true;
-                this.search();
+                this.$services.scrollBottom();
+                setTimeout(() => {
+                    this.search()
+                }, 500);
             },
             search() {
                 AppointmentApi.findHospital({
@@ -120,9 +118,6 @@
                         h.display = 0;
                     })
                     this.founded.push(...res.content);
-                    setTimeout(() => {
-                        this.$services.scrollBottom();
-                    }, 200)
                 })
             },
         },
@@ -143,8 +138,10 @@
 </script>
 
 <style scoped lang="scss">
+    @import "../../assets/styles/var";
+
     .search-input {
-        margin-top: calc(50vh - 70px);
+        margin-top: calc(50vh - 80px);
         width: 50%;
         margin-left: 25%;
         transition: margin-top 1s;
@@ -166,10 +163,14 @@
     }
 
     .result-wrapper {
-        opacity: 0;
-        transition: opacity 1s;
         margin-top: 10px;
-        min-height: 20px;
+        min-height: 200px;
+        position: relative;
+        padding-bottom: 10px;
+
+        /deep/ .el-loading-mask {
+            background-color: $color-lightest-blue;
+        }
 
         .hospital {
             float: left;
@@ -228,9 +229,12 @@
                     width: 100%;
                     position: absolute;
                     text-align: center;
+                    line-height: 100px;
 
                     img {
-                        height: 100%;
+                        max-height: 100%;
+                        max-width: 100%;
+                        vertical-align: middle;
                         transition: opacity 1s;
                         opacity: 0;
 
@@ -244,7 +248,7 @@
 
             .info {
                 height: 60px;
-                padding: 10px;
+                padding: 5px;
 
                 .name {
                     margin: 0;
@@ -252,7 +256,7 @@
                 }
 
                 .address {
-                    margin: 0;
+                    margin-top: 3px;
                     overflow: hidden;
                     height: 60%;
                     text-overflow: ellipsis;
@@ -277,10 +281,6 @@
     .searched {
         .search-input {
             margin-top: calc(70px);
-        }
-
-        .result-wrapper.founded {
-            opacity: 1;
         }
 
         .not-found.show {

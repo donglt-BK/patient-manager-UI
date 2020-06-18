@@ -17,12 +17,6 @@ export default {
             method: "GET"
         });
     },
-    listAllDoctor(departmentId) {
-        return request({
-            url: base + "/doctor/findAll?departmentId=" + departmentId,
-            method: "GET"
-        });
-    },
     listHospital(param) {
         return request({
             url: base + "/hospital/list" + Util.createParam(param),
@@ -81,6 +75,12 @@ export default {
             method: "GET",
         });
     },
+    departmentDetail(id) {
+        return request({
+            url: base + "/department/detail?id=" + id,
+            method: "GET",
+        });
+    },
     addDepartment(data) {
         return request.post(base + "/department/add", data, {
             processData: false,
@@ -124,46 +124,6 @@ export default {
     deleteDepartment(hospitalId, departmentId) {
         return request({
             url: base + "/department/delete?hospitalId=" + hospitalId + "&departmentId=" + departmentId,
-            method: "POST"
-        });
-    },
-
-    listDoctor(param) {
-        return request({
-            url: base + "/doctor/list" + Util.createParam(param),
-            method: "GET"
-        });
-    },
-    getAllDoctorId(departmentId) {
-        return request({
-            url: base + "/doctor/getAllDoctorId?departmentId=" + departmentId,
-            method: "GET"
-        });
-    },
-    addDoctor({departmentId, userId}) {
-        let formData = new FormData();
-        formData.append("departmentId", departmentId);
-        formData.append("userId", userId);
-
-        return request({
-            url: base + "/doctor/add",
-            method: "POST",
-            data: formData,
-        });
-    },
-    updateDoctor(data) {
-        console.log(data)
-        return request.post(base + "/doctor/update", data, {
-            processData: false,
-            contentType: false,
-            headers: {
-                "Content-Type": undefined
-            }
-        });
-    },
-    deleteDoctor(departmentId, doctorId) {
-        return request({
-            url: base + "/doctor/delete?departmentId=" + departmentId + "&doctorId=" + doctorId,
             method: "POST"
         });
     },

@@ -11,21 +11,15 @@ const lefterItems = {
     Appointment: {
         name: "Appointment",
         image: require("../../assets/images/icons/appointment.png"),
-        path: "",
+        path: Pages.appointment.path,
         authorize: Roles.ALL
-    },
-    Working: {
-        name: "Working",
-        image: require("../../assets/images/icons/doctor work.png"),
-        path: "",
-        authorize: [Roles.DOCTOR]
     },
     Schedule: {
         name: "Schedule Management",
         isLongName: true,
         image: require("../../assets/images/icons/schedule.png"),
         path: Pages.schedule.path,
-        authorize: [Roles.DOCTOR, Roles.DEPARTMENT_MANAGER, Roles.HOSPITAL_MANAGER, Roles.SYSTEM_ADMIN]
+        authorize: [Roles.DEPARTMENT_MANAGER, Roles.HOSPITAL_MANAGER, Roles.SYSTEM_ADMIN]
     },
     HospitalManagement: {
         name: "Hospital Management",

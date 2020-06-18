@@ -24,7 +24,6 @@
         },
         methods: {
             removeManager(managerId) {
-                console.log(managerId);
                 this.$emit('removeManager', managerId);
             },
             addManager(managerId) {
@@ -44,14 +43,14 @@
         overflow: hidden;
         border-radius: 50%;
         cursor: pointer;
-        background: #f1f1f1;
-        border: 1px dashed #d9d9d9;
+        background: #eeeeee;
+        border: 1px dashed #9c9c9c;
         display: inline-block;
         margin-left: -5px;
 
         i {
             font-size: 14px;
-            color: #8c939d;
+            color: #9c9c9c;
             width: 33px;
             height: 33px;
             line-height: 33px;

@@ -9,7 +9,7 @@
             <label style="margin-right: 20px;" @click="profile">
                 <span>{{username}}</span>
             </label>
-            <el-button class="btn no-radius light-blue" @click="logout">Logout</el-button>
+            <el-button class="btn white logout no-radius light-blue" @click="logout">Logout</el-button>
         </div>
     </el-header>
 </template>
@@ -69,6 +69,11 @@
             position: absolute;
             top: 0;
             right: 20px;
+        }
+
+        .logout {
+            height: 30px;
+            padding: 0 10px
         }
     }
 

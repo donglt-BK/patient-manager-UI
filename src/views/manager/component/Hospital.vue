@@ -8,9 +8,9 @@
 
                     <InputLabel class='label' text="Status" :required="true"/>
                     <el-select class='field' v-model="status">
-                        <el-option label="Available   - Can find and can interact" value="AVAILABLE"/>
+                        <el-option label="Available - Can find and can interact" value="AVAILABLE"/>
                         <el-option label="Unavailable - Can find but can not interact" value="UNAVAILABLE"/>
-                        <el-option label="Hidden      - Can not be found" value="HIDDEN"/>
+                        <el-option label="Hidden - Can not be found" value="HIDDEN"/>
                     </el-select>
 
                     <InputLabel class='label' text="Description" :optional="true"/>
@@ -23,7 +23,8 @@
                         <ManagerList :managers="managers" @removeManager="removeManager" @addManager="addManager"/>
                     </div>
 
-                    <el-button @click="save" class="save blue">Save</el-button>
+                    <el-button @click="save" class="save btn darken-blue">Save</el-button>
+                    <el-button @click="onDelete" v-show="!isCreate" class="delete-btn btn red">Delete Hospital</el-button>
                 </div>
                 <div class="map-wrapper">
                     <GoogleMap ref="map" :maker-name="name"/>
@@ -63,15 +64,13 @@
                         </el-table-column>
                         <el-table-column>
                             <template slot-scope="scope">
-                                <el-button @click="selectDepartment(scope.row)">Detail</el-button>
-                                <el-button @click="deleteDepartment(scope.row.id)">Delete</el-button>
+                                <el-button class="darken-blue btn" @click="selectDepartment(scope.row)">Detail</el-button>
+                                <el-button class="red btn" @click="deleteDepartment(scope.row.id)">Delete</el-button>
                             </template>
                         </el-table-column>
                     </DataTable>
-                    <div class="add" @click="addDepartment">Add</div>
+                    <el-button @click="addDepartment" class="add-btn btn darken-blue">Add Department</el-button>
                 </div>
-
-                <el-button @click="onDelete">Delete</el-button>
             </div>
         </div>
 
@@ -121,12 +120,11 @@
                     description: this.description,
                     addressId: this.$refs.address.getAddress(),
                 }
-                console.log(entity)
                 if (this.id === -1) {
                     this.loading = true;
                     ManagerApi.addHospital(entity).then(response => {
                         this.loading = false;
-                        this.$emit("updateSuccess");
+                        this.$emit("updateSuccess", this.name);
                         this.$services.alert.success("Create hospital success");
                         this.loadHospital(response);
                     });
@@ -135,7 +133,7 @@
                     this.loading = true;
                     ManagerApi.updateHospital(entity).then(() => {
                         this.loading = false;
-                        this.$emit("updateSuccess");
+                        this.$emit("updateSuccess", this.name);
                         this.$services.alert.success("Update hospital success");
                     });
                 }
@@ -246,7 +244,6 @@
                 })
             },
             removeManager(managerId) {
-                console.log(managerId);
                 this.$services.deleteDialog.open(
                     () => {
                         ManagerApi.removeHospitalManager({
@@ -269,6 +266,12 @@
 </script>
 
 <style scoped lang="scss">
+    /deep/ .delete-btn {
+        margin-top: 12px;
+        float: right;
+        margin-right: 10px;
+    }
+
     .label {
         margin-top: 10px;
         width: 160px !important;
@@ -300,12 +303,10 @@
             margin-top: 12px;
             width: 75px;
             float: right;
-            background-color: blue;
-            color: white;
         }
 
         .manager-wrapper {
-            width: calc(100% - 95px);
+            width: calc(100% - 242px);
             float: left;
             margin: 14px 10px 0 0;
             height: 38px;

@@ -44,11 +44,6 @@
             onChange(value) {
                 this.$emit("change", value);
             }
-        },
-        watch: {
-            'value': function (value) {
-                console.log(" switch button change value: " + value);
-            }
         }
     }
 </script>

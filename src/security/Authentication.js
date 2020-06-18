@@ -61,7 +61,6 @@ let Auth = {
             data.roles = [Roles.PATIENT, Roles.SYSTEM_ADMIN, Roles.HOSPITAL_MANAGER, Roles.DEPARTMENT_MANAGER];
         } else {
             data.roles = [Roles.PATIENT];
-            if (data.doctorIds.length > 0) data.roles.push(Roles.DOCTOR);
             if (data.manageDepartmentIds.length > 0) data.roles.push(Roles.DEPARTMENT_MANAGER);
             if (data.manageHospitalIds.length > 0) data.roles.push(Roles.HOSPITAL_MANAGER);
         }

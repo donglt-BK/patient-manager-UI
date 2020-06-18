@@ -8,7 +8,8 @@ let Pages = {
     profile: {name: "profile", path: "/profile"},
     management: {name: "management", path: "/manage"},
     schedule: {name: "schedule", path: "/schedule"},
-    book: {name: "book", path: "/booking"}
+    book: {name: "book", path: "/booking"},
+    appointment: {name: "appointment", path: "/appointment"}
 };
 
 export default Pages;

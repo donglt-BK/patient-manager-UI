@@ -1,10 +1,13 @@
 <template>
-    <div :class="'level ' + level">
+    <div :class="'breadcrumb darken-blue level ' + level">
         <span @click="returnManagement" class="management"
-              v-bind:class="{returnable: canReturnTo === 'management'}">Management Hospital</span>
+              v-bind:class="{returnable: canReturnTo === 'management' && level !== 'management'}">
+            Management Hospital
+        </span>
         <span @click="returnHospital" class="hospital"
-              v-bind:class="{returnable: canReturnTo !== 'none'}"
-              v-if="hospital">{{hospital}}</span>
+              v-bind:class="{returnable: canReturnTo !== 'none' && level !== 'hospital'}"
+              v-if="hospital">{{hospital}}
+        </span>
         <span class="department" v-if="department">{{department}}</span>
     </div>
 </template>
@@ -24,7 +27,7 @@
         },
         mounted() {
             let user = this.$auth.getCurrentUser();
-            if (user.hasAnyRoles([Roles.SYSTEM_ADMIN]) || user.manageHospitalIds.length > 1) {
+            if (user.hasAnyRoles([Roles.SYSTEM_ADMIN]) || user.manageHospitalIds.length > 1 || user.manageDepartmentHospitalIds.length > 1) {
                 this.canReturnTo = "management";
             } else if (user.hasAnyRoles([Roles.HOSPITAL_MANAGER]) || user.manageDepartmentIds.length > 1) {
                 this.canReturnTo = "hospital";
@@ -61,31 +64,36 @@
 </script>
 
 <style scoped lang="scss">
+    @import "../../../assets/styles/var";
+
+    .breadcrumb {
+        margin: 0 -10px 10px    ;
+        padding: 10px;
+    }
+
     .level {
         span.returnable {
-            color: blue;
+            color: $color-light-blue;
             cursor: pointer;
-            &:hover {
-                color: #0606fd;
-            }
 
-            &:active, &:focus {
-                color: #2828ff;
+            &:hover, &:active, &:focus {
+                text-decoration: underline;
             }
         }
 
-        &.management .management, &.hospital .hospital {
+        &.management .management, &.hospital .hospital, .department {
             cursor: default;
-            color: black;
+            color: white;
+
             &:hover, &:active, &:focus {
-                color: black;
+                color: white;
             }
         }
 
         .hospital, .department {
             &:before {
                 content: " > ";
-                color: black;
+                color: white;
             }
         }
     }

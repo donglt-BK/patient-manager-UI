@@ -4,7 +4,7 @@
         <div class="content-wrapper" v-bind:class="{close: !expand}">
             <Header></Header>
             <el-container class="app-container lightest-blue">
-                <el-main>
+                <el-main style="min-height: calc(100vh - 60px);">
                     <!-- customize content here -->
                     <transition name="fade" mode="out-in">
                         <router-view :pageTitle.sync="pageTitle" >
@@ -34,7 +34,6 @@
         methods: {
             onExpandClick(isExpand) {
                 this.expand = isExpand;
-                console.log(isExpand)
             }
         },
         components: {

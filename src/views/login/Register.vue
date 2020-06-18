@@ -1,40 +1,37 @@
 <template>
-    <div class="user-info-wrapper">
-        <div class="edit">
-            <InputLabel style='width: auto' text="Username" :required="true"/>
-            <el-input v-model="userInfo.username"></el-input>
+    <div class="user-info-wrapper" v-loading="loading">
+        <InputLabel style='width: auto' text="Username" :required="true"/>
+        <el-input v-model="userInfo.username"></el-input>
 
-            <InputLabel style='width: auto' text="Password" :required="true"/>
-            <el-input type="password" v-model="userInfo.password"></el-input>
+        <InputLabel style='width: auto' text="Password" :required="true"/>
+        <el-input type="password" v-model="userInfo.password"></el-input>
 
-            <InputLabel style='width: auto' text="Name" :required="true"/>
-            <el-input v-model="userInfo.name"></el-input>
+        <InputLabel style='width: auto' text="Name" :required="true"/>
+        <el-input v-model="userInfo.name"></el-input>
 
-            <InputLabel style='width: auto' text="Gender" :required="true"/>
-            <el-select v-model="userInfo.gender">
-                <el-option label="Male" value="MALE"/>
-                <el-option label="Female" value="FEMALE"/>
-            </el-select>
+        <InputLabel style='width: auto' text="Gender" :required="true"/>
+        <el-select v-model="userInfo.gender">
+            <el-option label="Male" value="MALE"/>
+            <el-option label="Female" value="FEMALE"/>
+        </el-select>
 
-            <InputLabel style='width: auto' text="Date of Birth" :required="true"/>
-            <el-date-picker v-model="userInfo.dob"></el-date-picker>
+        <InputLabel style='width: auto' text="Date of Birth" :required="true"/>
+        <el-date-picker v-model="userInfo.dob"></el-date-picker>
 
-            <InputLabel style='width: auto' text="Phone" :optional="true"/>
-            <el-input v-model="userInfo.phone"></el-input>
+        <InputLabel style='width: auto' text="Phone" :optional="true"/>
+        <el-input v-model="userInfo.phone"></el-input>
 
-            <InputLabel style='width: auto' text="Email" :optional="true"/>
-            <el-input v-model="userInfo.email"></el-input>
+        <InputLabel style='width: auto' text="Email" :optional="true"/>
+        <el-input v-model="userInfo.email"></el-input>
 
-            <AddressSelect ref="address"></AddressSelect>
-            <el-button @click="save">Save</el-button>
-
-        </div>
+        <AddressSelect ref="address"></AddressSelect>
+        <el-button @click="save">Save</el-button>
     </div>
 </template>
 
 <script>
-    import Roles from "../../security/Roles";
     import UserApi from "../../api/UserApi";
+    import Pages from "../../router/Pages";
 
     export default {
         name: "Register",
@@ -49,7 +46,8 @@
                     gender: "MALE",
                     phone: "",
                     email: "",
-                    dob: ""
+                    dob: "",
+                    loading: false
                 },
             }
         },
@@ -65,9 +63,13 @@
                     email: this.userInfo.email,
                 }
 
-                UserApi.update(entity).then(() => {
+                this.loading = true;
+                UserApi.register(entity).then(() => {
+                    this.loading = false;
                     this.$services.alert.success("Update success");
-                    this.$auth.getCurrentUser().update(entity);
+                    setTimeout(() => {
+                        this.$router.push(Pages.login.path)
+                    }, 1000)
                 })
             },
             getUrl(url) {

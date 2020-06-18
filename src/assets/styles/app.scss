@@ -46,22 +46,55 @@ body * {
 }
 
 .btn {
-  height: 30px;
-  padding: 0 10px;
+  &.white {
+    background: white;
+
+    * {
+      color: $color-dark !important;
+    }
+
+    &:hover {
+      background: $color-darken-gray;
+    }
+  }
+
+  &.darken-blue {
+    background: $color-darken-blue;
+
+    &:hover {
+      background: #4d75b1 !important;
+    }
+  }
+
+  &.red {
+    background: $color-red;
+    border-color: #ce5353 !important;
+
+    &:hover {
+      background: #ce5353;
+      border-color: #ce5353 !important;
+    }
+  }
+
+  * {
+    color: white;
+  }
 
   &.no-radius {
     border-radius: 0;
   }
+
 }
 
 .el-table {
   * {
-      border-color: $color-lightest-blue !important;
+    border-color: $color-lightest-blue !important;
   }
 
   th {
     background: $color-darkest-gray;
     text-align: center;
+
     * {
       color: $color-dark;
     }

@@ -5,7 +5,6 @@ import Login from "../views/login/Login";
 import Error from "../views/error/Error";
 import Pages from "./Pages";
 import PatientViews from "./PatientViews";
-import DoctorViews from "./DoctorViews";
 import ManagerViews from "./ManagerViews";
 import Register from "../views/login/Register";
 
@@ -20,7 +19,6 @@ const router = new Router({
             component: Layout,
             children: [
                 ...PatientViews,
-                ...DoctorViews,
                 ...ManagerViews
             ]
         }, {
