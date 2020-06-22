@@ -16,7 +16,6 @@ export default {
         });
     },
     register(data) {
-
         return request.post(base + "/register", data, {
             processData: false,
             contentType: false,
@@ -35,6 +34,12 @@ export default {
     find(param) {
         return request({
             url: base + "/find" + Util.createParam(param),
+            method: "GET"
+        });
+    },
+    refresh() {
+        return request({
+            url: base + "/refresh",
             method: "GET"
         });
     },

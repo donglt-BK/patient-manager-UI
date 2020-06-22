@@ -1,31 +1,33 @@
 <template>
     <div>
-        <el-dialog :visible.sync="dialogVisible" center width="60%">
+        <el-dialog :visible.sync="dialogVisible" center width="400px">
             <div slot="title" class="bold text-center">Add {{title}}</div>
 
             <el-input placeholder="Search" v-model="key">
                 <i slot="prefix" class="el-input__icon el-icon-search"></i>
             </el-input>
 
-            <div v-if="founded.length > 0">
-                <div v-for="user in founded">
+            <div v-if="founded.length > 0" class="user-wrapper">
+                <div v-for="user in founded" class="user-item">
                     <div class="avatar-wrapper">
                         <img :src="getUrl(user.avatar)"/>
                     </div>
-                    <div>
+                    <div class="name">
                         <p>{{user.name}}</p>
                         <p>{{user.username}}</p>
                     </div>
-                    <el-button v-if="!isCurrent(user.id)" @click="addUser(user.id)">Add</el-button>
-                    <el-button v-else disabled>{{title}}</el-button>
+                    <el-button class="btn darken-blue" v-if="!isCurrent(user.id)" @click="addUser(user.id)">Add
+                    </el-button>
+                    <el-button class="btn" v-else disabled>{{title}}</el-button>
                 </div>
+            </div>
+            <div v-else style="padding: 20px; text-align: center">No user found</div>
 
-                <div class="paging">
-                    <el-button class="nav-btn" @click="page++" :disabled="page===totalPages">></el-button>
-                    <el-input class="no-arrow page-number" type="number" min="1" :max="totalPages" v-model="page"/>
-                    <el-button class="nav-btn" @click="page--" :disabled="page===1"><</el-button>
-                    <span style="padding-top: 6px; font-size: 15px">Total {{totalPages}}</span>
-                </div>
+            <div class="paging">
+                <el-button class="nav-btn" @click="page++" :disabled="page===totalPages">></el-button>
+                <el-input class="no-arrow page-number" type="number" min="1" :max="totalPages" v-model="page"/>
+                <el-button class="nav-btn" @click="page--" :disabled="page===1"><</el-button>
+                <span style="padding-top: 6px; font-size: 15px">Total {{totalPages}}</span>
             </div>
         </el-dialog>
     </div>
@@ -75,7 +77,7 @@
                 UserApi.find({
                     key: this.key,
                     page: this.page,
-                    size: 1
+                    size: 5
                 }).then(response => {
                     this.founded = response.content;
                     this.first = response.first;
@@ -114,6 +116,49 @@
 </script>
 
 <style scoped lang="scss">
+
+    .user-wrapper {
+        margin: 10px 0;
+        overflow: auto;
+        max-height: 300px;
+
+        .user-item {
+            border-top: 1px solid gray;
+            padding: 10px;
+            position: relative;
+
+            &:hover {
+                background-color: #e5e5e5;
+            }
+            &:first-child {
+                border-top: none;
+            }
+
+            > * {
+                display: inline-block;
+            }
+
+            .name {
+                position: absolute;
+                top: 13px;
+                left: 60px;
+
+                p {
+                    margin: 0;
+
+                }
+            }
+
+            .btn {
+                position: absolute;
+                right: 10px;
+                top: 12px;
+                height: 35px;
+                padding: 0 10px;
+            }
+        }
+    }
+
     .avatar-wrapper {
         height: 35px;
         width: 35px;
@@ -121,6 +166,8 @@
         border-radius: 50%;
         cursor: pointer;
         background: #f1f1f1;
+        position: relative;
+        top: 2px;
 
         img {
             width: 100%;
@@ -134,6 +181,7 @@
 
 
     .paging {
+        margin-bottom: 20px;
         > * {
             display: inline-block;
             float: right;

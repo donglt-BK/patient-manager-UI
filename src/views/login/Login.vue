@@ -85,25 +85,34 @@
                 };
                 try {
                     this.fullscreenLoading = true;
-                    let response = await UserApi.login(loginData);
-                    this.$auth.setCurrentUser(response.user);
+                    await UserApi.login(loginData);
+                    let response = await UserApi.refresh();
+                    console.log(response)
+                    this.$auth.setCurrentUser(response);
                     this.goToHomePage();
                 } catch (e) {
-                    if (e.response.status === 400) {
-                        this.$services.alert.error("Wrong username or password");
+                    if (e.response) {
+                        if (e.response.status === 400) {
+                            this.$services.alert.error("Wrong username or password");
+                        } else {
+                            this.$services.alert.error(this.$t("common.serverErrorMessage"), 2000);
+                            this.$auth.logout();
+                        }
                     } else {
-                        this.$services.alert.error(this.$t("common.serverErrorMessage"), 2000);
-                        this.$auth.logout();
+                        console.log(e)
                     }
-                } finally {
-                    this.fullscreenLoading = false;
+                } finally
+                    {
+                        this.fullscreenLoading = false;
+                    }
                 }
-            },
-            goToHomePage() {
-                this.$router.push({path: Pages.home.path});
+            ,
+                goToHomePage()
+                {
+                    this.$router.push({path: Pages.home.path});
+                }
             }
         }
-    }
 </script>
 
 <style lang="scss" scoped>
